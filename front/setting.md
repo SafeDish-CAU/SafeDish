@@ -5,7 +5,7 @@
 
 # 2. npm 모듈 설치
 ### a. 필요한 라이브러리 설치
-```npm i```
+/front 경로에서 ```npm i``` 명령어 실행
 ### b. react-native-share-menu 수정
 [관련 github issue](https://github.com/Expensify/react-native-share-menu/issues/261)  
 
