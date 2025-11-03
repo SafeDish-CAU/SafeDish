@@ -1,0 +1,117 @@
+export const TestData = [
+  {
+    id: '1',
+    title: '돼지불백',
+    price: 8500,
+    allergy_materials: {
+      대두: 2,
+      돼지고기: 3,
+      마늘: 1,
+      밀: 2,
+    },
+  },
+  {
+    id: '2',
+    title: '치킨마요덮밥',
+    price: 7000,
+    allergy_materials: {
+      우유: 2,
+      밀: 1,
+      대두: 2,
+      계란: 1,
+      닭고기: 3,
+    },
+  },
+  {
+    id: '3',
+    title: '새우튀김우동',
+    price: 9500,
+    allergy_materials: {
+      오징어: 1,
+      밀: 3,
+      새우: 3,
+      계란: 1,
+      대두: 2,
+    },
+  },
+  {
+    id: '4',
+    title: '비빔냉면',
+    price: 8000,
+    allergy_materials: {
+      계란: 1,
+      대두: 2,
+      메밀: 3,
+      밀: 2,
+      돼지고기: 1,
+    },
+  },
+  {
+    id: '5',
+    title: '김치볶음밥',
+    price: 7000,
+    allergy_materials: {
+      마늘: 1,
+      돼지고기: 2,
+      대두: 2,
+      계란: 1,
+    },
+  },
+  {
+    id: '6',
+    title: '크림파스타',
+    price: 11000,
+    allergy_materials: {
+      우유: 3,
+      밀: 3,
+      돼지고기: 1,
+      대두: 1,
+    },
+  },
+  {
+    id: '7',
+    title: '소고기국밥',
+    price: 9000,
+    allergy_materials: {
+      쇠고기: 3,
+      마늘: 1,
+      밀: 1,
+      대두: 2,
+    },
+  },
+  {
+    id: '8',
+    title: '닭갈비덮밥',
+    price: 8500,
+    allergy_materials: {
+      마늘: 1,
+      밀: 2,
+      닭고기: 3,
+      대두: 2,
+    },
+  },
+  {
+    id: '9',
+    title: '새우볶음밥',
+    price: 8000,
+    allergy_materials: {
+      계란: 1,
+      새우: 3,
+      대두: 2,
+      마늘: 1,
+    },
+  },
+  {
+    id: '10',
+    title: '함박스테이크',
+    price: 12000,
+    allergy_materials: {
+      계란: 1,
+      밀: 1,
+      돼지고기: 3,
+      쇠고기: 3,
+      우유: 2,
+      대두: 2,
+    },
+  },
+];

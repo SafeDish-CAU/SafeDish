@@ -6,7 +6,7 @@
  */
 
 import React, { useEffect, useCallback } from 'react';
-import { NewAppScreen } from '@react-native/new-app-screen';
+import  NewAppScreen  from '@react-native/new-app-screen';
 import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
 import {
   SafeAreaProvider,
@@ -14,6 +14,12 @@ import {
 } from 'react-native-safe-area-context';
 import ShareMenu, { ShareData } from 'react-native-share-menu';
 import { parseStoreFromDeepLink } from './scripts/parsing';
+/*
+import { NavigationContainer } from '@react-navigation/native';
+import RootStack from './screen/RootStack';
+*/
+
+import MenuList from './screen/MenuList';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -46,22 +52,40 @@ function App() {
   }, []);
 
   return (
+    /*
+    <NavigationContainer>
+      <RootStack />
+    </NavigationContainer
+    */
     <SafeAreaProvider>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <AppContent />
     </SafeAreaProvider>
+
+
   );
 }
 
 function AppContent() {
   const safeAreaInsets = useSafeAreaInsets();
 
+  const templateMap: Record<string, React.ComponentType<any>> = {
+      'MenuList': MenuList,
+    };
+
+  const Template = templateMap['MenuList'] || NewAppScreen;
   return (
+
+
     <View style={styles.container}>
+      {/*
       <NewAppScreen
         templateFileName="App.tsx"
         safeAreaInsets={safeAreaInsets}
       />
+      */}
+        <Template safeAreaInsets={safeAreaInsets} />
+
     </View>
   );
 }
