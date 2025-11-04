@@ -81,7 +81,6 @@ const AllergyTagList = ({MaterialList}) => (
     <View style={styles.tagListContainer}>
     {MaterialList.map(([material, level], index) =>{
                 const tagIndex = TAGS.findIndex(tag=>tag === material)
-
                 return tagIndex !== -1?(
                     <AllergyTag key= {index} tag = {tagIndex} level={level} />
                     ):null;

@@ -6,7 +6,6 @@ export const TestData = [
     allergy_materials: {
       대두: 2,
       돼지고기: 3,
-      마늘: 1,
       밀: 2,
     },
   },
@@ -18,7 +17,7 @@ export const TestData = [
       우유: 2,
       밀: 1,
       대두: 2,
-      계란: 1,
+      난류: 1,
       닭고기: 3,
     },
   },
@@ -30,7 +29,7 @@ export const TestData = [
       오징어: 1,
       밀: 3,
       새우: 3,
-      계란: 1,
+      난류: 1,
       대두: 2,
     },
   },
@@ -39,7 +38,7 @@ export const TestData = [
     title: '비빔냉면',
     price: 8000,
     allergy_materials: {
-      계란: 1,
+      난류: 1,
       대두: 2,
       메밀: 3,
       밀: 2,
@@ -51,10 +50,9 @@ export const TestData = [
     title: '김치볶음밥',
     price: 7000,
     allergy_materials: {
-      마늘: 1,
       돼지고기: 2,
       대두: 2,
-      계란: 1,
+      난류: 1,
     },
   },
   {
@@ -73,8 +71,7 @@ export const TestData = [
     title: '소고기국밥',
     price: 9000,
     allergy_materials: {
-      쇠고기: 3,
-      마늘: 1,
+      소고기: 3,
       밀: 1,
       대두: 2,
     },
@@ -84,7 +81,6 @@ export const TestData = [
     title: '닭갈비덮밥',
     price: 8500,
     allergy_materials: {
-      마늘: 1,
       밀: 2,
       닭고기: 3,
       대두: 2,
@@ -95,10 +91,9 @@ export const TestData = [
     title: '새우볶음밥',
     price: 8000,
     allergy_materials: {
-      계란: 1,
+      난류: 1,
       새우: 3,
       대두: 2,
-      마늘: 1,
     },
   },
   {
@@ -106,12 +101,13 @@ export const TestData = [
     title: '함박스테이크',
     price: 12000,
     allergy_materials: {
-      계란: 1,
+      난류: 1,
       밀: 1,
       돼지고기: 3,
-      쇠고기: 3,
+      소고기: 3,
       우유: 2,
       대두: 2,
     },
   },
 ];
+

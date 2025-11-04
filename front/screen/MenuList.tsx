@@ -4,20 +4,31 @@
 
 //  type props = NativeStackScreenProps<RootStackNavigationProp, 'Menu'>;
 
-import React, { useEffect, useCallback, useMemo} from 'react';
+/*
+
+TODO :
+
+
+
+*/
+
+import React, { useEffect, useCallback, useMemo, useState} from 'react';
 import NewAppScreen from '@react-native/new-app-screen';
 import { StatusBar, SafeAreaView, StyleSheet, useColorScheme, View, Text, FlatList } from 'react-native';
-import AllergyTagList, {AllergyTag}  from '../scripts/Data/AllergyTag'
-import {TestData} from '../scripts/Data/TestData'
+import DropDownPicker from 'react-native-dropdown-picker';
+import AllergyTagList, {AllergyTag}  from '../scripts/Data/AllergyTag';
+import {TestData} from '../scripts/Data/TestData';
 
 const Data = TestData;// 테스트 데이터 대입
 
 
 const maxMaterialNum = 5; // 임시로 5개로 배치, material을 넣는 최대 갯수
 
-
-
+/* flat list */
+//TODO : 사용자 정보에 맞게 DATA Filtering
+// == 사용자 정보에 맞아야 DATA를 보여줌.
 const Item = ({ DATA }) => {
+
   const materialArray = Object.entries(DATA.allergy_materials);
   const sortedMaterials = materialArray.sort((a, b) => b[1] - a[1]);
   const Materials = sortedMaterials.slice(0, maxMaterialNum);
@@ -33,9 +44,93 @@ const Item = ({ DATA }) => {
   );
   };
 
+//TODO :: 3단계 이상의 TAG 존재시 List에서 Filter.
+const filterOption = ({DATA, setDATA}) =>{
+    return null;
+
+
+    }
+
+/*dropdown */
+// 정렬 기준을 결정하도록 하고, 그에 맞게 정렬
+const SortOption = ({DATA, setDATA}) =>{
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState('title');
+    const [items, setItems] = useState([
+        { label : '이름 순', value: 'title'},
+        { label : '가격 순', value: 'price'},
+        {label : '안전도 순', value: 'allergy'},
+        ])
+
+    const sortMenu = useMemo(() => {
+        const sorted = [...DATA];
+        switch(value){
+        case 'title':
+            sorted.sort((a,b)=>a.title.localeCompare(b.title));
+            break;
+        case 'price':
+            sorted.sort((a,b)=> a.price-b.price);
+            break;
+        case 'allergy':
+            sorted.sort((a, b)=>{
+
+                const aLevel = Object.values(a.allergy_materials)
+                const bLevel = Object.values(b.allergy_materials)
+
+                const aMax = aLevel.length ? Math.max(...aLevel) : -Infinity;
+                const bMax = bLevel.length ? Math.max(...bLevel) : -Infinity;
+                if(aMax != bMax) {
+                    return aMax - bMax;
+                }
+                else{
+                    const aCount = Object.keys(a.allergy_materials).length;
+                    const bCount = Object.keys(b.allergy_materials).length;
+                    return aCount-bCount;
+                    }
+            });
+            break;
+        default:
+            break;
+        }
+        return sorted;
+    }, [DATA, value]);
+
+    useEffect (() => {
+        const isEqual = sortMenu.every((item, index) => item.id ===DATA[index].id);
+        if(!isEqual){
+            setDATA(sortMenu);
+        }
+        }, [sortMenu, setDATA]);
+
+    return(
+      <View>
+        <DropDownPicker
+          open={open}
+          value={value}
+          items={items}
+          setOpen={setOpen}
+          setValue={(callback) => {
+            const newValue = callback(value);
+            setValue(newValue);
+          }}
+          setItems={setItems}
+
+          style={styles.dropdown}
+          dropDownContainerStyle={styles.dropdownContainer}
+          labelStyle={styles.label}
+          placeholderStyle={styles.placeholder}
+          arrowIconStyle={styles.arrow}
+          tickIconStyle={styles.tick}
+          selectedItemLabelStyle={styles.selectedLabel}
+        />
+      </View>
+        )
+
+    }
+
 
 function MenuList(){
-
+  const [DATA, setDATA] = useState([...Data]);
   const ListHeader = () => (
         <View>
           <View style={styles.cyanBanner} />
@@ -61,9 +156,14 @@ function MenuList(){
 
         {/* 임의 이미지 */}
 
-      </>
+        {/* 드롭 다운*/}
+        <View style={styles.OptionContainer}>
+          <SortOption DATA = {DATA} setDATA = {setDATA}/>
+        </View>
+
+    </>
     <FlatList
-      data = {Data}
+      data ={DATA}
       renderItem = {renderItem}
       keyExtractor={item => item.id}
       showsVerticalScrollIndicator={false}
@@ -77,9 +177,11 @@ function MenuList(){
 }
 
 
+
+
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
+      flex:1,
       backgroundColor: '#fff',
   },
   header: {
@@ -114,14 +216,6 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       backgroundColor: '#fafafa',
   },
-  dropdown: {
-      height: 45,
-      width: '90%',
-      borderColor: '#ccc',
-      borderWidth: 1,
-      borderRadius: 8,
-      paddingHorizontal: 10,
-  },
     placeholderStyle: {
       fontSize: 16,
       color: '#999',
@@ -134,12 +228,58 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   cyanBanner: {
-      height: 200,
+      height: 0,
       backgroundColor: 'cyan',
       width: '100%',
     },
 
 
+
+  OptionContainer:{
+      backgroundColor: '#aaa',
+      borderBottomWidth:2.5,
+      borderColor : '#aaa',
+      height:80,
+      alignItems:'flex-end',
+      justifyContent:'center',
+      paddingRight : 30,
+
+    },
+    dropdown: {
+      height: 45,
+      width:120,
+      backgroundColor: '#f0f0f0',
+      borderColor: '#ccc',
+      borderWidth: 1,
+      borderRadius: 0,
+      paddingHorizontal: 10,
+      paddingVertical:0,
+    },
+    dropdownContainer: {
+      width: 120,
+      backgroundColor: '#fff',
+      borderColor: '#ccc',
+      borderWidth: 1,
+      borderRadius:0,
+      paddingVertical:0,
+    },
+    label: {
+      fontSize: 16,
+      color: '#333',
+    },
+    placeholder: {
+      color: '#999',
+    },
+    arrow: {
+      tintColor: '#333',
+    },
+    tick: {
+      tintColor: '#007AFF',
+    },
+    selectedLabel: {
+      fontWeight: 'bold',
+      color: '#007AFF',
+    },
 
 });
 
