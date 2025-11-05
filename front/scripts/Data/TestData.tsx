@@ -40,7 +40,7 @@ export const TestData = [
     allergy_materials: {
       난류: 1,
       대두: 2,
-      메밀: 3,
+      메밀: 2,
       밀: 2,
       돼지고기: 1,
     },
@@ -111,3 +111,14 @@ export const TestData = [
   },
 ];
 
+
+export const TestUserData =[
+  {
+    uid: 2021130612321,
+    name: '푸앙이',
+    allergy_materials: [
+      '난류',
+      '소고기',
+    ],
+  }
+];

@@ -16,13 +16,21 @@ import React, { useEffect, useCallback, useMemo, useState} from 'react';
 import NewAppScreen from '@react-native/new-app-screen';
 import { StatusBar, SafeAreaView, StyleSheet, useColorScheme, View, Text, FlatList } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
+import Checkbox from '@react-native-community/checkbox';
 import AllergyTagList, {AllergyTag}  from '../scripts/Data/AllergyTag';
-import {TestData} from '../scripts/Data/TestData';
+import {TestData, TestUserData} from '../scripts/Data/TestData';
 
 const Data = TestData;// 테스트 데이터 대입
-
+const User = TestUserData; //테스트 유저 데이터
 
 const maxMaterialNum = 5; // 임시로 5개로 배치, material을 넣는 최대 갯수
+
+const uid = ' ';
+
+//const sid = ' ';
+//가게정보를 받아올 시 사용됨.
+//페이지 진입시 받아오는 가게의 sid가 같은경우 DATAfilteringforUser를 사용하지 않음.
+
 
 /* flat list */
 //TODO : 사용자 정보에 맞게 DATA Filtering
@@ -44,12 +52,37 @@ const Item = ({ DATA }) => {
   );
   };
 
+
 //TODO :: 3단계 이상의 TAG 존재시 List에서 Filter.
+// 현재 
 const filterOption = ({DATA, setDATA}) =>{
-    return null;
+  const [isSelected, setSelection] = useState(false);
+  const Origin = [...DATA]
 
+  const filterLev3 = useMemo(() => {
+    const baseData = [...DATA];
+    const filterLev = 3
 
+      const filteredData = baseData.filter(dict =>
+        Object.values(dict)
+          .some(innerDict => Object.keys(innerDict).some(value=>!userAllergy.includes(filterLev))
+        )
+      );
+    )
+  }, [DATA, setDATA]);
+
+  useEffect (() => {
+    const isEqual = filterLev3.every((item, index) => item.id ===DATA[index].id);
+    if(!isEqual){
+      setDATA(filterLev3);
     }
+    }, [sortMenu, setDATA]);
+
+  return(
+
+
+  );
+  }
 
 /*dropdown */
 // 정렬 기준을 결정하도록 하고, 그에 맞게 정렬
@@ -131,6 +164,24 @@ const SortOption = ({DATA, setDATA}) =>{
 
 function MenuList(){
   const [DATA, setDATA] = useState([...Data]);
+
+  {/* 유저 데이터로 필터링 */}
+  useEffect(() => {
+    const baseData = [...Data];
+    const userData = [...User][0];
+    const userAllergy = userData.allergy_materials;
+
+    const filteredData = baseData.filter(dict =>
+      Object.values(dict)
+        .some(innerDict => Object.keys(innerDict).some(key=>userAllergy.includes(key))
+      )
+    );
+
+    setDATA(filteredData);
+
+  }, []);
+
+
   const ListHeader = () => (
         <View>
           <View style={styles.cyanBanner} />
