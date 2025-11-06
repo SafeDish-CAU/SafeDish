@@ -54,7 +54,8 @@ const Item = ({ DATA }) => {
 
 
 //TODO :: 3단계 이상의 TAG 존재시 List에서 Filter.
-// 현재 
+// 현재
+{/*
 const filterOption = ({DATA, setDATA}) =>{
   const [isSelected, setSelection] = useState(false);
   const Origin = [...DATA]
@@ -83,7 +84,7 @@ const filterOption = ({DATA, setDATA}) =>{
 
   );
   }
-
+*/}
 /*dropdown */
 // 정렬 기준을 결정하도록 하고, 그에 맞게 정렬
 const SortOption = ({DATA, setDATA}) =>{
@@ -165,21 +166,7 @@ const SortOption = ({DATA, setDATA}) =>{
 function MenuList(){
   const [DATA, setDATA] = useState([...Data]);
 
-  {/* 유저 데이터로 필터링 */}
-  useEffect(() => {
-    const baseData = [...Data];
-    const userData = [...User][0];
-    const userAllergy = userData.allergy_materials;
 
-    const filteredData = baseData.filter(dict =>
-      Object.values(dict)
-        .some(innerDict => Object.keys(innerDict).some(key=>userAllergy.includes(key))
-      )
-    );
-
-    setDATA(filteredData);
-
-  }, []);
 
 
   const ListHeader = () => (
@@ -336,3 +323,23 @@ const styles = StyleSheet.create({
 
 
 export default MenuList;
+
+
+{/* 유저 데이터로 필터링 */}
+
+{/*
+  useEffect(() => {
+    const baseData = [...Data];
+    const userData = [...User][0];
+    const userAllergy = userData.allergy_materials;
+
+    const filteredData = baseData.filter(dict =>
+      Object.values(dict)
+        .some(innerDict => Object.keys(innerDict).some(key=>userAllergy.includes(key))
+      )
+    );
+
+    setDATA(filteredData);
+
+  }, []);
+  */}

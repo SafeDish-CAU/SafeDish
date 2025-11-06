@@ -1,5 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
+import {TestUserData} from './TestData';
+// testdata용
+const userData = TestUserData[0];
+
+// user data를 이용한 렌더링 필터링 여부 확인
+const userRender = true;
 
 const TAGS = [
   '난류', '우유', '메밀', '땅콩',
@@ -80,9 +86,15 @@ const AllergyTag = ({tag, level}) => (
 const AllergyTagList = ({MaterialList}) => (
     <View style={styles.tagListContainer}>
     {MaterialList.map(([material, level], index) =>{
-                const tagIndex = TAGS.findIndex(tag=>tag === material)
-                return tagIndex !== -1?(
-                    <AllergyTag key= {index} tag = {tagIndex} level={level} />
+                const tagIndex1 = TAGS.findIndex(tag=>tag === material);
+                const tagIndex2 = userData.allergy_materials.findIndex(tag=>tag === material);
+
+                let caseResult = false;
+                if(userRender == true) caseResult = (tagIndex1 != -1 && tagIndex2 != -1);
+                else caseResult = tagIndex1 != -1;
+
+                return caseResult?(
+                    <AllergyTag key= {index} tag = {tagIndex1} level={level} />
                     ):null;
                   })}
 
