@@ -5,7 +5,7 @@ import {TestUserData} from './TestData';
 const userData = TestUserData[0];
 
 // user data를 이용한 렌더링 필터링 여부 확인
-const userRender = true;
+const userRender = false;
 
 const TAGS = [
   '난류', '우유', '메밀', '땅콩',
@@ -75,6 +75,8 @@ const levCont = [
 /*
     tag : index of TAG
     level : select/warningLevel (1, 2, 3)
+
+    AllergyTagList에 userRender 값에 따라 필터 여부가 달라지는 리스트가 있음.
 */
 
 const AllergyTag = ({tag, level}) => (
@@ -83,16 +85,17 @@ const AllergyTag = ({tag, level}) => (
     </View>
     )
 
+
 const AllergyTagList = ({MaterialList}) => (
     <View style={styles.tagListContainer}>
-    {MaterialList.map(([material, level], index) =>{
+    {(MaterialList || []).map(([material, level], index) =>{
                 const tagIndex1 = TAGS.findIndex(tag=>tag === material);
                 const tagIndex2 = userData.allergy_materials.findIndex(tag=>tag === material);
 
                 let caseResult = false;
                 if(userRender == true) caseResult = (tagIndex1 != -1 && tagIndex2 != -1);
                 else caseResult = tagIndex1 != -1;
-
+                console.log(MaterialList);
                 return caseResult?(
                     <AllergyTag key= {index} tag = {tagIndex1} level={level} />
                     ):null;

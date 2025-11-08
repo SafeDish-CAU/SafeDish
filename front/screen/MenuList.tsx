@@ -7,12 +7,13 @@
 /*
 
 TODO :
-
+전체적 구조 수정
+Component들이 메인의 State에 영향을 줄 수 있는 구조로 인해 불안정해질 수 있음.
 
 
 */
 
-import React, { useEffect, useCallback, useMemo, useState} from 'react';
+import React, { useRef, useEffect, useCallback, useMemo, useState} from 'react';
 import NewAppScreen from '@react-native/new-app-screen';
 import { StatusBar, SafeAreaView, StyleSheet, useColorScheme, View, Text, FlatList } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -21,7 +22,8 @@ import AllergyTagList, {AllergyTag}  from '../scripts/Data/AllergyTag';
 import {TestData, TestUserData} from '../scripts/Data/TestData';
 
 const Data = TestData;// 테스트 데이터 대입
-const User = TestUserData; //테스트 유저 데이터
+const Origin = [...Data] // 원래값 돌아가는 용도
+const User = TestUserData[0]; //테스트 유저 데이터
 
 const maxMaterialNum = 5; // 임시로 5개로 배치, material을 넣는 최대 갯수
 
@@ -52,39 +54,69 @@ const Item = ({ DATA }) => {
   );
   };
 
+{/* userData에 따른 Tag용 데이터 필터링*/}
+const userFilter = ({Data, userData}) =>{
+    console.log(userData);
+    console.log("#3", Data.map(item => item.allergy_materials));
+    try{
+    return Data.map(item=> ({
+      ... item,
+      allergy_materials: Object.fromEntries(
+        Object.entries(item.allergy_materials).filter(
+        ([key]) => userData.allergy_materials.includes(key)
+        )
+      ),
+    }));
+    } catch(error){
+        console.log('runtime error occured :: userFilter');
+        }
+};
+
 
 //TODO :: 3단계 이상의 TAG 존재시 List에서 Filter.
 // 현재
-{/*
-const filterOption = ({DATA, setDATA}) =>{
+const FilterOption = ({DATA, setDATA}) =>{
   const [isSelected, setSelection] = useState(false);
-  const Origin = [...DATA]
+  const origin = useRef(DATA);
 
-  const filterLev3 = useMemo(() => {
+  useEffect (() => {
+      origin.current = DATA;
+  }, [Data])
+
+  const filterLev3 = () => {
     const baseData = [...DATA];
     const filterLev = 3
 
-      const filteredData = baseData.filter(dict =>
-        Object.values(dict)
-          .some(innerDict => Object.keys(innerDict).some(value=>!userAllergy.includes(filterLev))
-        )
-      );
-    )
-  }, [DATA, setDATA]);
+      const filteredData = isSelected == true?
+      baseData.filter( item => {
+        const levels = Object.values(item.allergy_materials);
+        const maxLev = Math.max(...levels);
+        return maxLev != 3;
+      })
+      : origin.current;
+    return filteredData
+  };
 
   useEffect (() => {
-    const isEqual = filterLev3.every((item, index) => item.id ===DATA[index].id);
-    if(!isEqual){
-      setDATA(filterLev3);
-    }
-    }, [sortMenu, setDATA]);
+      setDATA(filterLev3());
+    }, [isSelected]);
 
   return(
+    <View>
+      <View style={{ flexDirection: 'row', alignItems: 'center', margin: 5 }}>
+        <Checkbox
+          value = {isSelected}
+          onValueChange={() => setSelection(prev=>!prev)}
+        />
+        <Text style={{ marginLeft: 8 }}>위험 재료 필터링</Text>
+      </View>
 
+    </View>
 
   );
   }
-*/}
+
+
 /*dropdown */
 // 정렬 기준을 결정하도록 하고, 그에 맞게 정렬
 const SortOption = ({DATA, setDATA}) =>{
@@ -97,7 +129,9 @@ const SortOption = ({DATA, setDATA}) =>{
         ])
 
     const sortMenu = useMemo(() => {
+        try{
         const sorted = [...DATA];
+        console.log("sorted", sorted);
         switch(value){
         case 'title':
             sorted.sort((a,b)=>a.title.localeCompare(b.title));
@@ -127,9 +161,12 @@ const SortOption = ({DATA, setDATA}) =>{
             break;
         }
         return sorted;
+        } catch(error){
+                console.log('runtime error occured :: SortOption');
+                }
     }, [DATA, value]);
-
     useEffect (() => {
+
         const isEqual = sortMenu.every((item, index) => item.id ===DATA[index].id);
         if(!isEqual){
             setDATA(sortMenu);
@@ -166,9 +203,11 @@ const SortOption = ({DATA, setDATA}) =>{
 function MenuList(){
   const [DATA, setDATA] = useState([...Data]);
 
-
-
-
+  useEffect (() =>{
+    const userFiltered = userFilter({Data:DATA, userData:User});
+    setDATA(userFiltered);
+  }, [Data, User]);
+  console.log("#3", DATA.map(item => item.allergy_materials));
   const ListHeader = () => (
         <View>
           <View style={styles.cyanBanner} />
@@ -183,8 +222,8 @@ function MenuList(){
 
 
   // const navigation = useNavigation<RootStackNavigationProp>();
+  try{
   return(
-
     <SafeAreaView style={styles.container}>
     <>
         {/* 메뉴바 */}
@@ -194,9 +233,10 @@ function MenuList(){
 
         {/* 임의 이미지 */}
 
-        {/* 드롭 다운*/}
+        {/* 드롭 다운 및 체크박스*/}
         <View style={styles.OptionContainer}>
           <SortOption DATA = {DATA} setDATA = {setDATA}/>
+          <FilterOption DATA = {DATA} setDATA = {setDATA} />
         </View>
 
     </>
@@ -209,9 +249,11 @@ function MenuList(){
       style={{flex:1}}
     />
 
-
   </SafeAreaView>
   )
+  } catch(error){
+        console.warn('런타임 에러3');
+        }
 }
 
 
@@ -253,6 +295,7 @@ const styles = StyleSheet.create({
       paddingVertical: 10,
       alignItems: 'center',
       backgroundColor: '#fafafa',
+
   },
     placeholderStyle: {
       fontSize: 16,
@@ -278,8 +321,9 @@ const styles = StyleSheet.create({
       borderBottomWidth:2.5,
       borderColor : '#aaa',
       height:80,
-      alignItems:'flex-end',
-      justifyContent:'center',
+      flexDirection:'row',
+      alignItems:'center',
+      justifyContent:'flex-end',
       paddingRight : 30,
 
     },
