@@ -19,11 +19,11 @@ import { StatusBar, SafeAreaView, StyleSheet, useColorScheme, View, Text, FlatLi
 import DropDownPicker from 'react-native-dropdown-picker';
 import Checkbox from '@react-native-community/checkbox';
 import AllergyTagList, {AllergyTag}  from '../scripts/Data/AllergyTag';
-import {TestData, TestUserData} from '../scripts/Data/TestData';
+import {TestData, TestUserData, TestUserDataObject} from '../scripts/Data/TestData';
 
 const Data = TestData;// 테스트 데이터 대입
 const Origin = [...Data] // 원래값 돌아가는 용도
-const User = TestUserData[0]; //테스트 유저 데이터
+const User = TestUserDataObject().getComponent(); //테스트 유저 데이터
 
 const maxMaterialNum = 5; // 임시로 5개로 배치, material을 넣는 최대 갯수
 
@@ -202,11 +202,26 @@ const SortOption = ({DATA, setDATA}) =>{
 
 function MenuList(){
   const [DATA, setDATA] = useState([...Data]);
+  const [allergy, setAllergy] = useState([...User.allergy_materials])
 
-  useEffect (() =>{
-    const userFiltered = userFilter({Data:DATA, userData:User});
-    setDATA(userFiltered);
-  }, [Data, User]);
+  const flag = useRef(true);
+
+   const isChanged =()=>{
+     const oldSet = new Set(allergy.map(item => item.id));
+     const newSet = new Set(User.allergy_materials.map(item => item.id));
+
+     return !(oldSet.size == newSet.size && [...oldSet].every(id=>newSet.has(id)));
+   }
+
+   useEffect (()=>{
+     if (flag.current || isChanged()){
+       if (flag.current) flag.current = false;
+       const userFiltered = userFilter({Data:DATA, userData:User});
+       setAllergy([...User.allergy_materials]);
+       setDATA(userFiltered);
+     }
+   }, [Data, User]);
+
   console.log("#3", DATA.map(item => item.allergy_materials));
   const ListHeader = () => (
         <View>
@@ -269,6 +284,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#f5f5f5',
+        paddingTop:20,
   },
   headerText: {
     fontSize: 20,
@@ -387,3 +403,30 @@ export default MenuList;
 
   }, []);
   */}
+
+  /*
+    const flag = useRef(true);
+
+     const isChanged =()=>{
+       const oldSet = new Set(allergy.map(item => item.id));
+       const newSet = new Set(User.allergy_materials.map(item => item.id));
+
+       return !(oldSet.size == newSet.size && [...oldSet].every(id=>newSet.has(id)));
+     }
+
+     useEffect (()=>{
+       if (flag.current || isChanged()){
+         if (flag.current) flag.current = false;
+         const userFiltered = userFilter({Data:DATA, userData:User});
+         setAllergy([...User.allergy_materials]);
+         setDATA(userFiltered);
+       }
+     }, [Data, User]);
+   */ // 실제 데이터 적용용도
+
+   /*
+   useEffect(()=>{
+         const userFiltered = userFilter({Data:DATA, userData:User});
+         setDATA(userFiltered);
+       }, [Data, User]);
+   */

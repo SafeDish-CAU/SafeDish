@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Button, Text, StyleSheet, FlatList } from 'react-native';
 import {TestUserData} from './TestData';
 // testdata용
 const userData = TestUserData[0];
@@ -105,4 +105,4 @@ const AllergyTagList = ({MaterialList}) => (
     )
 
 export default AllergyTagList;
-export { AllergyTag };
+export { AllergyTag, TAGS };

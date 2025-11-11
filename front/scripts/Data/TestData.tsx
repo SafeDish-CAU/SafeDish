@@ -122,3 +122,43 @@ export const TestUserData =[
     ],
   }
 ];
+
+
+
+export const TestUserDataObject = () => {
+
+  const UserData =
+    {
+      uid: 2021130612321,
+          name: '푸앙이',
+          allergy_materials: [
+            '난류',
+            '소고기',
+      ],
+    };
+
+  const getComponent =()=>{
+        return UserData;
+  }
+
+  const allergySetter =(option, tag)=> {
+    if(option == 'add') addTag(tag);
+    else if(option == 'remove')removeTag(tag);
+    }
+
+  const addTag=(tag) =>{
+    if(UserData.allergy_materials.includes(tag)) {
+        console.log ('UserDataError : allergyList already includes :: ', tag);
+    } else UserData.allergy_materials.push(tag)
+  }
+
+  const removeTag=(tag) =>{
+    if(!UserData.allergy_materials.includes(tag)){
+        console.log('UserDataError : allergyList already does not includes :: ', tag);
+    }else {
+        const idx = UserData.allergy_materials.findIndex(item => item == tag);
+        UserData.allergy_materials.splice(idx, 1);
+        }
+  }
+  return {getComponent, allergySetter};
+};

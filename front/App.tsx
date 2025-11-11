@@ -7,6 +7,7 @@
 
 import React, { useEffect, useCallback } from 'react';
 import  NewAppScreen  from '@react-native/new-app-screen';
+import MainScreen from './screen/MainScreen';
 import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
 import {
   SafeAreaProvider,
@@ -71,6 +72,7 @@ function AppContent() {
 
   const templateMap: Record<string, React.ComponentType<any>> = {
       'MenuList': MenuList,
+      'MainScreen':MainScreen,
     };
 
   const Template = templateMap['MenuList'] || NewAppScreen;
