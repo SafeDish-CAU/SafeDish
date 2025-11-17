@@ -20,11 +20,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //import RootStack from './screen/RootStack';
 import MainScreen from './screen/MainScreen';
 import MenuList from './screen/MenuList';
+import MenuDetail from './screen/MenuDetail';
 
 export type RootStackParamList = {
     main : undefined;
-    store : undefined;
-    //store : {user: {}};
+    //store : undefined;
+    store : {user: {}};
+    //menu:undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -66,6 +68,7 @@ function App() {
       <Stack.Navigator initialRouteName="main">
         <Stack.Screen name="main" component={MainScreen} />
         <Stack.Screen name="store" component={MenuList} />
+        {/*}<Stack.Screen name="menu" component={MenuDetail} />*/}
       </Stack.Navigator>
     </NavigationContainer>
 
@@ -85,6 +88,7 @@ function AppContent() {
   const templateMap: Record<string, React.ComponentType<any>> = {
       'MenuList': MenuList,
       'MainScreen':MainScreen,
+      //'MenuDetail':MenuDetail,
     };
 
   const Template = templateMap['MenuList'] || NewAppScreen;

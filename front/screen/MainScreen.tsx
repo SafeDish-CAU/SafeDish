@@ -75,7 +75,7 @@ function MainScreen (){
             <TouchableOpacity
             style= {styles.allergyButton}
             onPress = {() => navigation.navigate('store'
-                //,{user: TestUserDataObject().getComponent(),}
+                ,{user: userData,}
                 )}
             >
               <Text> 페이지 변경 </Text>

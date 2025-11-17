@@ -20,11 +20,11 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import Checkbox from '@react-native-community/checkbox';
 import AllergyTagList, {AllergyTag}  from '../scripts/Data/AllergyTag';
 import {TestData, TestUserData, TestUserDataObject} from '../scripts/Data/TestData';
-import { RouteProp, useRoute } from '@react-navigation/native';
+import { RouteProp, useRoute, useNavigation} from '@react-navigation/native';
 import { RootStackParamList } from '../App';
-const Data = TestData;// 테스트 데이터 대입
+let Data = TestData;// 테스트 데이터 대입
 const Origin = [...Data] // 원래값 돌아가는 용도
-const User = TestUserDataObject().getComponent(); //테스트 유저 데이터
+let User = TestUserDataObject().getComponent(); //테스트 유저 데이터
 
 const maxMaterialNum = 5; // 임시로 5개로 배치, material을 넣는 최대 갯수
 
@@ -35,7 +35,7 @@ const uid = ' ';
 //페이지 진입시 받아오는 가게의 sid가 같은경우 DATAfilteringforUser를 사용하지 않음.
 
 type StoreRouteProp = RouteProp<RootStackParamList, 'store'>;
-
+navigation = useNavigation<StoreRouteProp>();
 /* flat list */
 //TODO : 사용자 정보에 맞게 DATA Filtering
 // == 사용자 정보에 맞아야 DATA를 보여줌.
@@ -47,11 +47,13 @@ const Item = ({ DATA }) => {
 
   return (
   <>
+    <TouchableOpacity onPress = {() => console.log("listPressed", DATA.title)}>//{() => navigation.navigate('menu')}>
     <View style={styles.menuItem}>
       <Text style={styles.menuTitle}>{DATA.title}</Text>
       <Text style={styles.menuTitle}>{DATA.price}</Text>
     </View>
     <AllergyTagList MaterialList = {Materials} />
+    </TouchableOpacity>
   </>
   );
   };
@@ -59,7 +61,7 @@ const Item = ({ DATA }) => {
 {/* userData에 따른 Tag용 데이터 필터링*/}
 const userFilter = ({Data, userData}) =>{
     console.log(userData);
-    console.log("#3", Data.map(item => item.allergy_materials));
+    console.log("#userFilter =>", Data.map(item => item.allergy_materials));
     try{
     return Data.map(item=> ({
       ... item,
@@ -83,6 +85,7 @@ const FilterOption = ({DATA, setDATA}) =>{
 
   useEffect (() => {
       origin.current = DATA;
+      console.log("Filter Option =>", origin.current)
   }, [Data])
 
   const filterLev3 = () => {
@@ -95,7 +98,7 @@ const FilterOption = ({DATA, setDATA}) =>{
         const maxLev = Math.max(...levels);
         return maxLev != 3;
       })
-      : origin.current;
+      : [...origin.current];
     return filteredData
   };
 
@@ -135,7 +138,7 @@ const SortOption = ({DATA, setDATA}) =>{
     const sortMenu = useMemo(() => {
         try{
         const sorted = [...DATA];
-        console.log("sorted", sorted);
+        console.log("sorted");//, sorted);
         switch(value){
         case 'title':
             sorted.sort((a,b)=>a.title.localeCompare(b.title));
@@ -204,19 +207,28 @@ const SortOption = ({DATA, setDATA}) =>{
     }
 
 
-//function MenuList({userData}){
+//function MenuList({}){
 function MenuList(){
+  //const [user,setUser] = useState(userData);
+
   const [DATA, setDATA] = useState([...Data]);
-  const [allergy, setAllergy] = useState([...User.allergy_materials])
-  //User = userData;
-  console.Log(User);
+  const [allergy, setAllergy] = useState([...User.allergy_materials]);
+
+  const route = useRoute<StoreRouteProp>();
+  const userData = route.params.user;
+
+  User = userData;
+  console.log("user allergyList");//, User);
+
   useEffect(()=>{
     const userFiltered = userFilter({Data:DATA, userData:User});
-    setDATA(userFiltered);
-  }, [Data, User]);
+    if(JSON.stringify(userFiltered) !== JSON.stringify(DATA))
+      setDATA(userFiltered);
+  }, [DATA, User]);
 
-  console.log("MenuList", User);
-  console.log("#3", DATA.map(item => item.allergy_materials));
+  console.log("MenuList");//, User);
+  //console.log("#3", DATA.map(item => item.allergy_materials));
+
   const ListHeader = () => (
         <View>
           <View style={styles.cyanBanner} />
