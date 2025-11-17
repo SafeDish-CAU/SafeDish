@@ -20,7 +20,8 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import Checkbox from '@react-native-community/checkbox';
 import AllergyTagList, {AllergyTag}  from '../scripts/Data/AllergyTag';
 import {TestData, TestUserData, TestUserDataObject} from '../scripts/Data/TestData';
-
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { RootStackParamList } from '../App';
 const Data = TestData;// 테스트 데이터 대입
 const Origin = [...Data] // 원래값 돌아가는 용도
 const User = TestUserDataObject().getComponent(); //테스트 유저 데이터
@@ -33,6 +34,7 @@ const uid = ' ';
 //가게정보를 받아올 시 사용됨.
 //페이지 진입시 받아오는 가게의 sid가 같은경우 DATAfilteringforUser를 사용하지 않음.
 
+type StoreRouteProp = RouteProp<RootStackParamList, 'store'>;
 
 /* flat list */
 //TODO : 사용자 정보에 맞게 DATA Filtering
@@ -120,6 +122,8 @@ const FilterOption = ({DATA, setDATA}) =>{
 /*dropdown */
 // 정렬 기준을 결정하도록 하고, 그에 맞게 정렬
 const SortOption = ({DATA, setDATA}) =>{
+    const route = useRoute<StoreRouteProp>();
+
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('title');
     const [items, setItems] = useState([
@@ -200,28 +204,18 @@ const SortOption = ({DATA, setDATA}) =>{
     }
 
 
+//function MenuList({userData}){
 function MenuList(){
   const [DATA, setDATA] = useState([...Data]);
   const [allergy, setAllergy] = useState([...User.allergy_materials])
+  //User = userData;
+  console.Log(User);
+  useEffect(()=>{
+    const userFiltered = userFilter({Data:DATA, userData:User});
+    setDATA(userFiltered);
+  }, [Data, User]);
 
-  const flag = useRef(true);
-
-   const isChanged =()=>{
-     const oldSet = new Set(allergy.map(item => item.id));
-     const newSet = new Set(User.allergy_materials.map(item => item.id));
-
-     return !(oldSet.size == newSet.size && [...oldSet].every(id=>newSet.has(id)));
-   }
-
-   useEffect (()=>{
-     if (flag.current || isChanged()){
-       if (flag.current) flag.current = false;
-       const userFiltered = userFilter({Data:DATA, userData:User});
-       setAllergy([...User.allergy_materials]);
-       setDATA(userFiltered);
-     }
-   }, [Data, User]);
-
+  console.log("MenuList", User);
   console.log("#3", DATA.map(item => item.allergy_materials));
   const ListHeader = () => (
         <View>
@@ -241,10 +235,11 @@ function MenuList(){
   return(
     <SafeAreaView style={styles.container}>
     <>
-        {/* 메뉴바 */}
+        {/* 가게 헤더
         <View style={styles.header}>
           <Text style={styles.headerText}>가게 이름</Text>
         </View>
+        */}
 
         {/* 임의 이미지 */}
 

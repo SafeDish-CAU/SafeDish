@@ -1,6 +1,9 @@
 import React, { useRef, useEffect, useCallback, useMemo, useState} from 'react';
 import NewAppScreen from '@react-native/new-app-screen';
 import { StatusBar, SafeAreaView, StyleSheet, useColorScheme, TouchableOpacity, View, Text, FlatList } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../App';
 import {TestUserDataObject} from '../scripts/Data/TestData';
 import {TAGS} from '../scripts/Data/AllergyTag';
 
@@ -12,6 +15,11 @@ import {TAGS} from '../scripts/Data/AllergyTag';
 */
 const userDataObject = TestUserDataObject();
 const userData = userDataObject.getComponent();
+
+type MainScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'main'
+>;
 
 const AllergySetterButton = ({tag}) => {
     const [Pressed, setPressed] = useState(userData.allergy_materials.includes(tag));
@@ -44,22 +52,34 @@ const AllergySetterButton = ({tag}) => {
         //<Text>{tag}</Text>
 
 function MainScreen (){
+  const navigation = useNavigation<MainScreenNavigationProp>();
+  console.log(userDataObject, userData
+      );
 
   return(
   <SafeAreaView style={styles.mainContainer}>
-    {/*헤더 */}
+    {/*헤더
     <View style={styles.mainHeader}>
       <Text>Header</Text>
     </View>
+    */}
     {/* 버튼메뉴 */}
     <View style={styles.allergyButtonGridWrapper}>
-      <TouchableOpacity
-      style= {styles.allergyButton}
-      onPress = {() => console.log(userData)}
-      >
-        <Text> 알러지 출력 </Text>
-      </TouchableOpacity>
       <View style = {styles.allergyButtonWrapperHeader}>
+       <TouchableOpacity
+            style= {styles.allergyButton}
+            onPress = {() => console.log(userData)}
+            >
+              <Text> 알러지 출력 </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+            style= {styles.allergyButton}
+            onPress = {() => navigation.navigate('store'
+                //,{user: TestUserDataObject().getComponent(),}
+                )}
+            >
+              <Text> 페이지 변경 </Text>
+            </TouchableOpacity>
       </View>
       <View style = {styles.allergyButtonRow}>
         <AllergySetterButton tag={TAGS[0]}/>
@@ -125,6 +145,8 @@ const styles = StyleSheet.create({
     height : 175,
     backgroundColor: '#aaa',
     marginBottom: 5,
+    flexDirection:'row',
+    alignItems:'center',
     },
   allergyButtonRow:{
     paddingLeft:60,

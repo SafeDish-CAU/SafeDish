@@ -7,7 +7,6 @@
 
 import React, { useEffect, useCallback } from 'react';
 import  NewAppScreen  from '@react-native/new-app-screen';
-import MainScreen from './screen/MainScreen';
 import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
 import {
   SafeAreaProvider,
@@ -15,14 +14,23 @@ import {
 } from 'react-native-safe-area-context';
 import ShareMenu, { ShareData } from 'react-native-share-menu';
 import { parseStoreFromDeepLink } from './scripts/parsing';
-/*
-import { NavigationContainer } from '@react-navigation/native';
-import RootStack from './screen/RootStack';
-*/
 
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+//import RootStack from './screen/RootStack';
+import MainScreen from './screen/MainScreen';
 import MenuList from './screen/MenuList';
 
+export type RootStackParamList = {
+    main : undefined;
+    store : undefined;
+    //store : {user: {}};
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
 function App() {
+  console.log("APP RENDER STARTED");
   const isDarkMode = useColorScheme() === 'dark';
 
   const handleShare = useCallback(async (item?: ShareData) => {
@@ -53,16 +61,20 @@ function App() {
   }, []);
 
   return (
-    /*
+
     <NavigationContainer>
-      <RootStack />
-    </NavigationContainer
-    */
+      <Stack.Navigator initialRouteName="main">
+        <Stack.Screen name="main" component={MainScreen} />
+        <Stack.Screen name="store" component={MenuList} />
+      </Stack.Navigator>
+    </NavigationContainer>
+
+    /*
     <SafeAreaProvider>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <AppContent />
     </SafeAreaProvider>
-
+    */
 
   );
 }
