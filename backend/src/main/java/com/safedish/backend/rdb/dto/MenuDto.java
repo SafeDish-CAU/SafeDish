@@ -1,7 +1,9 @@
 package com.safedish.backend.rdb.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.safedish.backend.rdb.entitiy.Menu;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.safedish.backend.rdb.entity.Menu;
+import com.safedish.backend.rdb.entity.Option;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -10,35 +12,20 @@ import java.util.List;
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MenuDto {
+    @JsonProperty("menu_id")
     private final Long id;
+
+    @JsonProperty("menu_name")
     private final String name;
+
+    @JsonProperty("menu_price")
     private final Long price;
+
+    @JsonProperty("menu_allergies")
     private final List<AllergyDto> allergies = new ArrayList<>();
 
-    private static final List<String> ALLERGY_NAMES = List.of(
-            "알류(가금류)", // 0 EGGS
-            "우유",         // 1 MILK
-            "메밀",         // 2 BUCKWHEAT
-            "땅콩",         // 3 PEANUT
-            "대두",         // 4 SOYBEAN
-            "밀",           // 5 WHEAT
-            "고등어",       // 6 MACKEREL
-            "게",           // 7 CRAB
-            "새우",         // 8 SHRIMP
-            "돼지고기",     // 9 PORK
-            "복숭아",       // 10 PEACH
-            "토마토",       // 11 TOMATO
-            "아황산류",     // 12 SULFUROUSACIDS
-            "호두",         // 13 WALNUT
-            "닭고기",       // 14 CHICKEN
-            "쇠고기",       // 15 BEEF
-            "오징어",       // 16 SQUID
-            "굴",           // 17 OYSTER
-            "전복",         // 18 ABALONE
-            "홍합",         // 19 MUSSEL
-            "조개류",       // 20 SHELLFISH
-            "잣"            // 21 PINENUT
-    );
+    @JsonProperty("menu_options")
+    private final List<OptionDto> options = new ArrayList<>();
 
     public MenuDto(Menu menu) {
         this.id = menu.getId();
@@ -48,9 +35,13 @@ public class MenuDto {
         long mask = menu.getAllergyMask();
         for (int i = 0; i < 22; i++) {
             if ((mask & (1L << i)) != 0L) {
-                AllergyDto allergyDto = new AllergyDto((long)i, ALLERGY_NAMES.get(i));
+                AllergyDto allergyDto = new AllergyDto(i);
                 this.allergies.add(allergyDto);
             }
+        }
+
+        for (Option elem : menu.getOptions()) {
+            this.options.add(new OptionDto(elem));
         }
     }
 }

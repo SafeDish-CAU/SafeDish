@@ -1,14 +1,15 @@
 package com.safedish.backend.rdb.controller;
 
-import com.safedish.backend.rdb.dto.PlatformResponseDto;
+import com.safedish.backend.rdb.dto.CreatePlatformRequestDto;
+import com.safedish.backend.rdb.dto.CreatePlatformResponseDto;
+import com.safedish.backend.rdb.dto.ReadPlatformResponseDto;
+import com.safedish.backend.rdb.entity.Baemin;
+import com.safedish.backend.rdb.entity.Coupang;
 import com.safedish.backend.rdb.service.PlatformService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,10 +18,34 @@ public class PlatformController {
     private final PlatformService platformService;
 
     @GetMapping({"", "/"})
-    public ResponseEntity<?> getPlatform(@RequestParam("pfName") String pfName, @RequestParam("pfSid") Long pfSid) {
-        Long storeId = platformService.findStoreByPlatform(pfName, pfSid);
+    public ResponseEntity<?> readPlatform(@RequestParam("pf_name") String platformName, @RequestParam("pf_sid") Long platformSid) {
+        Long storeId = platformService.findStoreByPlatform(platformName, platformSid);
         if (storeId == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당하는 매장이 없습니다");
-        PlatformResponseDto dto = new PlatformResponseDto(storeId);
-        return ResponseEntity.ok().body(dto);
+        ReadPlatformResponseDto resDto = new ReadPlatformResponseDto(storeId);
+        return ResponseEntity.ok().body(resDto);
+    }
+
+    @PostMapping({"", "/"})
+    public ResponseEntity<?> createPlatform(@RequestHeader("Authorization") String token, @RequestBody CreatePlatformRequestDto reqDto) {
+        Long storeId = reqDto.getStoreId();
+        String platformName = reqDto.getPlatformName();
+        if (platformName.equals("baemin") || platformName.equals("coupang")) {
+            try {
+                Long platformSid = null;
+                if (platformName.equals("baemin")) {
+                    Baemin baemin = platformService.createBaemin(token, reqDto.getStoreId(), reqDto.getPlatformSid());
+                    platformSid = baemin.getId();
+                } else { // else if (platformName.equals("coupang"))
+                    Coupang coupang = platformService.createCoupang(token, reqDto.getStoreId(), reqDto.getPlatformSid());
+                    platformSid = coupang.getId();
+                }
+                CreatePlatformResponseDto resDto = new CreatePlatformResponseDto(storeId, platformName, platformSid);
+                return ResponseEntity.ok(resDto);
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 }
