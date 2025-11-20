@@ -5,34 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c075e7b1-5010-44d8-963c-8f0374f58fdf" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/HELP.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" afterPath="$PROJECT_DIR$/.gitattributes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/controller/OwnerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/controller/OwnerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/controller/PlatformController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/controller/PlatformController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/controller/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/controller/StoreController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/dto/AllergyDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/dto/AllergyDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/dto/MenuDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/dto/MenuDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/dto/PlatformResponseDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/dto/StoreResponseDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/entitiy/Baemin.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/entitiy/Coupang.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/entitiy/Menu.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/entitiy/MenuOption.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/entitiy/Owner.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/entitiy/Store.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/repository/BaeminRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/repository/BaeminRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/repository/CoupangRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/repository/CoupangRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/repository/MenuOptionRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/repository/MenuRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/repository/MenuRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/repository/OwnerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/repository/OwnerRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/repository/StoreRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/repository/StoreRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/service/OwnerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/service/OwnerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/service/PlatformService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/service/PlatformService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/service/StoreService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/safedish/backend/rdb/service/StoreService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/com/safedish/backend/rdb/entitiy/MenuOption.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/com/safedish/backend/rdb/entitiy/Owner.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,6 +130,7 @@
       <workItem from="1763602917422" duration="52000" />
       <workItem from="1763603164579" duration="182000" />
       <workItem from="1763603357103" duration="181000" />
+      <workItem from="1763603590441" duration="1717000" />
     </task>
     <servers />
   </component>
