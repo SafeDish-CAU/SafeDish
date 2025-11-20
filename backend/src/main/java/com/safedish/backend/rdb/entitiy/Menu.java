@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -21,6 +24,9 @@ public class Menu {
 
     @Column(name = "allergy_mask", nullable = false, columnDefinition = "BIGINT")
     private long allergyMask;
+
+    @OneToMany(mappedBy = "menu", cascade = CascadeType.REMOVE)
+    private List<MenuOption> options = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")
