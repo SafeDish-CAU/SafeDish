@@ -15,7 +15,7 @@ Component들이 메인의 State에 영향을 줄 수 있는 구조로 인해 불
 
 import React, { useRef, useEffect, useCallback, useMemo, useState} from 'react';
 import NewAppScreen from '@react-native/new-app-screen';
-import { StatusBar, SafeAreaView, StyleSheet, useColorScheme, View, Text, FlatList } from 'react-native';
+import { TouchableOpacity, StatusBar, SafeAreaView, StyleSheet, useColorScheme, View, Text, FlatList } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Checkbox from '@react-native-community/checkbox';
 import AllergyTagList, {AllergyTag}  from '../scripts/Data/AllergyTag';
@@ -35,7 +35,7 @@ const uid = ' ';
 //페이지 진입시 받아오는 가게의 sid가 같은경우 DATAfilteringforUser를 사용하지 않음.
 
 type StoreRouteProp = RouteProp<RootStackParamList, 'store'>;
-navigation = useNavigation<StoreRouteProp>();
+
 /* flat list */
 //TODO : 사용자 정보에 맞게 DATA Filtering
 // == 사용자 정보에 맞아야 DATA를 보여줌.
@@ -210,7 +210,7 @@ const SortOption = ({DATA, setDATA}) =>{
 //function MenuList({}){
 function MenuList(){
   //const [user,setUser] = useState(userData);
-
+  navigation = useNavigation<StoreRouteProp>();
   const [DATA, setDATA] = useState([...Data]);
   const [allergy, setAllergy] = useState([...User.allergy_materials]);
 
