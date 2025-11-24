@@ -34,6 +34,40 @@ public class OptionService {
         return option;
     }
 
+    public Option editOption(String token, Long optionId, String name, Long price, Long allergyMask) throws Exception {
+        Optional<Option> optionOpt = optionRepository.findById(optionId);
+        if (optionOpt.isEmpty()) {
+            throw new Exception("해당하는 옵션이 없습니다.");
+        }
+
+        Option option = optionOpt.get();
+        Owner owner = option.getMenu().getStore().getOwner();
+        if (!owner.getToken().equals(token)) {
+            throw new Exception("유효하지 않은 토큰입니다.");
+        }
+
+        option.setName(name);
+        option.setPrice(price);
+        option.setAllergyMask(allergyMask);
+        optionRepository.save(option);
+        return option;
+    }
+
+    public void deleteOption(String token, Long optionId) throws Exception {
+        Optional<Option> optionOpt = optionRepository.findById(optionId);
+        if (optionOpt.isEmpty()) {
+            throw new Exception("해당하는 옵션이 없습니다.");
+        }
+
+        Option option = optionOpt.get();
+        Owner owner = option.getMenu().getStore().getOwner();
+        if (!owner.getToken().equals(token)) {
+            throw new Exception("유효하지 않은 토큰입니다.");
+        }
+
+        optionRepository.delete(option);
+    }
+
     public Option findByOptionId(Long optionId) throws Exception {
         Optional<Option> optionOpt = optionRepository.findById(optionId);
         if (optionOpt.isEmpty()) {

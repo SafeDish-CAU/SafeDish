@@ -3,6 +3,7 @@ package com.safedish.backend.rdb.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -13,12 +14,15 @@ public class Option {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     @Column(nullable = false)
     private String name;
 
+    @Setter
     @Column(nullable = false)
     private Long price;
 
+    @Setter
     @Column(name = "allergy_mask", nullable = false, columnDefinition = "BIGINT")
     private long allergyMask;
 
