@@ -7,6 +7,8 @@ import { RootStackParamList } from '../App';
 import {TestUserDataObject} from '../scripts/Data/TestData';
 import {TAGS} from '../scripts/Data/AllergyTag';
 
+import { CheckBox } from '@rneui/themed';
+
 /*
     ***MainScreen***
     메인메뉴의 버튼 -> 유저 데이터로 연결
@@ -55,6 +57,9 @@ function MainScreen (){
   const navigation = useNavigation<MainScreenNavigationProp>();
   console.log(userDataObject, userData
       );
+
+  const [checked, setChecked] = React.useState(true);
+  //for react element test
 
   return(
   <SafeAreaView style={styles.mainContainer}>
@@ -116,6 +121,15 @@ function MainScreen (){
     {/* 추천 메뉴 */}
     <View>
       <Text>recommendedMenu</Text>
+               <CheckBox
+                 checked={checked}
+                 onPress={() => console.log('pressed')}
+                 // Use ThemeProvider to make change for all checkbox
+                 iconType="material-community"
+                 checkedIcon="checkbox-marked"
+                 uncheckedIcon="checkbox-blank-outline"
+                 checkedColor="#ff3d00"
+               />
     </View>
 
   </SafeAreaView>
