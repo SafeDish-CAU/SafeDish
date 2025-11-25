@@ -1,3 +1,4 @@
+/*
 export const TestData = [
   {
     id: '1',
@@ -110,6 +111,281 @@ export const TestData = [
     },
   },
 ];
+*/
+
+export const TestData = {
+     "store_id":3,
+     "store_name" : '만능집',
+     "menus" = [
+      {
+        menu_id: 1,
+        menu_name: '돼지불백',
+        menu_price: 8500,
+        menu_allergies: [
+          { allergy_code: 4, allergy_description: '대두' },
+          { allergy_code: 9, allergy_description: '돼지고기' },
+          { allergy_code: 5, allergy_description: '밀' },
+        ],
+        menu_options: [
+          {
+            option_id: 1,
+            option_name: '치즈 추가',
+            option_price: 1000,
+            option_allergies: [{ allergy_code: 1, allergy_description: '우유' }]
+          },
+          {
+            option_id: 2,
+            option_name: '계란 추가',
+            option_price: 500,
+            option_allergies: [{ allergy_code: 0, allergy_description: '알류(가금류)' }]
+          },
+          {
+            option_id: 3,
+            option_name: '매운 소스 추가',
+            option_price: 300,
+            option_allergies: []
+          }
+        ]
+      },
+      {
+        menu_id: 2,
+        menu_name: '치킨마요덮밥',
+        menu_price: 7000,
+        menu_allergies: [
+          { allergy_code: 1, allergy_description: '우유' },
+          { allergy_code: 5, allergy_description: '밀' },
+          { allergy_code: 4, allergy_description: '대두' },
+          { allergy_code: 0, allergy_description: '알류(가금류)' },
+          { allergy_code: 14, allergy_description: '닭고기' },
+        ],
+        menu_options: [
+          {
+            option_id: 1,
+            option_name: '추가 닭고기',
+            option_price: 2000,
+            option_allergies: [{ allergy_code: 14, allergy_description: '닭고기' }]
+          },
+          {
+            option_id: 2,
+            option_name: '마요네즈 소스 추가',
+            option_price: 500,
+            option_allergies: [
+              { allergy_code: 0, allergy_description: '알류(가금류)' },
+              { allergy_code: 1, allergy_description: '우유' }
+            ]
+          }
+        ]
+      },
+      {
+        menu_id: 3,
+        menu_name: '새우튀김우동',
+        menu_price: 9500,
+        menu_allergies: [
+          { allergy_code: 16, allergy_description: '오징어' },
+          { allergy_code: 5, allergy_description: '밀' },
+          { allergy_code: 8, allergy_description: '새우' },
+          { allergy_code: 0, allergy_description: '알류(가금류)' },
+          { allergy_code: 4, allergy_description: '대두' },
+        ],
+        menu_options: [
+          {
+            option_id: 1,
+            option_name: '튀김 추가',
+            option_price: 2000,
+            option_allergies: [{ allergy_code: 8, allergy_description: '새우' }]
+          },
+          {
+            option_id: 2,
+            option_name: '계란 토핑',
+            option_price: 500,
+            option_allergies: [{ allergy_code: 0, allergy_description: '알류(가금류)' }]
+          }
+        ]
+      },
+      {
+        menu_id: 4,
+        menu_name: '비빔냉면',
+        menu_price: 8000,
+        menu_allergies: [
+          { allergy_code: 0, allergy_description: '알류(가금류)' },
+          { allergy_code: 4, allergy_description: '대두' },
+          { allergy_code: 2, allergy_description: '메밀' },
+          { allergy_code: 5, allergy_description: '밀' },
+          { allergy_code: 9, allergy_description: '돼지고기' },
+        ],
+        menu_options: [
+          {
+            option_id: 1,
+            option_name: '계란 추가',
+            option_price: 500,
+            option_allergies: [{ allergy_code: 0, allergy_description: '알류(가금류)' }]
+          },
+          {
+            option_id: 2,
+            option_name: '참깨소스 추가',
+            option_price: 300,
+            option_allergies: [{ allergy_code: 4, allergy_description: '대두' }]
+          }
+        ]
+      },
+      {
+        menu_id: 5,
+        menu_name: '김치볶음밥',
+        menu_price: 7000,
+        menu_allergies: [
+          { allergy_code: 9, allergy_description: '돼지고기' },
+          { allergy_code: 4, allergy_description: '대두' },
+          { allergy_code: 0, allergy_description: '알류(가금류)' },
+        ],
+        menu_options: [
+          {
+            option_id: 1,
+            option_name: '계란 프라이 추가',
+            option_price: 500,
+            option_allergies: [{ allergy_code: 0, allergy_description: '알류(가금류)' }]
+          },
+          {
+            option_id: 2,
+            option_name: '치즈 토핑',
+            option_price: 1000,
+            option_allergies: [{ allergy_code: 1, allergy_description: '우유' }]
+          }
+        ]
+      },
+      {
+        menu_id: 6,
+        menu_name: '크림파스타',
+        menu_price: 11000,
+        menu_allergies: [
+          { allergy_code: 1, allergy_description: '우유' },
+          { allergy_code: 5, allergy_description: '밀' },
+          { allergy_code: 9, allergy_description: '돼지고기' },
+          { allergy_code: 4, allergy_description: '대두' },
+        ],
+        menu_options: [
+          {
+            option_id: 1,
+            option_name: '베이컨 추가',
+            option_price: 1500,
+            option_allergies: [{ allergy_code: 9, allergy_description: '돼지고기' }]
+          },
+          {
+            option_id: 2,
+            option_name: '치즈 추가',
+            option_price: 1000,
+            option_allergies: [{ allergy_code: 1, allergy_description: '우유' }]
+          }
+        ]
+      },
+      {
+        menu_id: 7,
+        menu_name: '소고기국밥',
+        menu_price: 9000,
+        menu_allergies: [
+          { allergy_code: 15, allergy_description: '쇠고기' },
+          { allergy_code: 5, allergy_description: '밀' },
+          { allergy_code: 4, allergy_description: '대두' },
+        ],
+        menu_options: [
+          {
+            option_id: 1,
+            option_name: '추가 소고기',
+            option_price: 2000,
+            option_allergies: [{ allergy_code: 15, allergy_description: '쇠고기' }]
+          },
+          {
+            option_id: 2,
+            option_name: '계란 추가',
+            option_price: 500,
+            option_allergies: [{ allergy_code: 0, allergy_description: '알류(가금류)' }]
+          }
+        ]
+      },
+      {
+        menu_id: 8,
+        menu_name: '닭갈비덮밥',
+        menu_price: 8500,
+        menu_allergies: [
+          { allergy_code: 5, allergy_description: '밀' },
+          { allergy_code: 14, allergy_description: '닭고기' },
+          { allergy_code: 4, allergy_description: '대두' },
+        ],
+        menu_options: [
+          {
+            option_id: 1,
+            option_name: '치즈 토핑',
+            option_price: 1000,
+            option_allergies: [{ allergy_code: 1, allergy_description: '우유' }]
+          },
+          {
+            option_id: 2,
+            option_name: '계란 추가',
+            option_price: 500,
+            option_allergies: [{ allergy_code: 0, allergy_description: '알류(가금류)' }]
+          }
+        ]
+      },
+      {
+        menu_id: 9,
+        menu_name: '새우볶음밥',
+        menu_price: 8000,
+        menu_allergies: [
+          { allergy_code: 0, allergy_description: '알류(가금류)' },
+          { allergy_code: 8, allergy_description: '새우' },
+          { allergy_code: 4, allergy_description: '대두' },
+        ],
+        menu_options: [
+          {
+            option_id: 1,
+            option_name: '새우 추가',
+            option_price: 1500,
+            option_allergies: [{ allergy_code: 8, allergy_description: '새우' }]
+          },
+          {
+            option_id: 2,
+            option_name: '계란 추가',
+            option_price: 500,
+            option_allergies: [{ allergy_code: 0, allergy_description: '알류(가금류)' }]
+          }
+        ]
+      },
+      {
+        menu_id: 10,
+        menu_name: '함박스테이크',
+        menu_price: 12000,
+        menu_allergies: [
+          { allergy_code: 0, allergy_description: '알류(가금류)' },
+          { allergy_code: 5, allergy_description: '밀' },
+          { allergy_code: 9, allergy_description: '돼지고기' },
+          { allergy_code: 15, allergy_description: '쇠고기' },
+          { allergy_code: 1, allergy_description: '우유' },
+          { allergy_code: 4, allergy_description: '대두' },
+        ],
+        menu_options: [
+          {
+            option_id: 1,
+            option_name: '치즈 추가',
+            option_price: 1000,
+            option_allergies: [{ allergy_code: 1, allergy_description: '우유' }]
+          },
+          {
+            option_id: 2,
+            option_name: '계란 추가',
+            option_price: 500,
+            option_allergies: [{ allergy_code: 0, allergy_description: '알류(가금류)' }]
+          },
+          {
+            option_id: 3,
+            option_name: '버섯 추가',
+            option_price: 700,
+            option_allergies: []
+          }
+        ]
+      }
+    ];
+}
+
+
 
 
 export const TestUserData =[

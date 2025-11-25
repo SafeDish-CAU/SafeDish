@@ -17,6 +17,9 @@ import { parseStoreFromDeepLink } from './scripts/parsing';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { UserDataProvider } from './scripts/Data/userData';
+
+
 //import RootStack from './screen/RootStack';
 import MainScreen from './screen/MainScreen';
 import MenuList from './screen/MenuList';
@@ -63,14 +66,15 @@ function App() {
   }, []);
 
   return (
-
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="main">
-        <Stack.Screen name="main" component={MainScreen} />
-        <Stack.Screen name="store" component={MenuList} />
-        {/*}<Stack.Screen name="menu" component={MenuDetail} />*/}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <UserDataProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="main">
+          <Stack.Screen name="main" component={MainScreen} />
+          <Stack.Screen name="store" component={MenuList} />
+          {/*}<Stack.Screen name="menu" component={MenuDetail} />*/}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </UserDataProvider>
 
     /*
     <SafeAreaProvider>

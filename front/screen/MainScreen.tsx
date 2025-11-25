@@ -6,8 +6,9 @@ import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 import {TestUserDataObject} from '../scripts/Data/TestData';
 import {TAGS} from '../scripts/Data/AllergyTag';
+import {useUserData} from '../scripts/Data/userData';
 
-import { CheckBox } from '@rneui/themed';
+import { Button, CheckBox } from '@rneui/themed';
 
 /*
     ***MainScreen***
@@ -15,49 +16,78 @@ import { CheckBox } from '@rneui/themed';
     별개로 데이터를 받아와 추천메뉴 띄워주기
 
 */
-const userDataObject = TestUserDataObject();
-const userData = userDataObject.getComponent();
 
 type MainScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'main'
 >;
 
-const AllergySetterButton = ({tag}) => {
-    const [Pressed, setPressed] = useState(userData.allergy_materials.includes(tag));
-
+const AllergySetterButton = ({tag, isPressed, pressFunc}) => {
     const onPress = () => {
-      if(Pressed) {
-        setPressed(false);
-        userDataObject.allergySetter('remove', tag);
+      console.log("onPressed", isPressed, tag)
+      if(isPressed) {
+        pressFunc({mode:'remove', value:tag});
       }  else{
-        setPressed(true);
-        userDataObject.allergySetter('add', tag);
+        pressFunc({mode:'add', value:tag})
       }
     };
 
-    return(
+    /* return(
       <View>
-        <TouchableOpacity
-            style= {[
+         <Button
+          title={tag}
+          type="solid"
+          onPress = {onPress}
+          color={isPressed? '#ff3d00':'#ffffff'}
+          buttonStyle={{
+              flex:1,
+              //backgroundColor: isPressed? '#ff3d00':'#ffffff',
+              borderWidth:2,
+              borderColor:isPressed?'#ff3d00':'gray',
+              borderRadius:15,
+          }}
+          containerStyle={{
+              height:60,
+              width: 60,
+              margin:5
+              }}
+          titleStyle={{
+            color: isPressed ? 'white' : 'black',
+            fontSize: 10,
+            fontWeight: 'bold',
+            textAlign: 'center',
+          }}
+        >
+
+        </Button>
+      </View>
+    ); */
+
+    return(
+        <View>
+          <TouchableOpacity
+            style = {[
                 styles.allergyButton,
-                {backgroundColor: Pressed?'#E0B0FF':'#eee'},
+                {backgroundColor: isPressed? '#ff3d00':'#eee'},
                 ]}
             onPress = {onPress}
-        >
-        <Text style={styles.allergyButtonText}>{tag}</Text>
-        </TouchableOpacity>
-      </View>
-    );
+          >
+          <Text style={styles.allergyButtonText}>{tag}</Text>
+          </TouchableOpacity>
+        </View>
+        )
 }
 
         //<Text>{tag}</Text>
 
 function MainScreen (){
   const navigation = useNavigation<MainScreenNavigationProp>();
-  console.log(userDataObject, userData
-      );
+  const {UserData, UserNameSetter, AllergySetter} = useUserData();
 
+  useEffect(() => {
+    console.log("::MainScreen reRendered::");
+    console.log(UserData);
+  }, [UserData]);
   const [checked, setChecked] = React.useState(true);
   //for react element test
 
@@ -73,7 +103,7 @@ function MainScreen (){
       <View style = {styles.allergyButtonWrapperHeader}>
        <TouchableOpacity
             style= {styles.allergyButton}
-            onPress = {() => console.log(userData)}
+            onPress = {() => console.log(UserData)}
             >
               <Text> 알러지 출력 </Text>
             </TouchableOpacity>
@@ -87,34 +117,38 @@ function MainScreen (){
             </TouchableOpacity>
       </View>
       <View style = {styles.allergyButtonRow}>
-        <AllergySetterButton tag={TAGS[0]}/>
-        <AllergySetterButton tag={TAGS[1]}/>
-        <AllergySetterButton tag={TAGS[2]}/>
-        <AllergySetterButton tag={TAGS[3]}/>
+        <AllergySetterButton tag={TAGS[0]} isPressed={UserData.user_allergy.includes(0)} pressFunc = {AllergySetter}/>
+        <AllergySetterButton tag={TAGS[1]} isPressed={UserData.user_allergy.includes(1)} pressFunc = {AllergySetter}/>
+        <AllergySetterButton tag={TAGS[2]} isPressed={UserData.user_allergy.includes(2)} pressFunc = {AllergySetter}/>
+        <AllergySetterButton tag={TAGS[3]} isPressed={UserData.user_allergy.includes(3)} pressFunc = {AllergySetter}/>
       </View>
       <View style = {styles.allergyButtonRow}>
-        <AllergySetterButton tag={TAGS[4]}/>
-        <AllergySetterButton tag={TAGS[5]}/>
-        <AllergySetterButton tag={TAGS[6]}/>
-        <AllergySetterButton tag={TAGS[7]}/>
+        <AllergySetterButton tag={TAGS[4]} isPressed={UserData.user_allergy.includes(4)} pressFunc = {AllergySetter}/>
+        <AllergySetterButton tag={TAGS[5]} isPressed={UserData.user_allergy.includes(5)} pressFunc = {AllergySetter}/>
+        <AllergySetterButton tag={TAGS[6]} isPressed={UserData.user_allergy.includes(6)} pressFunc = {AllergySetter}/>
+        <AllergySetterButton tag={TAGS[7]} isPressed={UserData.user_allergy.includes(7)} pressFunc = {AllergySetter}/>
       </View>
       <View style = {styles.allergyButtonRow}>
-        <AllergySetterButton tag={TAGS[8]}/>
-        <AllergySetterButton tag={TAGS[9]}/>
-        <AllergySetterButton tag={TAGS[10]}/>
-        <AllergySetterButton tag={TAGS[11]}/>
+        <AllergySetterButton tag={TAGS[8]} isPressed={UserData.user_allergy.includes(8)} pressFunc = {AllergySetter}/>
+        <AllergySetterButton tag={TAGS[9]} isPressed={UserData.user_allergy.includes(9)} pressFunc = {AllergySetter}/>
+        <AllergySetterButton tag={TAGS[10]} isPressed={UserData.user_allergy.includes(10)} pressFunc = {AllergySetter}/>
+        <AllergySetterButton tag={TAGS[11]} isPressed={UserData.user_allergy.includes(11)} pressFunc = {AllergySetter}/>
       </View>
       <View style = {styles.allergyButtonRow}>
-        <AllergySetterButton tag={TAGS[12]}/>
-        <AllergySetterButton tag={TAGS[13]}/>
-        <AllergySetterButton tag={TAGS[14]}/>
-        <AllergySetterButton tag={TAGS[15]}/>
+        <AllergySetterButton tag={TAGS[12]} isPressed={UserData.user_allergy.includes(12)} pressFunc = {AllergySetter}/>
+        <AllergySetterButton tag={TAGS[13]} isPressed={UserData.user_allergy.includes(13)} pressFunc = {AllergySetter}/>
+        <AllergySetterButton tag={TAGS[14]} isPressed={UserData.user_allergy.includes(14)} pressFunc = {AllergySetter}/>
+        <AllergySetterButton tag={TAGS[15]} isPressed={UserData.user_allergy.includes(15)} pressFunc = {AllergySetter}/>
       </View>
       <View style = {styles.allergyButtonRow}>
-        <AllergySetterButton tag={TAGS[16]}/>
-        <AllergySetterButton tag={TAGS[17]}/>
-        <AllergySetterButton tag={TAGS[18]}/>
-        <AllergySetterButton tag={TAGS[19]}/>
+        <AllergySetterButton tag={TAGS[16]} isPressed={UserData.user_allergy.includes(16)} pressFunc = {AllergySetter}/>
+        <AllergySetterButton tag={TAGS[17]} isPressed={UserData.user_allergy.includes(17)} pressFunc = {AllergySetter}/>
+        <AllergySetterButton tag={TAGS[18]} isPressed={UserData.user_allergy.includes(18)} pressFunc = {AllergySetter}/>
+        <AllergySetterButton tag={TAGS[19]} isPressed={UserData.user_allergy.includes(19)} pressFunc = {AllergySetter}/>
+      </View>
+      <View style = {styles.allergyButtonRow}>
+        <AllergySetterButton tag={TAGS[20]} isPressed={UserData.user_allergy.includes(20)} pressFunc = {AllergySetter}/>
+        <AllergySetterButton tag={TAGS[21]} isPressed={UserData.user_allergy.includes(21)} pressFunc = {AllergySetter}/>
       </View>
     </View>
 
