@@ -1,8 +1,6 @@
 package com.safedish.backend.rdb.controller;
 
-import com.safedish.backend.rdb.dto.CreateOptionRequestDto;
-import com.safedish.backend.rdb.dto.CreateOptionResponseDto;
-import com.safedish.backend.rdb.dto.ReadOptionResponseDto;
+import com.safedish.backend.rdb.dto.*;
 import com.safedish.backend.rdb.entity.Option;
 import com.safedish.backend.rdb.service.OptionService;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +35,31 @@ public class OptionController {
             Option option = optionService.findByOptionId(optionId);
             ReadOptionResponseDto resDto = new ReadOptionResponseDto(option);
             return ResponseEntity.ok(resDto);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PostMapping({"/{optionId}/edit", "/{optionId}/edit/"})
+    public ResponseEntity<?> editOption(@PathVariable("optionId") Long optionId, @RequestHeader("Authorization") String token, @RequestBody EditOptionRequestDto reqDto) {
+        try {
+            long allergyMask = 0L;
+            for (Long allergyId : reqDto.getOptionAllergies()) {
+                allergyMask |= (1L << allergyId);
+            }
+            Option option = optionService.editOption(token, optionId, reqDto.getOptionName(), reqDto.getOptionPrice(), allergyMask);
+            EditOptionResponseDto resDto = new EditOptionResponseDto(option.getId(), option.getName(), option.getPrice());
+            return ResponseEntity.ok(resDto);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PostMapping({"/{optionId}/delete", "/{optionId}/delete/"})
+    public  ResponseEntity<?> deleteOption(@PathVariable("optionId") Long optionId, @RequestHeader("Authorization") String token) {
+        try {
+            optionService.deleteOption(token, optionId);
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
