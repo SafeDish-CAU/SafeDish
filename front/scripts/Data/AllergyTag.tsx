@@ -15,8 +15,8 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   tagListContainer: {
-    padding: 15,
-    borderBottomWidth:1.5,
+    paddingTop: 15,
+    borderBottomWidth:0,
     borderColor: '#aaa',
     flexDirection: 'row',
     justifyContent: 'flex-start',

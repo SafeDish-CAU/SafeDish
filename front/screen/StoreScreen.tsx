@@ -9,7 +9,7 @@ import {getStoreMenu} from '../scripts/Data/api';
 import { RouteProp, useRoute, useNavigation} from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-import {CheckBox} from '@rneui/themed';
+import {CheckBox, ListItem} from '@rneui/themed';
 
 const maxMaterialNum = 5; // 임시로 5개로 배치, material을 넣는 최대 갯수
 
@@ -86,22 +86,21 @@ const Item = ({ DATA }) => {
   const listItem = {...DATA};
   //{() => navigation.navigate('menu')}>
   return (
-  <>
-    <TouchableOpacity onPress = {() => console.log("listPressed", DATA.menu_name)}>
-    <View style={styles.menuItem}>
-      <Text style={styles.menuTitle}>{DATA.menu_name}</Text>
-      <Text style={styles.menuTitle}>{DATA.menu_price}</Text>
-    </View>
-    <AllergyTagList2 maxLen = {5} menuList = {listItem}/>
-    </TouchableOpacity>
-  </>
+  <ListItem bottomDivider onPress = {() => console.log("listPressed", DATA.menu_name)}>
+    <ListItem.Content style={{ paddingBottom: 0 }}>
+      <ListItem.Title>{DATA.menu_name}</ListItem.Title>
+      <ListItem.Subtitle>{`${DATA.menu_price}원`}</ListItem.Subtitle>
+      <AllergyTagList2 maxLen = {5} menuList = {listItem}/>
+    </ListItem.Content>
+    <ListItem.Chevron size = {35} color="#aaaaaa" />
+  </ListItem>
+
   );
+  // Chevron : 리스트 우측의 화살표(Touchable은 아님)
 };
 
 const renderItem=({item}) => (
-    <View>
-      <Item DATA={item} />
-    </View>
+  <Item DATA={item} />
   );
 
 export function StoreScreen (){
@@ -169,11 +168,12 @@ export function StoreScreen (){
           <CheckBox
             checked={isFiltered}
             onPress={() => setFiltered(!isFiltered)}
-            Title="위험음식 제거"
+            title="위험음식 제거"
             iconType="material-community"
             checkedIcon="checkbox-marked"
             uncheckedIcon="checkbox-blank-outline"
-            checkedColor="#ff3d00"
+            checkedColor="#747999"
+            containerStyle={{ backgroundColor: 'transparent', borderWidth: 0, padding:0}}
           />
         </View>
 
@@ -191,13 +191,6 @@ export function StoreScreen (){
 
 
 
-
-
-
-
-
-
-
 const styles = StyleSheet.create({
   container: {
       flex:1,
@@ -210,6 +203,61 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5f5f5',
         paddingTop:20,
   },
+
+
+  OptionContainer:{
+      backgroundColor: '#ff6e60',
+      borderBottomWidth:0,
+      height:80,
+      flexDirection:'row',
+      alignItems:'center',
+      justifyContent:'space-between',
+      paddingRight : 30,
+
+    },
+    dropdown: {
+      height: 45,
+      width:120,
+      backgroundColor: '#f0f0f0',
+      borderColor: '#ccc',
+      borderWidth: 1,
+      borderRadius: 0,
+      paddingHorizontal: 10,
+      paddingVertical:0,
+      marginLeft:20,
+    },
+    dropdownContainer: {
+      width: 120,
+      backgroundColor: '#fff',
+      borderColor: '#ccc',
+      borderWidth: 1,
+      borderRadius:0,
+      paddingVertical:0,
+      marginLeft:20,
+    },
+    label: {
+      fontSize: 16,
+      color: '#333',
+    },
+    placeholder: {
+      color: '#999',
+    },
+    arrow: {
+      tintColor: '#333',
+    },
+    tick: {
+      tintColor: '#007AFF',
+    },
+    selectedLabel: {
+      fontWeight: 'bold',
+      color: '#007AFF',
+    },
+
+});
+
+
+
+/*
   headerText: {
     fontSize: 20,
     fontWeight: "700",
@@ -253,54 +301,4 @@ const styles = StyleSheet.create({
       backgroundColor: 'cyan',
       width: '100%',
     },
-
-
-
-  OptionContainer:{
-      backgroundColor: '#aaa',
-      borderBottomWidth:2.5,
-      borderColor : '#aaa',
-      height:80,
-      flexDirection:'row',
-      alignItems:'center',
-      justifyContent:'flex-end',
-      paddingRight : 30,
-
-    },
-    dropdown: {
-      height: 45,
-      width:120,
-      backgroundColor: '#f0f0f0',
-      borderColor: '#ccc',
-      borderWidth: 1,
-      borderRadius: 0,
-      paddingHorizontal: 10,
-      paddingVertical:0,
-    },
-    dropdownContainer: {
-      width: 120,
-      backgroundColor: '#fff',
-      borderColor: '#ccc',
-      borderWidth: 1,
-      borderRadius:0,
-      paddingVertical:0,
-    },
-    label: {
-      fontSize: 16,
-      color: '#333',
-    },
-    placeholder: {
-      color: '#999',
-    },
-    arrow: {
-      tintColor: '#333',
-    },
-    tick: {
-      tintColor: '#007AFF',
-    },
-    selectedLabel: {
-      fontWeight: 'bold',
-      color: '#007AFF',
-    },
-
-});
+*/
