@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     backgroundColor: '#fff',
     borderColor: '#ccc',
-    borderWidth: 3,
+    borderWidth: 1,
   },
 
   tagContainer_LV2: {
@@ -49,15 +49,20 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     borderRadius: 20,
     alignSelf: 'flex-start',
-    backgroundColor: '#EE0000',
-    borderColor: '#ccc',
-    borderWidth: 3,
+    backgroundColor: '#ff3d00',
+    borderColor: '#ff3d00',
+    borderWidth: 1,
   },
   tagText: {
     color: 'black',
     fontSize: 14,
     fontWeight: 'bold',
   },
+  tagText_LV3:{
+     color: 'white',
+     fontSize: 14,
+     fontWeight: 'bold',
+  }
 });
 
 const levCont = [
@@ -66,6 +71,11 @@ const levCont = [
     styles.tagContainer_LV3,
     ]
 
+const levCont2 = [
+    styles.tagText,
+    styles.tagText,
+    styles.tagText_LV3
+    ]
 
 /*
     tag : index of TAG
@@ -78,7 +88,7 @@ const AllergyTag = ({tag, level}) => {
     const Allergy = typeof tag == 'string'? tag : TAGS[tag];
     return (
     <View style= {levCont[level-1]}>
-        <Text style={styles.tagText}> {Allergy} </Text>
+        <Text style={levCont2[level-1]}> {Allergy} </Text>
     </View>
     )
 }
@@ -102,5 +112,30 @@ const AllergyTagList = ({MaterialList}) => (
     </View>
     )
 
+const AllergyTagList2 = ({maxLen, menuList}) => {
+    console.log("AllergyTagList2", menuList)
+    const h_allergy = [...menuList.H_levAllergy];
+    const l_allergy = [...menuList.L_levAllergy];
+
+
+    const remain = maxLen - h_allergy.length >= 0 ? maxLen-h_allergy.length : 0;
+    return(
+    <View style={styles.tagListContainer}>
+    {(h_allergy.slice(0, 5) || []).map((tag) =>{
+        if(tag == undefined) {
+            console.log("error from AllergyTagList2 :: Hightag is undefined")}
+
+        return <AllergyTag key={`${menuList.menu_id}_${tag}`} tag = {tag} level={3} />;
+          })}
+    {(l_allergy.slice(0, remain) || []).map((tag) =>{
+        if(tag == undefined) {
+            console.log("error from AllergyTagList2 :: Lowtag is undefined")}
+
+        return <AllergyTag key={`${menuList.menu_id}_${tag}`} tag = {tag} level={1} />;
+          })}
+    </View>
+    );
+}
+
 export default AllergyTagList;
-export { AllergyTag, TAGS };
+export { AllergyTagList2, AllergyTag, TAGS };

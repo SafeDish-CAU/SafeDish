@@ -24,11 +24,13 @@ import { UserDataProvider } from './scripts/Data/userData';
 import MainScreen from './screen/MainScreen';
 import MenuList from './screen/MenuList';
 import MenuDetail from './screen/MenuDetail';
+import {StoreScreen} from './screen/StoreScreen';
 
 export type RootStackParamList = {
     main : undefined;
     //store : undefined;
     store : {user: {}};
+    storeS : undefined;
     //menu:undefined;
 };
 
@@ -68,9 +70,10 @@ function App() {
   return (
     <UserDataProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="main">
+        <Stack.Navigator initialRouteName="storeS">
           <Stack.Screen name="main" component={MainScreen} />
           <Stack.Screen name="store" component={MenuList} />
+          <Stack.Screen name="storeS" component={StoreScreen}/>
           {/*}<Stack.Screen name="menu" component={MenuDetail} />*/}
         </Stack.Navigator>
       </NavigationContainer>

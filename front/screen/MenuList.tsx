@@ -26,6 +26,7 @@ let Data = TestData;// 테스트 데이터 대입
 const Origin = [...Data] // 원래값 돌아가는 용도
 let User = TestUserDataObject().getComponent(); //테스트 유저 데이터
 
+
 const maxMaterialNum = 5; // 임시로 5개로 배치, material을 넣는 최대 갯수
 
 const uid = ' ';

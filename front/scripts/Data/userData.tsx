@@ -10,7 +10,7 @@ export function UserDataProvider({children}){
     const [UserData, SetUserData] = useState({
         uid : 1,
         user_name : 'user',
-        user_allergy : [3, 7, 11 , 12, 13, 19],
+        user_allergy : [3,4, 5, 15, 13, 19],
         })
 
     // UserNameSetter : 유저이름세팅
