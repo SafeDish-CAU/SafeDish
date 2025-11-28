@@ -23,7 +23,7 @@ import { UserDataProvider } from './scripts/Data/userData';
 //import RootStack from './screen/RootStack';
 import MainScreen from './screen/MainScreen';
 import MenuList from './screen/MenuList';
-import MenuDetail from './screen/MenuDetail';
+import {MenuDetail} from './screen/MenuDetail';
 import {StoreScreen} from './screen/StoreScreen';
 
 export type RootStackParamList = {
@@ -31,7 +31,7 @@ export type RootStackParamList = {
     //store : undefined;
     store : {user: {}};
     storeS : undefined;
-    //menu:undefined;
+    menu:{menuId: 0};
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -74,7 +74,7 @@ function App() {
           <Stack.Screen name="main" component={MainScreen} />
           <Stack.Screen name="store" component={MenuList} />
           <Stack.Screen name="storeS" component={StoreScreen}/>
-          {/*}<Stack.Screen name="menu" component={MenuDetail} />*/}
+          <Stack.Screen name="menu" component={MenuDetail} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserDataProvider>
