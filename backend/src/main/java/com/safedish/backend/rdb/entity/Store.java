@@ -21,6 +21,26 @@ public class Store {
     @Column(nullable = false)
     private String name;
 
+    @Setter
+    @Column(nullable = false)
+    private String roadAddress;
+
+    @Setter
+    @Column(nullable = false)
+    private String postalCode;
+
+    @Setter
+    @Column(nullable = false)
+    private String detailAddress;
+
+    @Setter
+    @Column(nullable = false)
+    private Double latitude;
+
+    @Setter
+    @Column(nullable = false)
+    private Double longitude;
+
     @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE)
     private List<Menu> menus = new ArrayList<>();
 
@@ -28,8 +48,13 @@ public class Store {
     @JoinColumn(name = "owner_id", nullable = false)
     private Owner owner;
 
-    public Store(String name, Owner owner) {
+    public Store(String name, String roadAddress, String postalCode, String detailAddress, Double latitude, Double longitude, Owner owner) {
         this.name = name;
+        this.roadAddress = roadAddress;
+        this.postalCode = postalCode;
+        this.detailAddress = detailAddress;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.owner = owner;
     }
 }

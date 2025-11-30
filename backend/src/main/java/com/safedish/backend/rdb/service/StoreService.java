@@ -15,14 +15,14 @@ public class StoreService {
     private final OwnerRepository ownerRepository;
     private final StoreRepository storeRepository;
 
-    public Store createStore(String token, String name) throws Exception {
+    public Store createStore(String token, String name, String roadAddress, String postalCode, String detailAddress, Double latitude, Double longitude) throws Exception {
         Optional<Owner> ownerOpt = ownerRepository.findByToken(token);
         if (ownerOpt.isEmpty()) {
             throw new Exception("유효하지 않은 토큰입니다.");
         }
 
         Owner owner = ownerOpt.get();
-        Store store = new Store(name, owner);
+        Store store = new Store(name, roadAddress, postalCode, detailAddress, latitude, longitude, owner);
         storeRepository.save(store);
 
         return store;
@@ -67,5 +67,26 @@ public class StoreService {
         }
 
         return storeOpt.get();
+    }
+
+    public Store editStoreAddress(String token, Long storeId, String roadAddress, String postalCode, String detailAddress, Double latitude, Double longitude) throws Exception {
+        Optional<Store> storeOpt = storeRepository.findById(storeId);
+        if (storeOpt.isEmpty()) {
+            throw new Exception("해당하는 매장이 없습니다.");
+        }
+
+        Store store = storeOpt.get();
+        Owner owner = store.getOwner();
+        if (!owner.getToken().equals(token)) {
+            throw new Exception("유효하지 않은 토큰입니다.");
+        }
+
+        store.setRoadAddress(roadAddress);
+        store.setPostalCode(postalCode);
+        store.setDetailAddress(detailAddress);
+        store.setLatitude(latitude);
+        store.setLongitude(longitude);
+        storeRepository.save(store);
+        return store;
     }
 }

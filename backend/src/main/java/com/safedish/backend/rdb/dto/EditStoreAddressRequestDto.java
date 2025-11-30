@@ -8,16 +8,13 @@ import lombok.Setter;
 @Setter
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CreateStoreRequestDto {
-    @JsonProperty("store_name")
-    private String storeName;
-
+public class EditStoreAddressRequestDto {
     @JsonProperty("store_road_address")
-    private String storeRoadAddress;
+    private String roadAddress;
 
     @JsonProperty("store_postal_code")
-    private String storePostalCode;
+    private String postalCode;
 
     @JsonProperty("store_detail_address")
-    private String storeDetailAddress;
+    private String detailAddress;
 }
