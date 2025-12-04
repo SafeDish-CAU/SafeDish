@@ -1,5 +1,6 @@
 // app/(tabs)/index.tsx
 
+// SafeDish 캡스톤: PIP 장바구니
 import React, { useState } from "react";
 import {
   FlatList,
