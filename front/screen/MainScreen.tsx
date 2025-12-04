@@ -83,7 +83,7 @@ const AllergySetterButton = ({tag, isPressed, pressFunc}) => {
 function MainScreen (){
   const navigation = useNavigation<MainScreenNavigationProp>();
   const {UserData, UserNameSetter, AllergySetter} = useUserData();
-
+  const [storedMenuId, setStoredId] = useState(1);
   useEffect(() => {
     console.log("::MainScreen reRendered::");
     console.log(UserData);
@@ -109,8 +109,8 @@ function MainScreen (){
             </TouchableOpacity>
             <TouchableOpacity
             style= {styles.allergyButton}
-            onPress = {() => navigation.navigate('store'
-                ,{user: userData,}
+            onPress = {() => navigation.navigate('storeS'
+                ,{storeId : 1,}
                 )}
             >
               <Text> 페이지 변경 </Text>

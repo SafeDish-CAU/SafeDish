@@ -113,7 +113,7 @@ const AllergyTagList = ({MaterialList}) => (
     )
 
 const AllergyTagList2 = ({maxLen, menuList}) => {
-    console.log("AllergyTagList2", menuList)
+    //console.log("AllergyTagList2", menuList)
     const h_allergy = [...menuList.H_levAllergy];
     const l_allergy = [...menuList.L_levAllergy];
 

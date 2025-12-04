@@ -11,6 +11,7 @@ export function UserDataProvider({children}){
         uid : 1,
         user_name : 'user',
         user_allergy : [3,4, 5, 15, 13, 19],
+        user_cart : [],
         })
 
     // UserNameSetter : 유저이름세팅
@@ -52,11 +53,61 @@ export function UserDataProvider({children}){
             ...prev,
             user_allergy:result,
             }));
+
+    }
+    /*
+     :::   param   :::
+     cartAdder에 들어가는 데이터 자료형
+
+     {
+         menu_id: int
+         menu_name: string
+         menu_price: int
+
+         optionList: [
+            {
+             option_id: int,
+             option_name: string,
+             option_price: int
+             }
+         ]
+     }
+
+     -> 이 형태로 param을 받고, 바로 userCart에 들어감.
+    */
+    const CartAdder = ({menu}) =>{
+        SetUserData(prev => ({
+            ...prev,
+            user_cart: [...prev.user_cart, menu]
+        }));
+        console.log(UserData.user_cart);
     }
 
+    const RemoveFromCart=(index) =>{
+        SetUserData(prev=>({
+            ...prev,
+            user_cart:[...prev.user_cart.slice(0,index),
+                        ...prev.user_cart.slice(index+1)],
+            }));
+    }
+
+    const RemoveAndRecommend=(index)=>{
+
+        //TODO : RecommandSystem으로 데이터를 보냄
+
+        RemoveFromCart(index)
+        }
+
+
+    const ResetCart=()=>{
+        const len = UserData.user_cart.length;
+        for (let i=0;i<len;i++){
+        RemoveAndRecommend(i);
+        }
+    }
 
     return(
-        <UserContext.Provider value={{UserData, UserNameSetter, AllergySetter}}>
+        <UserContext.Provider value={{UserData, UserNameSetter, AllergySetter, CartAdder}}>
             {children}
         </UserContext.Provider>
     );

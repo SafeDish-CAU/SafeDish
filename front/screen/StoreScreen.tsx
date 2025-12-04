@@ -5,7 +5,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import AllergyTagList, {AllergyTagList2, AllergyTag}  from '../scripts/Data/AllergyTag';
 import {TestData, TestData2, TestUserData, TestUserDataObject} from '../scripts/Data/TestData';
 import {useUserData} from '../scripts/Data/userData';
-import {getStoreMenu} from '../scripts/Data/api';
+import {getStore} from '../scripts/Data/api';
 import { RouteProp, useRoute, useNavigation} from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
@@ -15,7 +15,7 @@ const maxMaterialNum = 5; // 임시로 5개로 배치, material을 넣는 최대
 
 
 
-type StoreRouteProp = RouteProp<RootStackParamList, 'store'>;
+type StoreRouteProp = RouteProp<RootStackParamList, 'storeS'>;
 
 const dataProcess = (baseData, userData) => {
     const baseMenu = [...baseData.menus]
@@ -82,11 +82,14 @@ const dataFilter=(baseList) =>{
 }
 
 
-const Item = ({ DATA }) => {
+const Item = ({ DATA, navigator }) => {
   const listItem = {...DATA};
   //{() => navigation.navigate('menu')}>
   return (
-  <ListItem bottomDivider onPress = {() => console.log("listPressed", DATA.menu_name)}>
+  <ListItem bottomDivider onPress = {() => {
+      console.log("cliked menu, ID:: ", listItem.menu_id);
+      navigator.navigate('menu',{menuId: listItem.menu_id,})}}
+      >
     <ListItem.Content style={{ paddingBottom: 0 }}>
       <ListItem.Title>{DATA.menu_name}</ListItem.Title>
       <ListItem.Subtitle>{`${DATA.menu_price}원`}</ListItem.Subtitle>
@@ -99,11 +102,13 @@ const Item = ({ DATA }) => {
   // Chevron : 리스트 우측의 화살표(Touchable은 아님)
 };
 
-const renderItem=({item}) => (
-  <Item DATA={item} />
-  );
+
 
 export function StoreScreen (){
+    const navigation = useNavigation<MainScreenNavigationProp>();
+    const route = useRoute<StoreRouteProp>();
+
+    const [storeId, setStoreId] = useState(route.params.storeId);
     const [open, setOpen] = useState(false);
     const [sortOption, setSortOption] = useState('title');
     const [items, setItems] = useState([
@@ -115,24 +120,51 @@ export function StoreScreen (){
 
     const [isFiltered, setFiltered] = useState(false);
 
-    const [BaseData, setBaseData] = useState(TestData2);
+    const [BaseData, setBaseData] = useState(undefined);
     const {UserData, UserNameSetter, AllergySetter} = useUserData();
+
+
+
+    useEffect(() => {
+        const load = async() => {
+            const loaded = await getStore(1);
+            setBaseData(loaded);
+        }
+        load();
+        }
+        , []);
+
+
+
+
     //console.log(BaseData);
     // 데이터 재가공
+
+
     const processedData = useMemo(() =>
-        dataProcess(BaseData, UserData),
+        {
+        if(BaseData)
+            return dataProcess(BaseData, UserData);
+        else return undefined;
+        },
         [BaseData, UserData]);
     // 데이터 정렬
     const sortedData = useMemo(() =>
-        dataSort(processedData, sortOption),
+        {
+            if(processedData) return dataSort(processedData, sortOption);
+            else return undefined;
+        },
         [processedData, sortOption]);
     // 데이터 필터링
     const filteredData = useMemo(() =>
         {
+        if(BaseData){
         console.log('filtered');
         return (isFiltered?
         dataFilter(sortedData):
         sortedData);
+        }
+        else return undefined;
 
         }, [sortedData, isFiltered]);
 
@@ -140,6 +172,13 @@ export function StoreScreen (){
     //console.log(sortedData)
     //console.log(filteredData)
     //console.log(Array.isArray(filteredData))
+    const renderItem=({item}) => (
+      <Item DATA={item}
+          navigator = {navigation} />
+      );
+
+//데이터 미로딩시 렌더링 x
+    if(BaseData==undefined) return; //(<ActivityIndicator />);
 
     return(
       <SafeAreaView style={styles.container}>

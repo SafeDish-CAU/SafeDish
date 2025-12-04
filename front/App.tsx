@@ -30,7 +30,7 @@ export type RootStackParamList = {
     main : undefined;
     //store : undefined;
     store : {user: {}};
-    storeS : undefined;
+    storeS : {storeId: 0};
     menu:{menuId: 0};
 };
 
@@ -70,9 +70,8 @@ function App() {
   return (
     <UserDataProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="storeS">
+        <Stack.Navigator initialRouteName="main">
           <Stack.Screen name="main" component={MainScreen} />
-          <Stack.Screen name="store" component={MenuList} />
           <Stack.Screen name="storeS" component={StoreScreen}/>
           <Stack.Screen name="menu" component={MenuDetail} />
         </Stack.Navigator>
