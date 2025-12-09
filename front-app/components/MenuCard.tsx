@@ -1,7 +1,7 @@
 import { ListItem } from '@rneui/themed';
 import AllergyTags from './AllergyTags';
 
-function MenuCard({ menu }: {
+function MenuCard({ menu, onPress }: {
   menu: {
     id: number;
     name: string;
@@ -11,9 +11,10 @@ function MenuCard({ menu }: {
       level: number;
     }>;
   };
+  onPress: (menuId: number) => void;
 }) {
   return (
-    <ListItem bottomDivider onPress={() => console.log('list pressed', menu.name)}>
+    <ListItem bottomDivider onPress={() => onPress(menu.id)}>
       <ListItem.Content style={{ paddingBottom: 0 }}>
         <ListItem.Title>{menu.name}</ListItem.Title>
         <ListItem.Subtitle>{`${menu.price}₩`}</ListItem.Subtitle>

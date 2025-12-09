@@ -8,6 +8,7 @@ import { useUser } from '../providers/UserProvider';
 import { useCart } from '../providers/CartProvider';
 import { getStore, GetStoreResponse } from '../api';
 import MenuCard from '../components/MenuCard';
+import AllergyTags from '../components/AllergyTags';
 
 type AllergyData = {
   code: number;
@@ -36,6 +37,10 @@ function StoreScreen({ route, navigation }: NativeStackScreenProps<RootStackPara
   const [isFiltered, setIsFiltered] = useState(false);
   const userCtx = useUser();
   const cartCtx = useCart();
+
+  const userData = userCtx?.user?.allergies
+    ?.map((value, index) => (value ? { code: index, level: 0 } : undefined))
+    .filter((value) => !!value) ?? [];
 
   const cartCount = cartCtx?.cart && cartCtx.cart.storeId === storeId
     ? cartCtx.cart.items.length
@@ -73,7 +78,7 @@ function StoreScreen({ route, navigation }: NativeStackScreenProps<RootStackPara
         allergyLevels[code] = 2;
       }
 
-      for (const group of menu.optionGroups) {
+      for (const group of menu.options) {
         for (const item of group.items) {
           for (const elem of item.allergies) {
             const code = elem.code;
@@ -112,6 +117,16 @@ function StoreScreen({ route, navigation }: NativeStackScreenProps<RootStackPara
     }
 
     return storeData;
+  };
+
+  const handleMenuPress = (menuId: number) => {
+    if (store) {
+      navigation.navigate('Menu', {
+        storeId: store.id,
+        storeName: store.name,
+        menuId,
+      });
+    }
   };
 
   useEffect(() => {
@@ -182,25 +197,53 @@ function StoreScreen({ route, navigation }: NativeStackScreenProps<RootStackPara
     );
   }
 
+  const menusForDisplay = isFiltered
+    ? store.menus.filter(menu =>
+      !menu.allergies.some(a => a.level === 2)
+    )
+    : store.menus;
+
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1, padding: 16 }}>
-        <View>
+        <View style={styles.filterRow}>
+          <View style={styles.allergyInfoContainer}>
+            <View style={styles.allergyHeaderRow}>
+              <Text style={styles.allergyInfoLabel}>내 알레르기 정보</Text>
+
+              <View style={styles.legendContainer}>
+                <View style={styles.legendItem}>
+                  <View style={[styles.legendColorBox, styles.legendColorMain]} />
+                  <Text style={styles.legendText}>메인에 포함</Text>
+                </View>
+
+                <View style={styles.legendItem}>
+                  <View style={[styles.legendColorBox, styles.legendColorOption]} />
+                  <Text style={styles.legendText}>옵션에 포함</Text>
+                </View>
+              </View>
+            </View>
+
+            <View style={styles.filterListWrapper}>
+              <AllergyTags allergies={userData} paddingTop={0} />
+            </View>
+          </View>
+
           <CheckBox
             checked={isFiltered}
             onPress={() => setIsFiltered(!isFiltered)}
             title='위험음식 제거'
-            iconType='material-community'
+            iconType='material-design'
             checkedIcon='checkbox-marked'
             uncheckedIcon='checkbox-blank-outline'
             checkedColor='#747999'
-            containerStyle={{ backgroundColor: 'transparent', borderWidth: 0, padding: 0 }}
-            size={32}
+            containerStyle={styles.filterCheckboxContainer}
+            size={24}
           />
         </View>
         <FlatList
-          data={store.menus}
-          renderItem={({ item }) => <MenuCard menu={item} />}
+          data={menusForDisplay}
+          renderItem={({ item }) => <MenuCard menu={item} onPress={handleMenuPress} />}
           keyExtractor={(item) => String(item.id)}
           showsVerticalScrollIndicator={false}
           style={{ flex: 1 }}
@@ -221,6 +264,69 @@ function StoreScreen({ route, navigation }: NativeStackScreenProps<RootStackPara
 }
 
 const styles = StyleSheet.create({
+  filterRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    marginHorizontal: -16,
+    paddingHorizontal: 16,
+    paddingTop: 8,
+    paddingBottom: 4,
+    backgroundColor: '#f5f5f5',
+    marginBottom: 8,
+  },
+  allergyInfoContainer: {
+    flex: 1,
+  },
+  allergyHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  allergyInfoLabel: {
+    fontSize: 12,
+    color: '#555',
+    fontWeight: '700',
+    marginRight: 8,
+  },
+  filterListWrapper: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+  },
+  legendContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  legendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 8,
+  },
+  legendColorBox: {
+    width: 10,
+    height: 10,
+    borderRadius: 2,
+    marginRight: 4,
+  },
+  legendColorMain: {
+    backgroundColor: '#ff5252',
+  },
+  legendColorOption: {
+    backgroundColor: '#ffca28',
+  },
+  legendText: {
+    fontSize: 11,
+    color: '#444',
+  },
+  filterCheckboxContainer: {
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    padding: 0,
+    margin: 0,
+    marginTop: 18,
+    marginLeft: 4,
+  },
   bottomBar: {
     padding: 16,
     borderTopWidth: 1,
@@ -229,7 +335,6 @@ const styles = StyleSheet.create({
   },
   cartIconContainer: {
     marginRight: 12,
-    marginTop: 16,
     paddingVertical: 4,
     paddingHorizontal: 4,
   },
@@ -250,5 +355,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
 
 export default StoreScreen;

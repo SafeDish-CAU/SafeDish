@@ -1,4 +1,4 @@
-import { Alert, View, ScrollView, Text, StyleSheet } from 'react-native';
+import { View, ScrollView, Button, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { useCart } from '../providers/CartProvider';
@@ -8,8 +8,30 @@ import CartCard from '../components/CartCard';
 function CartScreen({ route, navigation }: NativeStackScreenProps<RootStackParamList, 'Cart'>) {
   const cartCtx = useCart();
 
+  const totalPrice =
+    cartCtx?.cart?.items.reduce((sum, cartItem) => {
+      const basePrice = cartItem.menu.price ?? 0;
+
+      const optionsPrice = (cartItem.menu.options ?? []).reduce((groupSum, group) => {
+        const selectedItems = group.items.filter(i => i.selected);
+        const groupPrice = selectedItems.reduce((itemSum, item) => itemSum + (item.price ?? 0), 0);
+        return groupSum + groupPrice;
+      }, 0);
+
+      const itemTotal = (basePrice + optionsPrice) * (cartItem.quantity ?? 1);
+
+      return sum + itemTotal;
+    }, 0) ?? 0;
+
   const handleChangeOption = (cartIndex: number) => {
-    Alert.alert('옵션 변경', '옵션 변경 화면으로 이동하면 됩니다(테스트).');
+    if (cartCtx?.cart && cartIndex < cartCtx.cart.items.length) {
+      navigation.navigate('Menu', {
+        storeId: cartCtx.cart.storeId,
+        storeName: cartCtx.cart.storeName,
+        menuId: cartCtx.cart.items[cartIndex].menu.id,
+        cartIdx: cartIndex,
+      });
+    }
   };
 
   const handleIncrease = (cartIndex: number) => {
@@ -64,7 +86,26 @@ function CartScreen({ route, navigation }: NativeStackScreenProps<RootStackParam
             onRemove={handleRemove}
           />
         ))}
+        <TouchableOpacity
+          style={styles.addMenuButton}
+          onPress={() => navigation.navigate('Store', { storeId: cartCtx.cart!.storeId })}
+        >
+          <Text style={styles.addMenuText}>+ 메뉴 추가</Text>
+        </TouchableOpacity>
       </ScrollView>
+      <View style={styles.bottomBar}>
+        <Text style={styles.totalPriceText}>
+          합계 {totalPrice.toLocaleString()}원
+        </Text>
+      </View>
+      <View style={styles.addBar}>
+        <Button
+          title='주문하러 가기'
+          onPress={() => {
+            navigation.navigate('Memo');
+          }}
+        />
+      </View>
     </View>
   );
 }
@@ -90,6 +131,41 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     color: '#222',
+  },
+  addMenuButton: {
+    marginTop: 12,
+    marginHorizontal: 16,
+    paddingVertical: 14,
+    borderRadius: 8,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: '#e0e0e0',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  addMenuText: {
+    fontSize: 14,
+    color: '#333',
+    fontWeight: '500',
+  },
+  bottomBar: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: '#ddd',
+    backgroundColor: '#fff',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  totalPriceText: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#111',
+    textAlign: 'right',
+  },
+  addBar: {
+    padding: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+    backgroundColor: '#fff',
   },
 });
 

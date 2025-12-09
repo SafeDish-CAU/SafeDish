@@ -36,7 +36,7 @@ export type GetStoreResponse = {
       code: number;
       description: string;
     }>;
-    optionGroups: Array<{
+    options: Array<{
       id: number;
       name: string;
       minSelected: number;
@@ -79,7 +79,7 @@ export async function getStore(storeId: number): Promise<GetStoreResponse | unde
         name: '알레르기 없는 비빔밥',
         price: 9000,
         allergies: [],
-        optionGroups: [
+        options: [
           {
             id: 1001,
             name: '곁들임 반찬 선택',
@@ -113,7 +113,7 @@ export async function getStore(storeId: number): Promise<GetStoreResponse | unde
           { code: 3, description: '밀(글루텐)' },
           { code: 4, description: '돼지고기' },
         ],
-        optionGroups: [
+        options: [
           {
             id: 1002,
             name: '소스 선택',
@@ -152,7 +152,7 @@ export type GetMenuResponse = {
     code: number;
     description: string;
   }>;
-  optionGroups: Array<{
+  options: Array<{
     id: number;
     name: string;
     minSelected: number;
@@ -193,7 +193,7 @@ export async function getMenu(menuId: number): Promise<GetMenuResponse | undefin
       { code: 0, description: '난류' },
       { code: 1, description: '우유' },
     ],
-    optionGroups: [
+    options: [
       {
         id: 101,
         name: '사이드 선택',

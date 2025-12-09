@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
-import { Alert, ActivityIndicator, View, ScrollView, Text, StyleSheet } from 'react-native';
+import { Alert, Button, ActivityIndicator, View, ScrollView, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useUser } from '../providers/UserProvider';
 import { useCart } from '../providers/CartProvider';
@@ -33,7 +33,7 @@ type MenuData = {
   name: string;
   price: number;
   allergies: AllergyData[];
-  optionGroups: OptionGroupData[];
+  options: OptionGroupData[];
 };
 
 function MenuScreen({ route, navigation }: NativeStackScreenProps<RootStackParamList, 'Menu'>) {
@@ -43,9 +43,18 @@ function MenuScreen({ route, navigation }: NativeStackScreenProps<RootStackParam
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | undefined>(undefined);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [applying, setApplying] = useState(false);
   const userCtx = useUser();
   const cartCtx = useCart();
   const isEditMode = cartIdx && cartCtx?.cart && cartIdx < cartCtx.cart.items.length;
+
+  let initQuantity = 1;
+  if (cartIdx != null && cartCtx?.cart && storeId == cartCtx.cart.storeId && cartIdx < cartCtx.cart.items.length) {
+    initQuantity = cartCtx.cart.items[cartIdx].quantity;
+  }
+  const [quantity, setQuantity] = useState(initQuantity);
+
+  const finalPrice = totalPrice * quantity;
 
   const parseData = (resData: GetMenuResponse) => {
     const userAllergies = Array(22).fill(0);
@@ -60,7 +69,7 @@ function MenuScreen({ route, navigation }: NativeStackScreenProps<RootStackParam
       name: resData.name,
       price: resData.price,
       allergies: [],
-      optionGroups: [],
+      options: [],
     };
 
     for (const elem of resData.allergies) {
@@ -73,7 +82,7 @@ function MenuScreen({ route, navigation }: NativeStackScreenProps<RootStackParam
       }
     }
 
-    for (const group of resData.optionGroups) {
+    for (const group of resData.options) {
       const groupData: OptionGroupData = {
         id: group.id,
         name: group.name,
@@ -116,7 +125,7 @@ function MenuScreen({ route, navigation }: NativeStackScreenProps<RootStackParam
         groupData.items.push(itemData);
       });
 
-      menuData.optionGroups.push(groupData);
+      menuData.options.push(groupData);
     }
 
     return menuData;
@@ -126,7 +135,7 @@ function MenuScreen({ route, navigation }: NativeStackScreenProps<RootStackParam
     setMenu(value => {
       if (!value) return value;
 
-      const newGroups = value.optionGroups.map((group, gi) => {
+      const newGroups = value.options.map((group, gi) => {
         if (gi != groupIndex) return group;
         if (group.items.length <= itemIndex) return group;
 
@@ -154,8 +163,60 @@ function MenuScreen({ route, navigation }: NativeStackScreenProps<RootStackParam
         return { ...group, items };
       });
 
-      return { ...value, optionGroups: newGroups };
+      return { ...value, options: newGroups };
     });
+  };
+
+  const handleApply = () => {
+    if (!menu) return;
+    if (applying) return;
+
+    setApplying(true);
+    try {
+      const newGroups = [];
+      for (const group of menu.options) {
+        const newItems = [];
+        for (const item of group.items) {
+          const newItem = {
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            selected: item.selected,
+          };
+
+          newItems.push(newItem);
+        }
+
+        const newGroup = {
+          id: group.id,
+          name: group.name,
+          minSelected: group.minSelected,
+          maxSelected: group.maxSelected,
+          items: [...newItems],
+        };
+
+        newGroups.push(newGroup);
+      }
+
+      const newMenu = {
+        quantity: quantity,
+        menu: {
+          id: menu.id,
+          name: menu.name,
+          price: menu.price,
+          options: [...newGroups],
+        }
+      };
+
+      if (cartIdx) {
+        cartCtx?.editAt(cartIdx, newMenu);
+      } else {
+        cartCtx?.push(storeId, storeName, newMenu);
+      }
+      navigation.navigate('Store', { storeId });
+    } finally {
+      setApplying(false);
+    }
   };
 
   useEffect(() => {
@@ -181,7 +242,7 @@ function MenuScreen({ route, navigation }: NativeStackScreenProps<RootStackParam
 
   useEffect(() => {
     setTotalPrice((menu?.price ?? 0) +
-      (menu?.optionGroups ?? []).reduce((sum, group) => {
+      (menu?.options ?? []).reduce((sum, group) => {
         return (
           sum +
           group.items
@@ -229,7 +290,7 @@ function MenuScreen({ route, navigation }: NativeStackScreenProps<RootStackParam
           <Text style={styles.menuPrice}>{menu.price.toLocaleString()}원</Text>
         </View>
         <View style={styles.divider} />
-        {menu.optionGroups.map((group, index) => (
+        {menu.options.map((group, index) => (
           <View key={group.id} style={styles.groupSpacing}>
             <OptionCard
               groupIndex={index}
@@ -245,9 +306,35 @@ function MenuScreen({ route, navigation }: NativeStackScreenProps<RootStackParam
         <View style={{ height: 80 }} />
       </ScrollView>
       <View style={styles.bottomBar}>
+        <View style={styles.quantityRow}>
+          <Text style={styles.quantityLabel}>수량</Text>
+          <View style={styles.quantityBox}>
+            <TouchableOpacity
+              style={styles.qtyButton}
+              onPress={() => setQuantity(q => (q > 1 ? q - 1 : 1))}
+            >
+              <Text style={styles.qtyButtonText}>-</Text>
+            </TouchableOpacity>
+
+            <Text style={styles.quantityText}>{quantity}개</Text>
+
+            <TouchableOpacity
+              style={styles.qtyButton}
+              onPress={() => setQuantity(q => q + 1)}
+            >
+              <Text style={styles.qtyButtonText}>+</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
         <Text style={styles.totalPriceText}>
-          합계 {totalPrice.toLocaleString()}원
+          합계 {finalPrice.toLocaleString()}원
         </Text>
+      </View>
+      <View style={styles.addBar}>
+        <Button
+          title='장바구니 담기'
+          onPress={handleApply}
+        />
       </View>
     </View>
   );
@@ -286,12 +373,45 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   bottomBar: {
-    height: 56,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: '#ddd',
     backgroundColor: '#fff',
-    justifyContent: 'center',
     paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  quantityRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+  },
+  quantityLabel: {
+    fontSize: 14,
+    color: '#333',
+    fontWeight: '500',
+  },
+  quantityBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    paddingHorizontal: 8,
+    height: 32,
+    backgroundColor: '#fff',
+  },
+  qtyButton: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+  },
+  qtyButtonText: {
+    fontSize: 18,
+    color: '#333',
+  },
+  quantityText: {
+    fontSize: 14,
+    fontWeight: '500',
+    marginHorizontal: 4,
   },
   totalPriceText: {
     fontSize: 16,
@@ -311,6 +431,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#555',
   },
+  addBar: {
+    padding: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+    backgroundColor: '#fff',
+  },
 });
+
 
 export default MenuScreen;

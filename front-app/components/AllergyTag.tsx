@@ -6,8 +6,8 @@ function AllergyTag({ code, level }: {
   level: number;
 }) {
   const text = ALLERGY_TEXT_LIST[code];
-  const containerStyle = (level == 1 ? styles.tagContainerWarn : styles.tagContainerFatal);
-  const textStyle = (level == 1 ? styles.tagTextWarn : styles.tagTextFatal);
+  const containerStyle = (level == 0 ? styles.tagContainerInfo : level == 1 ? styles.tagContainerWarn : styles.tagContainerFatal);
+  const textStyle = (level == 0 ? styles.tagTextInfo : level == 1 ? styles.tagTextWarn : styles.tagTextFatal);
 
   return (
     <View style={[styles.tagContainerBase, containerStyle]}>
@@ -26,6 +26,10 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     borderWidth: 1,
   },
+  tagContainerInfo: {
+    backgroundColor: '#ffffff',
+    borderColor: '#000',
+  },
   tagContainerWarn: {
     backgroundColor: '#ffd700',
     borderColor: '#ffd700',
@@ -42,6 +46,9 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   tagTextFatal: {
+    color: 'black',
+  },
+  tagTextInfo: {
     color: 'black',
   },
 });
