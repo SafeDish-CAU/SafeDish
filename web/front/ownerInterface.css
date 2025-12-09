@@ -1,0 +1,336 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4fb;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+.flexScreen{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width:90%;
+    justify-content: center;
+    align-items: center;
+    display:flex;
+}
+
+#sideBar{
+    display: flex;
+    width:200px;
+    height:100%;
+    flex-direction: column;
+    background-color: #021e38fb;
+    padding: 20px;
+    padding-top:20px;
+}
+
+.storeListSide{
+    overflow:auto;
+    display: flex;
+    flex:1;
+    width: 40%;
+    flex-direction:column;
+    padding:10px;
+    background-color: #f4f4f4fb;
+}
+
+#storeListContainer{
+    display:flex;
+    margin-right:20px;
+    flex-direction:column;
+    background-color: #f4f4f4fb;
+}
+
+
+#itemsContainer{
+    display: flex;
+    flex:1;
+    height:100%;
+    flex-direction:row;
+    margin:5px;
+    
+}
+
+#menuListSide{
+    overflow:auto;
+    display: flex;
+    flex:1;
+    padding:10px;
+    background-color: #f4f4f4fb;
+    flex-direction:column;
+    opacity:0;
+}
+
+#menuListSide.active{
+    opacity:1;
+}
+
+#menuListContainer{
+    display: flex;
+    flex-direction:column;
+    flex:1;
+    width:100%;
+    background-color: #f4f4f4fb;
+}
+
+.submitButton{
+    padding: 10px;
+    border: none;
+    background-color: #ff7951;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.1s ease;
+}
+.submitButton:hover {
+    background-color: #ff7951;
+}
+.submitButton:active {
+    background-color: #d35c37;   
+}       
+
+
+.storeInformContainer{
+    box-sizing: border-box;
+    width:100%;
+    min-height: 125px;
+    border-radius: 22px;
+    background-color: #ffffff;
+    margin-bottom: 5px;
+    padding:20px;
+    border:2px solid #acacac;
+}
+
+.menuInformContainer{
+    box-sizing: border-box;
+    padding:20px;
+    width:100%;
+    min-height: 100px;
+    border-radius: 22px;
+    background-color: #ffffff;
+    margin-bottom: 10px;
+    border:2px solid #acacac;
+}
+
+.menu-option{
+    display:flex;
+    flex-direction: column;
+    margin-bottom:5px;
+}
+.optionWrapper{
+    display: none;
+}
+
+.optionInformContainer{
+    display:flex;
+    flex-direction:row;
+    box-sizing: border-box;
+    padding:10px;
+    width:90%;
+    margin-left:10%;
+    min-height: 50px;
+    border-radius: 22px;
+    background-color: #ffffff;
+    margin-bottom: 3px;
+}
+
+.optionWrapper.active{
+    display: flex;
+    flex-direction:column;
+}
+
+
+
+
+.addInfoButton{
+    display:flex;
+    width:70px;
+    height:70px;
+
+    border-radius:30px;
+    background-color: #ffffff;
+    margin-bottom: 5px;
+
+    transition: 0.1s ease;
+    text-align:center;
+    justify-content: center;
+    align-items:center;
+    border-style:solid;
+    border-color:#acacac;
+    border-width:3px;
+    color:#000000;
+    font-size:60px;
+}
+.addInfoButton:hover{
+    background-color:#aaaaaa;
+}
+.addInfoButton:active{
+    background-color: #9c9c9c;
+}
+
+/* 🔹 모달 백드롭(배경 블러 포함) */
+.modalWrapper {
+    position: fixed;
+    inset: 0; 
+    
+    background: rgba(0, 0, 0, 0.4); /* 어둡게 투명 레이어 */
+    backdrop-filter: blur(8px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.25s ease;
+}
+
+/* 🔹 모달 활성화 */
+.modalWrapper.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* 🔹 가운데 뜨는 모달 박스 */
+.modalBox {
+    background: white;
+    padding: 40px;
+    width: 600px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+
+    transform: translateY(20px);
+    transition: 0.25s ease;
+}
+
+/* modal open 시 box도 부드럽게 올라오는 효과 */
+.modalWrapper.active.modalBox {
+    transform: translateY(0);
+}
+
+
+.input-group {
+    margin-bottom: 15px;
+    flex-direction: column;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    text-align: flex-start;
+}
+
+.input-group input {
+    flex:1;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.select-group{
+    display:flex;
+    flex-direction:column;
+    margin-bottom: 15px;
+}
+
+.select-group label{
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    text-align: flex-start;
+}
+
+.select-group select{
+    box-sizing:border-box;
+    margin-right:20px;
+    flex:1;
+}
+
+
+
+.AllergyTagButtonContainer{
+    display:flex;
+    margin-right:4px;
+    margin-bottom:10px;
+}
+
+.AllergyTagButton{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    font-size:13px;
+    height:25px;
+    border-radius:7px;
+    border-color:#dfdfdf;
+    border-width:2px;
+    border-style:solid;
+    background-color:#ffffff;
+    color:#000000;
+    transition: 0.25s ease;
+}
+
+.AllergyTagButton:hover{
+    background-color:#d6d6d6;
+}
+
+.AllergyTagButton:active{
+    background-color:#c5c5c5;
+}
+
+.AllergyTagButton.pressed{
+    border-color: #ff7146;
+    background-color:#ff7146;
+    color:#ffffff;
+}
+
+.AllergyTagButton.pressed:hover{
+    background-color:#c45635;
+}
+
+.AllergyTagButton.pressed:active{
+    background-color:#b65031;
+}
+
+.AllergyTagButton label{
+    font-size: 14px;
+    text-align: flex-start;
+}
+
+.allergyTagsContainer{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:6px;
+    width:85%;
+
+}
+
+.allergyTagsContainer label{
+    font-size:14px;
+}
+
+.optionAddButton{
+    font-size:25px;
+    height:40px;
+    width:40px;
+    border-radius:7px;
+    border-color:#acacac;
+    border-width:2px;
+    border-style:solid;
+    background-color:#ffffff;
+    align-items: center;
+    justify-content: center;
+    display:none;
+    margin-left:90%
+}
+
+.optionAddButton.active{
+    display:flex;
+}
