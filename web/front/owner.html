@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./ownerInterface.css">
+    
+    <title>safedish_Owner</title>
+</head>
+<body>
+    
+    <div class="flexScreen">
+        <div id="sideBar">
+
+        </div>
+        <div id="itemsContainer">
+            <div class="storeListSide">
+                <h1>가게 목록</h1>
+                <div>
+                    <div id="storeListContainer" class="scroller"></div>
+                    <div id = "addStoreButton" class="addInfoButton">+</div>
+                </div>
+            </div>
+            <div id="menuListSide">
+                <h1>메뉴 목록</h1>
+                <div>
+                <div id="menuListContainer">
+                    <div class="menu-option">
+                        <div class="menuInformContainer"></div>      
+                        <div class="optionInformContainer"></div>
+                    </div>  
+                </div>
+                <div id = "addMenuButton" class="addInfoButton">+</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="modalWrapper" class="modalWrapper">
+        
+        <div class="modalBox">
+            
+            <h2 style="text-align: center;"> 가게 추가 </h2>
+
+            <div style="display:flex; flex-direction: row; width:55%;">
+                <div class="input-group" style="display:flex; width:60%; padding-right:5px; margin-right:20px;">
+                    <label for="storeName">가게 이름</label>
+                    <input type="text" id="storeName" placeholder="" required>
+                </div>
+
+                <div class="input-group" style="display:flex; width:34%;">
+                    <label for="storeID">가게 ID</label>
+                    <input type="number" id="storeID" placeholder="" required>
+                </div>
+            </div>
+            <div style="display:flex; flex-direction: row;">
+                <div class="input-group" style="flex-direction:column; display:flex; width:55%; margin-right:20px;">
+                    <label for="roadAddress">도로명 주소</label>
+                    <input type="text" id="roadAddress" placeholder="도로명 주소" required>
+                </div>
+                
+                <div class="input-group" style="flex-direction:column; display:flex; flex:1;">
+                    <label for="postalCode">우편번호</label>
+                    <input type="number" id="postalCode" placeholder="" required>
+                </div>
+            </div>
+            <div style="display:flex; flex-direction: row;">
+                <div class="input-group" style="flex-direction:column; display:flex; width:55%; margin-right: 20px;">
+                    <label for="detailAdd">상세 주소</label>
+                    <input type="text" id="detailAdd" placeholder="" required>
+                </div>
+                
+                <div class= "select-group">
+                    <select id="platform">
+                            <option value="baemin">배달의 민족</option>
+                            <option value="coupang">쿠팡 이츠</option>
+                    </select>
+                </div>
+                <div style="display: flex; flex-direction: column; flex:1; padding-top:20px">
+                    <button type="submit" id="submit Store Button" class="submitButton"style=" width:80%; height:80%; align-items: center; justify-content: center;">등록</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="menuModalWrapper" class="modalWrapper">
+        <div class="modalBox">
+            <h2 style="text-align: center; margin-bottom: 20px;"> 메뉴 추가 </h2>
+            <div style="display:flex; flex-direction:row; flex:1; justify-content:center;">
+                <div style="flex-direction:column; width:40%;padding-left:60px;">
+                    <div class="input-group" style="display:flex;width:70%; padding-right:5px; margin-right:20px;">
+                        <label for="menuName">메뉴 이름</label>
+                        <input type="text" id="menuName" placeholder="" required>
+                    </div>
+                    <div class="input-group" style="display:flex;width:70%;padding-right:5px; margin-right:20px;">
+                        <label for="menuPrice">메뉴 가격</label>
+                        <input type="number" id="menuPrice" placeholder="" required>
+                    </div>
+                    <div style="display:flex; flex-direction:column; height:120px; padding-right:50px;">
+                        <button id="menuAutoAllergySelectButton" class="submitButton"style=" margin-bottom:10px; padding:4px; width:60%; height:40%; font-size:12px; align-items:center; justify-content: center;">알레르기 유발물질 자동등록</button>
+                        <text style="font-size: 13px; color:#999999;">
+                            자동등록 기능을 사용할 경우
+                            실제와 다른 정보가 입력될 수 있습니다.
+                        </text>
+                    </div>
+
+                </div>
+                <div style="flex:1;"></div>
+                <div style="flex-direction:row; width:50%; align-items:center;">
+                    <label style="font-size:14px">알러지 유발 재료 설정</label>
+                    <div id= "menuAllergySelector" class="allergyTagsContainer" style="margin-bottom: 20px;">
+                        <div class="AllergyTagButton">알류</div>
+                        <div class="AllergyTagButton">우유</div>
+                        <div class="AllergyTagButton">메밀</div>
+                        <div class="AllergyTagButton">땅콩</div>
+                        <div class="AllergyTagButton">대두</div>
+                        <div class="AllergyTagButton">밀</div>
+                        <div class="AllergyTagButton">고등어</div>
+                        <div class="AllergyTagButton">게</div>
+                        <div class="AllergyTagButton">새우</div>
+                        <div class="AllergyTagButton">돼지고기</div>
+                        <div class="AllergyTagButton">복숭아</div>
+                        <div class="AllergyTagButton">토마토</div>
+                        <div class="AllergyTagButton">아황산류</div>
+                        <div class="AllergyTagButton">호두</div>
+                        <div class="AllergyTagButton">닭고기</div>
+                        <div class="AllergyTagButton">쇠고기</div>
+                        <div class="AllergyTagButton">오징어</div>
+                        <div class="AllergyTagButton">굴</div>
+                        <div class="AllergyTagButton">전복</div>
+                        <div class="AllergyTagButton">홍합</div>
+                        <div class="AllergyTagButton">조개류</div>
+                        <div class="AllergyTagButton">잣</div>
+
+                    </div>
+
+                    <div style="display:flex; flex-direction:column; height:50px; padding-right:50px;align-items: flex-end;">
+                        <button type="submit" id="submit Menu Button" class="submitButton"style=" width:40%; height:80%;  align-items:center; justify-content: center;">메뉴 등록</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./owner.js"></script>
+</body>
