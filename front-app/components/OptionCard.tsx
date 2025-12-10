@@ -93,7 +93,7 @@ function OptionCard({
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     paddingHorizontal: 16,
     paddingVertical: 12,
   },
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#222',
+    color: '#222222',
   },
   headerLimit: {
     marginTop: 2,
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 12,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#f4f4f5',
   },
   headerOptText: {
     fontSize: 11,
@@ -127,11 +127,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 12,
-    backgroundColor: '#111',
+    backgroundColor: '#ff4b26',
   },
   headerReqText: {
     fontSize: 11,
     color: '#fff',
+    fontWeight: '600',
   },
   listWrapper: {
     marginTop: 4,
@@ -139,42 +140,46 @@ const styles = StyleSheet.create({
   itemRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
     paddingVertical: 10,
   },
   itemRowDivider: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#e5e5e5',
+    borderBottomColor: '#e0e0e0',
   },
   itemLeft: {
     flexDirection: 'row',
     alignItems: 'center',
     flexShrink: 1,
+    flex: 1.2,
   },
   checkbox: {
     width: 20,
     height: 20,
     borderRadius: 4,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#e0e0e0',
     marginRight: 8,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
   },
   checkboxSelected: {
-    borderColor: '#00d084',
-    backgroundColor: '#00d084',
+    borderColor: '#e03614',
+    backgroundColor: '#ff4b26',
   },
   itemName: {
     fontSize: 14,
-    color: '#333',
+    color: '#222222',
+  },
+  itemCenter: {
+    flex: 1.6,
+    paddingHorizontal: 8,
   },
   itemPrice: {
-    marginLeft: 12,
-    fontSize: 14,
+    marginLeft: 8,
+    fontSize: 13,
     fontWeight: '600',
-    color: '#111',
+    color: '#e03614',
   },
 });
 

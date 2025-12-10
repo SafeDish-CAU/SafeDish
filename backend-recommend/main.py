@@ -9,7 +9,7 @@ from database import Database
 
 
 class UserCreateRequest(BaseModel):
-    id: int
+    id: str
     latitude: float
     longitude: float
 
@@ -28,13 +28,13 @@ class MenuCreateRequest(BaseModel):
 
 
 class OrderCreateRequest(BaseModel):
-    user_id: int
+    user_id: str
     menu_id: int
     quantity: int
 
 
 class RecommendRequest(BaseModel):
-    user_id: int
+    user_id: str
     allergy: int
 
 

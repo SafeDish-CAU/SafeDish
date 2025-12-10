@@ -7,6 +7,7 @@ import com.safedish.backend.rdb.dto.CreateStoreResponseDto;
 import com.safedish.backend.rdb.dto.ReadStoreResponseDto;
 import com.safedish.backend.rdb.entity.Store;
 import com.safedish.backend.rdb.service.StoreService;
+import com.safedish.backend.recommend.service.RecommendService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class StoreController {
     private final StoreService storeService;
     private final KakaoService kakaoService;
+    private final RecommendService recommendService;
 
     @PostMapping({"", "/"})
     public ResponseEntity<?> createStore(@RequestHeader("Authorization") String token, @RequestBody CreateStoreRequestDto reqDto) {
@@ -33,8 +35,15 @@ public class StoreController {
         }
 
         try {
-            Store store = storeService.createStore(token, reqDto.getName(), reqDto.getRoadAddress(), reqDto.getPostalCode(), reqDto.getDetailAddress(), latitude, longitude);
-            CreateStoreResponseDto resDto = new CreateStoreResponseDto(store.getId(), store.getName());
+            Store store = storeService.createStore(token, reqDto.getName(), reqDto.getType(), reqDto.getRoadAddress(), reqDto.getPostalCode(), reqDto.getDetailAddress(), latitude, longitude);
+
+            try {
+                recommendService.createStore(store.getId(), store.getLatitude(), store.getLongitude());
+            } catch (Exception e) {
+                System.out.println("추천서버 Menu 생성 실패");
+            }
+
+            CreateStoreResponseDto resDto = new CreateStoreResponseDto(store.getId(), store.getName(), store.getType());
             return ResponseEntity.ok(resDto);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

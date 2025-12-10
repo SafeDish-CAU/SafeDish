@@ -12,6 +12,9 @@ public class CreateStoreRequestDto {
     @JsonProperty("name")
     private String name;
 
+    @JsonProperty("type")
+    private Long type;
+
     @JsonProperty("road_address")
     private String roadAddress;
 

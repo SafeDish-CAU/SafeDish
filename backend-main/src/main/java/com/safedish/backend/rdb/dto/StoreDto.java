@@ -18,6 +18,9 @@ public class StoreDto {
     @JsonProperty("name")
     private final String name;
 
+    @JsonProperty("type")
+    private final Long type;
+
     @JsonProperty("road_address")
     private final String roadAddress;
 
@@ -33,6 +36,7 @@ public class StoreDto {
     public StoreDto(Store store) {
         this.id = store.getId();
         this.name = store.getName();
+        this.type = store.getType();
         this.roadAddress = store.getRoadAddress();
         this.postalCode = store.getPostalCode();
         this.detailAddress = store.getDetailAddress();

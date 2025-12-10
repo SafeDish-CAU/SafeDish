@@ -55,93 +55,20 @@ export type GetStoreResponse = {
 };
 
 export async function getStore(storeId: number): Promise<GetStoreResponse | undefined> {
-  // const url = new URL(`${API_URL.GET_STORE_API_URL}/${storeId}`);
-  // const urlStr = url.toString();
+  const url = new URL(`${API_URL.GET_STORE_API_URL}/${storeId}`);
+  const urlStr = url.toString();
 
-  // return fetch(urlStr, {
-  //   method: 'GET',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  // }).then(async (res) => {
-  //   const bodyJson = await res.json();
-  //   return humps.camelizeKeys(bodyJson) as GetStoreResponse;
-  // }).catch(err => {
-  //   return undefined;
-  // });
-  
-  return {
-    id: 1,
-    name: '테스트 가게',
-    menus: [
-      {
-        id: 101,
-        name: '알레르기 없는 비빔밥',
-        price: 9000,
-        allergies: [],
-        options: [
-          {
-            id: 1001,
-            name: '곁들임 반찬 선택',
-            minSelected: 0,
-            maxSelected: 2,
-            items: [
-              {
-                id: 2001,
-                name: '계란후라이',
-                price: 1000,
-                allergies: [
-                  { code: 1, description: '난류(계란)' },
-                ],
-              },
-              {
-                id: 2002,
-                name: '김치',
-                price: 500,
-                allergies: [],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: 102,
-        name: '치즈 돈까스',
-        price: 11000,
-        allergies: [
-          { code: 2, description: '우유' },
-          { code: 3, description: '밀(글루텐)' },
-          { code: 4, description: '돼지고기' },
-        ],
-        options: [
-          {
-            id: 1002,
-            name: '소스 선택',
-            minSelected: 1,
-            maxSelected: 1,
-            items: [
-              {
-                id: 2003,
-                name: '데미글라스 소스',
-                price: 0,
-                allergies: [
-                  { code: 3, description: '밀(글루텐)' },
-                ],
-              },
-              {
-                id: 2004,
-                name: '크림 소스',
-                price: 500,
-                allergies: [
-                  { code: 2, description: '우유' },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  };
+  return fetch(urlStr, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(async (res) => {
+    const bodyJson = await res.json();
+    return humps.camelizeKeys(bodyJson) as GetStoreResponse;
+  }).catch(err => {
+    return undefined;
+  });
 }
 
 export type GetMenuResponse = {
@@ -170,79 +97,111 @@ export type GetMenuResponse = {
 };
 
 export async function getMenu(menuId: number): Promise<GetMenuResponse | undefined> {
-  // const url = new URL(`${API_URL.GET_MENU_API_URL}/${menuId}`);
-  // const urlStr = url.toString();
+  const url = new URL(`${API_URL.GET_MENU_API_URL}/${menuId}`);
+  const urlStr = url.toString();
 
-  // return fetch(urlStr, {
-  //   method: 'GET',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  // }).then(async (res) => {
-  //   const bodyJson = await res.json();
-  //   return humps.camelizeKeys(bodyJson) as GetMenuResponse;
-  // }).catch(err => {
-  //   return undefined;
-  // });
+  return fetch(urlStr, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(async (res) => {
+    const bodyJson = await res.json();
+    return humps.camelizeKeys(bodyJson) as GetMenuResponse;
+  }).catch(err => {
+    return undefined;
+  });
+}
 
-  return {
-    id: 1,
-    name: '불고기버거 세트',
-    price: 6900,
-    allergies: [
-      { code: 0, description: '난류' },
-      { code: 1, description: '우유' },
-    ],
-    options: [
-      {
-        id: 101,
-        name: '사이드 선택',
-        minSelected: 1,
-        maxSelected: 1,
-        items: [
-          {
-            id: 1001,
-            name: '후렌치후라이(M)',
-            price: 0,
-            allergies: [{ code: 2, description: '대두' }],
-          },
-          {
-            id: 1002,
-            name: '치즈스틱(2조각)',
-            price: 1000,
-            allergies: [
-              { code: 1, description: '우유' },
-              { code: 3, description: '밀' },
-            ],
-          },
-        ],
-      },
-      {
-        id: 102,
-        name: '음료 변경',
-        minSelected: 0,
-        maxSelected: 2,
-        items: [
-          {
-            id: 2001,
-            name: '콜라(M)',
-            price: 0,
-            allergies: [],
-          },
-          {
-            id: 2002,
-            name: '제로 콜라(M)',
-            price: 300,
-            allergies: [],
-          },
-          {
-            id: 2003,
-            name: '오렌지 주스',
-            price: 500,
-            allergies: [{ code: 4, description: '오렌지' }],
-          },
-        ],
-      },
-    ],
-  };
+export type GetLocationResponse = {
+  latitude: number;
+  longitude: number;
+};
+
+export async function getLocation(roadAddress: string): Promise<GetLocationResponse | undefined> {
+  const url = new URL(`${API_URL.GET_LOCATION_API_URL}`);
+  url.searchParams.append('road_address', roadAddress);
+  const urlStr = url.toString();
+
+  return fetch(urlStr, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(async (res) => {
+    const bodyJson = await res.json();
+    return humps.camelizeKeys(bodyJson) as GetLocationResponse;
+  }).catch(err => {
+    return undefined;
+  });
+}
+
+export type GetRecommendsResponse = {
+  items: Array<{
+    storeId: number;
+    storeName: string;
+    menuId: number;
+    menuName: string;
+  }>;
+}
+
+export async function getRecommends(userId: string, allergyMask: number): Promise<GetRecommendsResponse | undefined> {
+  const url = new URL(`${API_URL.GET_RECOMMENDS_API_URL}`);
+  url.searchParams.append('user_id', userId);
+  url.searchParams.append('allergy_mask', `${allergyMask}`);
+  const urlStr = url.toString();
+
+  return fetch(urlStr, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(async (res) => {
+    const bodyJson = await res.json();
+    return humps.camelizeKeys(bodyJson) as GetRecommendsResponse;
+  }).catch(err => {
+    return undefined;
+  });
+}
+
+export async function createUser(userId: string, latitude: number, longitude: number): Promise<void> {
+  const url = new URL(`${API_URL.CREATE_USER_API_URL}`);
+  const urlStr = url.toString();
+
+  fetch(urlStr, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      id: userId,
+      latitude: latitude,
+      longitude: longitude,
+    }),
+  }).then((res) => {
+    return undefined;
+  }).catch(err => {
+    return undefined;
+  });
+}
+
+export async function createOrder(userId: string, menuId: number, quantity: number): Promise<void> {
+  const url = new URL(`${API_URL.CREATE_ORDER_API_URL}`);
+  const urlStr = url.toString();
+
+  fetch(urlStr, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      user_id: userId,
+      menu_id: menuId,
+      quantity: quantity,
+    }),
+  }).then((res) => {
+    return undefined;
+  }).catch(err => {
+    return undefined;
+  });
 }

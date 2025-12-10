@@ -23,6 +23,10 @@ public class Menu {
 
     @Setter
     @Column(nullable = false)
+    private Long type;
+
+    @Setter
+    @Column(nullable = false)
     private Long price;
 
     @Setter
@@ -36,8 +40,9 @@ public class Menu {
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
-    public Menu(String name, Long price, Long allergyMask, Store store) {
+    public Menu(String name, Long type, Long price, Long allergyMask, Store store) {
         this.name = name;
+        this.type = type;
         this.price = price;
         this.allergyMask = allergyMask;
         this.store = store;

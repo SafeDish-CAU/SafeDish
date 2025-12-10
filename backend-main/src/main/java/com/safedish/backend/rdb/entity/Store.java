@@ -23,6 +23,10 @@ public class Store {
 
     @Setter
     @Column(nullable = false)
+    private Long type;
+
+    @Setter
+    @Column(nullable = false)
     private String roadAddress;
 
     @Setter
@@ -48,8 +52,9 @@ public class Store {
     @JoinColumn(name = "owner_id", nullable = false)
     private Owner owner;
 
-    public Store(String name, String roadAddress, String postalCode, String detailAddress, Double latitude, Double longitude, Owner owner) {
+    public Store(String name, Long type, String roadAddress, String postalCode, String detailAddress, Double latitude, Double longitude, Owner owner) {
         this.name = name;
+        this.type = type;
         this.roadAddress = roadAddress;
         this.postalCode = postalCode;
         this.detailAddress = detailAddress;

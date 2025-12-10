@@ -6,50 +6,60 @@ function AllergyTag({ code, level }: {
   level: number;
 }) {
   const text = ALLERGY_TEXT_LIST[code];
-  const containerStyle = (level == 0 ? styles.tagContainerInfo : level == 1 ? styles.tagContainerWarn : styles.tagContainerFatal);
-  const textStyle = (level == 0 ? styles.tagTextInfo : level == 1 ? styles.tagTextWarn : styles.tagTextFatal);
+
+  const containerStyle =
+    level === 0
+      ? styles.tagContainerInfo
+      : level === 1
+        ? styles.tagContainerWarn
+        : styles.tagContainerFatal;
+
+  const textStyle =
+    level === 0
+      ? styles.tagTextInfo
+      : level === 1
+        ? styles.tagTextWarn
+        : styles.tagTextFatal;
 
   return (
     <View style={[styles.tagContainerBase, containerStyle]}>
-      <Text style={[styles.tagTextBase, textStyle]}>
-        {text}
-      </Text>
+      <Text style={[styles.tagTextBase, textStyle]}>{text}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   tagContainerBase: {
-    paddingHorizontal: 5,
-    paddingVertical: 2,
-    borderRadius: 20,
+    paddingHorizontal: 6,
+    paddingVertical: 3,
+    borderRadius: 999,
     alignSelf: 'flex-start',
     borderWidth: 1,
   },
   tagContainerInfo: {
-    backgroundColor: '#ffffff',
-    borderColor: '#000',
+    backgroundColor: '#f4f4f5',
+    borderColor: '#d4d4d8',
   },
   tagContainerWarn: {
-    backgroundColor: '#ffd700',
-    borderColor: '#ffd700',
+    backgroundColor: '#fff1ea',
+    borderColor: '#ffb38a',
   },
   tagContainerFatal: {
-    backgroundColor: '#ff3d00',
-    borderColor: '#ff3d00',
+    backgroundColor: '#ff4b26',
+    borderColor: '#e03614',
   },
   tagTextBase: {
-    fontSize: 14,
-    fontWeight: 'bold',
-  },
-  tagTextWarn: {
-    color: 'black',
-  },
-  tagTextFatal: {
-    color: 'black',
+    fontSize: 11,
+    fontWeight: '600',
   },
   tagTextInfo: {
-    color: 'black',
+    color: '#222222',
+  },
+  tagTextWarn: {
+    color: '#222222',
+  },
+  tagTextFatal: {
+    color: '#ffffff',
   },
 });
 

@@ -12,7 +12,10 @@ export type RootStackParamList = {
     cartIdx?: number;
   };
   Memo: undefined;
-  Cart: undefined;
+  Cart: {
+    canEnd: boolean;
+  };
+  Location: undefined;
   Test: undefined;
 };
 

@@ -18,6 +18,9 @@ public class MenuDto {
     @JsonProperty("name")
     private final String name;
 
+    @JsonProperty("type")
+    private final Long type;
+
     @JsonProperty("price")
     private final Long price;
 
@@ -30,6 +33,7 @@ public class MenuDto {
     public MenuDto(Menu menu) {
         this.id = menu.getId();
         this.name = menu.getName();
+        this.type = menu.getType();
         this.price = menu.getPrice();
 
         long mask = menu.getAllergyMask();

@@ -6,3 +6,4 @@ import config
 
 db = Database(config.NEO4J_URI, config.NEO4J_USER, config.NEO4J_PASSWORD)
 db.reset()
+db.close()

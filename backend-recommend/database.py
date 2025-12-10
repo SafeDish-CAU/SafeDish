@@ -57,7 +57,7 @@ class Database():
 
             session.run("MATCH (n) DETACH DELETE n")
 
-    def create_user(self, user_id: int, latitude: float, longitude: float):
+    def create_user(self, user_id: str, latitude: float, longitude: float):
         with self.driver.session() as session:
             session.run(
                 """
@@ -97,7 +97,7 @@ class Database():
                 allergy=allergy,
             )
 
-    def create_order(self, user_id: int, menu_id: int, quantity: int):
+    def create_order(self, user_id: str, menu_id: int, quantity: int):
         with self.driver.session() as session:
             session.run(
                 """
@@ -116,7 +116,7 @@ class Database():
                 quantity=quantity,
             )
 
-    def recommend(self, user_id: int, allergy: int, w_distance: List[float], candidate_k: int, top_n: int):
+    def recommend(self, user_id: str, allergy: int, w_distance: List[float], candidate_k: int, top_n: int):
         with self.driver.session() as session:
             result = session.run(
                 """
@@ -154,7 +154,7 @@ class Database():
                      distance(me.location, s.location) AS dist,
                      gds.similarity.cosine(me.embedding, m.embedding) AS fastrpSim
                 ORDER BY fastrpSim DESC
-                LIMIT $candidate_k   // FastRP 상위 K개 후보
+                LIMIT $candidate_k
 
                 CALL {
                   WITH me, m
@@ -183,7 +183,7 @@ class Database():
                        WHEN dist <= 1500 THEN $w2
                        WHEN dist <= 2000 THEN $w3
                        WHEN dist <= 2500 THEN $w4
-                       ELSE $w5           // 2.5km 초과 ~ 3km 이하
+                       ELSE $w5
                      END AS distanceWeight,
                      coalesce(
                        head([cw IN catWeights WHERE cw.code = m.category | cw.weight]),

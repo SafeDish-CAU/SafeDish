@@ -16,7 +16,7 @@ public class MenuService {
     private final StoreRepository storeRepository;
     private final MenuRepository menuRepository;
 
-    public Menu createMenu(String token, Long storeId, String name, Long price, Long allergyMask) throws Exception {
+    public Menu createMenu(String token, Long storeId, String name, Long type, Long price, Long allergyMask) throws Exception {
         Optional<Store> storeOpt = storeRepository.findById(storeId);
         if (storeOpt.isEmpty()) {
             throw new Exception("해당하는 매장이 없습니다.");
@@ -28,7 +28,7 @@ public class MenuService {
             throw new Exception("유효하지 않은 토큰입니다.");
         }
 
-        Menu menu = new Menu(name, price, allergyMask, store);
+        Menu menu = new Menu(name, type, price, allergyMask, store);
         menuRepository.save(menu);
 
         return menu;

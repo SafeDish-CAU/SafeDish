@@ -6,6 +6,7 @@ type UserContextValue = {
   user?: User;
   loading: boolean;
   setAllergy: (code: number, value: number) => Promise<void>;
+  setLocation: (address: string, latitude: number, longitude: number, fixed: boolean) => Promise<void>;
 };
 
 const UserContext = createContext<UserContextValue | undefined>(undefined);
@@ -20,7 +21,7 @@ export function UserProvider({ children }: UserProviderProps) {
 
   const setDefault = async () => {
     const uid = await getUniqueId();
-    const allergies = Array(22).fill(0);
+    const allergies = Array(25).fill(0);
     const newUser: User = {
       id: uid,
       allergies: allergies,
@@ -66,10 +67,31 @@ export function UserProvider({ children }: UserProviderProps) {
     }
   };
 
+  const setLocation = async (address: string, latitude: number, longitude: number, fixed: boolean) => {
+    if (!user) return;
+    if (!fixed && user?.location?.fixed) return;
+
+    const location = {
+      address: address,
+      latitude: latitude,
+      longitude: longitude,
+      fixed: fixed,
+    };
+
+    const newUser: User = {
+      ...user,
+      location,
+    };
+
+    setUser(newUser);
+    await saveUser(newUser);
+  };
+
   const value: UserContextValue = {
     user,
     loading,
     setAllergy,
+    setLocation,
   };
 
   return (

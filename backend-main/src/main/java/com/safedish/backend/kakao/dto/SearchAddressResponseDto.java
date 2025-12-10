@@ -15,10 +15,10 @@ public class SearchAddressResponseDto {
     @Getter
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Document {
-        @JsonProperty("x")
+        @JsonProperty("y")
         Double latitude;
 
-        @JsonProperty("y")
+        @JsonProperty("x")
         Double longitude;
     }
 

@@ -5,6 +5,7 @@ import com.safedish.backend.rdb.dto.CreateMenuResponseDto;
 import com.safedish.backend.rdb.dto.ReadMenuResponseDto;
 import com.safedish.backend.rdb.entity.Menu;
 import com.safedish.backend.rdb.service.MenuService;
+import com.safedish.backend.recommend.service.RecommendService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/menu")
 public class MenuController {
     private final MenuService menuService;
+    private final RecommendService recommendService;
 
     @PostMapping({"", "/"})
     public ResponseEntity<?> createMenu(@RequestHeader("Authorization") String token, @RequestBody CreateMenuRequestDto reqDto) {
@@ -23,8 +25,16 @@ public class MenuController {
             for (Long allergyId : reqDto.getAllergies()) {
                 allergyMask |= (1L << allergyId);
             }
-            Menu menu = menuService.createMenu(token, reqDto.getStoreId(), reqDto.getName(), reqDto.getPrice(), allergyMask);
-            CreateMenuResponseDto resDto = new CreateMenuResponseDto(menu.getStore().getId(), menu.getId(), menu.getName(), menu.getPrice(), menu.getAllergyMask());
+
+            Menu menu = menuService.createMenu(token, reqDto.getStoreId(), reqDto.getName(), reqDto.getType(), reqDto.getPrice(), allergyMask);
+
+            try {
+                recommendService.createMenu(menu.getId(), menu.getStore().getId(), menu.getType(), allergyMask);
+            } catch (Exception e) {
+                System.out.println("추천서버 Menu 생성 실패");
+            }
+
+            CreateMenuResponseDto resDto = new CreateMenuResponseDto(menu.getStore().getId(), menu.getId(), menu.getName(), menu.getType(), menu.getPrice(), menu.getAllergyMask());
             return ResponseEntity.ok(resDto);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

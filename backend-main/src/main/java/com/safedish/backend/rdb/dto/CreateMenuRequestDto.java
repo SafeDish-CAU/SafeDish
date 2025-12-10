@@ -18,6 +18,9 @@ public class CreateMenuRequestDto {
     @JsonProperty("name")
     private String name;
 
+    @JsonProperty("type")
+    private Long type;
+
     @JsonProperty("price")
     private Long price;
 

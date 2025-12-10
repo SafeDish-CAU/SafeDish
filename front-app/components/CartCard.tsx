@@ -63,7 +63,7 @@ function CartCard({
             <View style={styles.textArea}>
               <Text style={styles.menuName}>{menu.name}</Text>
               <Text style={styles.menuPrice}>
-                가격 : {formatPrice(menu.price)}
+                기본 가격 {formatPrice(menu.price)}
               </Text>
               {optionLines.map(line => (
                 <Text key={line} style={styles.menuOption}>
@@ -72,6 +72,7 @@ function CartCard({
               ))}
             </View>
           </View>
+
           <View style={styles.bottomRow}>
             <Text style={styles.totalPrice}>{formatPrice(totalPrice)}</Text>
             <View style={styles.actionRow}>
@@ -81,6 +82,7 @@ function CartCard({
               >
                 <Text style={styles.optionBtnText}>옵션 변경</Text>
               </TouchableOpacity>
+
               <View style={styles.quantityBox}>
                 <TouchableOpacity
                   style={styles.iconBtn}
@@ -89,7 +91,7 @@ function CartCard({
                   <Icon
                     name={isSingle ? 'delete-outline' : 'remove'}
                     size={18}
-                    color='#333'
+                    color='#222222'
                   />
                 </TouchableOpacity>
                 <Text style={styles.quantityText}>{quantity}</Text>
@@ -97,7 +99,7 @@ function CartCard({
                   style={styles.iconBtn}
                   onPress={() => onIncrease(cartIndex)}
                 >
-                  <Icon name='add' size={18} color='#333' />
+                  <Icon name='add' size={18} color='#222222' />
                 </TouchableOpacity>
               </View>
             </View>
@@ -111,14 +113,15 @@ function CartCard({
 const styles = StyleSheet.create({
   wrapper: {
     paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingVertical: 6,
   },
   card: {
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#eee',
+    borderColor: '#e0e0e0',
     paddingVertical: 14,
     paddingHorizontal: 14,
+    backgroundColor: '#ffffff',
   },
   contentRow: {
     flexDirection: 'row',
@@ -128,22 +131,23 @@ const styles = StyleSheet.create({
     paddingRight: 8,
   },
   menuName: {
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#222222',
     marginBottom: 4,
   },
   menuPrice: {
     fontSize: 13,
-    color: '#666',
+    color: '#666666',
     marginBottom: 2,
   },
   menuOption: {
     fontSize: 12,
-    color: '#777',
+    color: '#777777',
     marginTop: 1,
   },
   bottomRow: {
-    marginTop: 8,
+    marginTop: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -151,6 +155,7 @@ const styles = StyleSheet.create({
   totalPrice: {
     fontSize: 15,
     fontWeight: '700',
+    color: '#ff4b26',
     flex: 1,
   },
   actionRow: {
@@ -163,25 +168,29 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#ff4b26',
+    backgroundColor: '#ffffff',
   },
   optionBtnText: {
     fontSize: 13,
-    fontWeight: '500',
+    fontWeight: '600',
+    color: '#ff4b26',
   },
   quantityBox: {
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#e0e0e0',
     overflow: 'hidden',
     marginLeft: 8,
+    backgroundColor: '#ffffff',
   },
   quantityText: {
     paddingHorizontal: 10,
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: '600',
+    color: '#222222',
   },
   iconBtn: {
     paddingHorizontal: 8,

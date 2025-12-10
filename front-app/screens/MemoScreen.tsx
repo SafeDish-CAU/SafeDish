@@ -29,7 +29,9 @@ function MemoScreen({ route, navigation }: NativeStackScreenProps<RootStackParam
     if (isPipMode) {
       hasBeenInPip.current = true;
     } else if (hasBeenInPip.current) {
-      navigation.replace('Cart');
+      navigation.replace('Cart', {
+        canEnd: true,
+      });
     }
   }, [isPipMode, navigation]);
 
@@ -57,7 +59,10 @@ function MemoScreen({ route, navigation }: NativeStackScreenProps<RootStackParam
   if (Platform.OS !== 'android') {
     return (
       <View style={styles.container}>
-        <Text style={styles.infoText}>PIP 모드는 안드로이드에서만 지원됩니다.</Text>
+        <Text style={styles.infoTitle}>PIP 모드는 안드로이드에서만 지원됩니다.</Text>
+        <Text style={styles.infoDescription}>
+          주문 메모는 장바구니에서 바로 확인하실 수 있어요.
+        </Text>
       </View>
     );
   }
@@ -67,14 +72,19 @@ function MemoScreen({ route, navigation }: NativeStackScreenProps<RootStackParam
       {memos.length === 0 ? (
         <Text style={styles.emptyText}>장바구니에 담긴 메뉴가 없습니다.</Text>
       ) : (
-        memos.map((m, index) => (
-          <Memo
-            key={index}
-            name={m.name}
-            qty={m.qty}
-            option={m.option}
-          />
-        ))
+        <>
+          <Text style={styles.pipTitle}>주문 메모</Text>
+          <View style={styles.listWrapper}>
+            {memos.map((m, index) => (
+              <Memo
+                key={index}
+                name={m.name}
+                qty={m.qty}
+                option={m.option}
+              />
+            ))}
+          </View>
+        </>
       )}
     </View>
   );
@@ -83,22 +93,42 @@ function MemoScreen({ route, navigation }: NativeStackScreenProps<RootStackParam
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#222',
-    padding: 16,
+    backgroundColor: '#f5f5f7',
+    paddingHorizontal: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  infoText: {
+  infoTitle: {
     fontSize: 16,
-    color: '#fff',
+    fontWeight: '700',
+    color: '#222222',
+    textAlign: 'center',
+    marginBottom: 6,
+  },
+  infoDescription: {
+    fontSize: 13,
+    color: '#555555',
+    textAlign: 'center',
   },
   pipContainer: {
     flex: 1,
-    // backgroundColor: '#222',
-    padding: 8,
+    backgroundColor: '#ffffff',
+    paddingVertical: 6,
+    paddingHorizontal: 8,
     justifyContent: 'flex-start',
   },
+  pipTitle: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#ff4b26',
+    marginBottom: 4,
+  },
+  listWrapper: {
+    flexShrink: 1,
+  },
   emptyText: {
-    fontSize: 14,
-    color: '#ccc',
+    fontSize: 12,
+    color: '#555555',
   },
 });
 

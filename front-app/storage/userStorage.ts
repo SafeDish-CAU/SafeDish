@@ -4,6 +4,12 @@ const USER_KEY = 'user';
 
 export type User = {
   id: string;
+  location?: {
+    address: string;
+    latitude: number;
+    longitude: number;
+    fixed: boolean;
+  }
   allergies: number[];
 };
 

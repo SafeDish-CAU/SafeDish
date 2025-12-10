@@ -1,6 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
-import { ActivityIndicator, Text, FlatList, View, Button, TouchableOpacity, StyleSheet } from 'react-native';
-import Icon from '@react-native-vector-icons/material-icons'
+import { ActivityIndicator, Text, FlatList, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { CheckBox } from '@rneui/themed';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from './Stack';
@@ -9,6 +8,7 @@ import { useCart } from '../providers/CartProvider';
 import { getStore, GetStoreResponse } from '../api';
 import MenuCard from '../components/MenuCard';
 import AllergyTags from '../components/AllergyTags';
+import CartButton from '../components/CartButton';
 
 type AllergyData = {
   code: number;
@@ -51,8 +51,8 @@ function StoreScreen({ route, navigation }: NativeStackScreenProps<RootStackPara
     : true;
 
   const parseData = (resData: GetStoreResponse) => {
-    const userAllergies = Array(22).fill(0);
-    for (let i = 0; i < 22; i++) {
+    const userAllergies = Array(25).fill(0);
+    for (let i = 0; i < 25; i++) {
       if (userCtx?.user?.allergies?.[i]) {
         userAllergies[i] = 1;
       }
@@ -72,7 +72,7 @@ function StoreScreen({ route, navigation }: NativeStackScreenProps<RootStackPara
         allergies: [],
       };
 
-      const allergyLevels: number[] = Array(22).fill(0);
+      const allergyLevels: number[] = Array(25).fill(0);
       for (const elem of menu.allergies) {
         const code = elem.code;
         allergyLevels[code] = 2;
@@ -89,7 +89,7 @@ function StoreScreen({ route, navigation }: NativeStackScreenProps<RootStackPara
 
       const warns: AllergyData[] = [];
       const fatals: AllergyData[] = [];
-      for (let i = 0; i < 22; i++) {
+      for (let i = 0; i < 25; i++) {
         const level = allergyLevels[i];
         const included = userAllergies[i];
         if (level == 0 || included == 0) continue;
@@ -124,7 +124,8 @@ function StoreScreen({ route, navigation }: NativeStackScreenProps<RootStackPara
       navigation.navigate('Menu', {
         storeId: store.id,
         storeName: store.name,
-        menuId,
+        menuId: menuId,
+        cartIdx: undefined,
       });
     }
   };
@@ -157,19 +158,14 @@ function StoreScreen({ route, navigation }: NativeStackScreenProps<RootStackPara
         title: store.name,
         headerShown: true,
         headerRight: () => (
-          <TouchableOpacity
-            style={styles.cartIconContainer}
-            onPress={() => navigation.navigate('Cart')}
-          >
-            <Icon name="shopping-cart" size={24} />
-            {cartCount > 0 && (
-              <View style={styles.cartBadge}>
-                <Text style={styles.cartBadgeText}>
-                  {cartCount > 99 ? '99+' : cartCount}
-                </Text>
-              </View>
-            )}
-          </TouchableOpacity>
+          <View style={{ paddingRight: 8, paddingTop: 2 }}>
+            <CartButton
+              count={cartCount}
+              onPress={() => navigation.navigate('Cart', {
+                canEnd: false,
+              })}
+            />
+          </View>
         ),
       });
     } else {
@@ -181,31 +177,34 @@ function StoreScreen({ route, navigation }: NativeStackScreenProps<RootStackPara
 
   if (loading) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={styles.center}>
         <ActivityIndicator />
-        <Text>가게 정보를 불러오는 중입니다…</Text>
+        <Text style={styles.centerText}>가게 정보를 불러오는 중입니다…</Text>
       </View>
     );
   }
 
   if (error || !store) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>{error ?? '데이터가 없습니다.'}</Text>
-        <Button title='다시 시도' onPress={() => navigation.replace('Store', { storeId })} />
+      <View style={styles.center}>
+        <Text style={styles.centerText}>{error ?? '데이터가 없습니다.'}</Text>
+        <TouchableOpacity
+          style={styles.retryButton}
+          onPress={() => navigation.replace('Store', { storeId })}
+        >
+          <Text style={styles.retryButtonText}>다시 시도</Text>
+        </TouchableOpacity>
       </View>
     );
   }
 
   const menusForDisplay = isFiltered
-    ? store.menus.filter(menu =>
-      !menu.allergies.some(a => a.level === 2)
-    )
+    ? store.menus.filter(menu => !menu.allergies.some(a => a.level === 2))
     : store.menus;
 
   return (
-    <View style={{ flex: 1 }}>
-      <View style={{ flex: 1, padding: 16 }}>
+    <View style={styles.wrapper}>
+      <View style={styles.inner}>
         <View style={styles.filterRow}>
           <View style={styles.allergyInfoContainer}>
             <View style={styles.allergyHeaderRow}>
@@ -213,12 +212,19 @@ function StoreScreen({ route, navigation }: NativeStackScreenProps<RootStackPara
 
               <View style={styles.legendContainer}>
                 <View style={styles.legendItem}>
-                  <View style={[styles.legendColorBox, styles.legendColorMain]} />
+                  <View
+                    style={[styles.legendColorBox, styles.legendColorMain]}
+                  />
                   <Text style={styles.legendText}>메인에 포함</Text>
                 </View>
 
                 <View style={styles.legendItem}>
-                  <View style={[styles.legendColorBox, styles.legendColorOption]} />
+                  <View
+                    style={[
+                      styles.legendColorBox,
+                      styles.legendColorOption,
+                    ]}
+                  />
                   <Text style={styles.legendText}>옵션에 포함</Text>
                 </View>
               </View>
@@ -236,34 +242,54 @@ function StoreScreen({ route, navigation }: NativeStackScreenProps<RootStackPara
             iconType='material-design'
             checkedIcon='checkbox-marked'
             uncheckedIcon='checkbox-blank-outline'
-            checkedColor='#747999'
+            checkedColor={'#ff4b26'}
             containerStyle={styles.filterCheckboxContainer}
-            size={24}
+            size={22}
+            textStyle={styles.checkboxText}
           />
         </View>
+
         <FlatList
           data={menusForDisplay}
-          renderItem={({ item }) => <MenuCard menu={item} onPress={handleMenuPress} />}
-          keyExtractor={(item) => String(item.id)}
+          renderItem={({ item }) => (
+            <MenuCard menu={item} onPress={handleMenuPress} />
+          )}
+          keyExtractor={item => String(item.id)}
           showsVerticalScrollIndicator={false}
-          style={{ flex: 1 }}
+          contentContainerStyle={styles.listContent}
         />
       </View>
 
       <View style={styles.bottomBar}>
-        <Button
-          title='주문하러 가기'
-          onPress={() => {
-            navigation.navigate('Memo');
-          }}
+        <TouchableOpacity
+          style={[
+            styles.orderButton,
+            isCartEmpty && styles.orderButtonDisabled,
+          ]}
+          onPress={() => navigation.navigate('Memo')}
+          activeOpacity={isCartEmpty ? 1 : 0.9}
           disabled={isCartEmpty}
-        />
+        >
+          <Text style={styles.orderButtonText}>주문하러 가기</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: '#f5f5f7',
+  },
+  inner: {
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingTop: 8,
+  },
+  listContent: {
+    paddingBottom: 16,
+  },
   filterRow: {
     flexDirection: 'row',
     alignItems: 'flex-start',
@@ -271,8 +297,10 @@ const styles = StyleSheet.create({
     marginHorizontal: -16,
     paddingHorizontal: 16,
     paddingTop: 8,
-    paddingBottom: 4,
-    backgroundColor: '#f5f5f5',
+    paddingBottom: 8,
+    backgroundColor: '#ffffff',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#e0e0e0',
     marginBottom: 8,
   },
   allergyInfoContainer: {
@@ -310,14 +338,14 @@ const styles = StyleSheet.create({
     marginRight: 4,
   },
   legendColorMain: {
-    backgroundColor: '#ff5252',
+    backgroundColor: '#ff4b26',
   },
   legendColorOption: {
-    backgroundColor: '#ffca28',
+    backgroundColor: '#ffb74d',
   },
   legendText: {
     fontSize: 11,
-    color: '#444',
+    color: '#555',
   },
   filterCheckboxContainer: {
     backgroundColor: 'transparent',
@@ -327,32 +355,56 @@ const styles = StyleSheet.create({
     marginTop: 18,
     marginLeft: 4,
   },
+  checkboxText: {
+    fontSize: 12,
+    color: '#444',
+    fontWeight: '500',
+  },
   bottomBar: {
-    padding: 16,
-    borderTopWidth: 1,
-    borderTopColor: '#ddd',
-    backgroundColor: '#fff',
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: '#e0e0e0',
+    backgroundColor: '#ffffff',
   },
-  cartIconContainer: {
-    marginRight: 12,
-    paddingVertical: 4,
-    paddingHorizontal: 4,
-  },
-  cartBadge: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    minWidth: 16,
-    height: 16,
+  orderButton: {
+    height: 44,
     borderRadius: 8,
-    backgroundColor: 'red',
+    backgroundColor: '#ff4b26',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  cartBadgeText: {
-    color: '#fff',
-    fontSize: 10,
-    fontWeight: 'bold',
+  orderButtonDisabled: {
+    backgroundColor: '#cccccc',
+  },
+  orderButtonText: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#ffffff',
+  },
+  center: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    backgroundColor: '#ffffff',
+  },
+  centerText: {
+    marginTop: 8,
+    fontSize: 14,
+    color: '#666',
+  },
+  retryButton: {
+    marginTop: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: 8,
+    backgroundColor: '#ff4b26',
+  },
+  retryButtonText: {
+    fontSize: 14,
+    color: '#ffffff',
+    fontWeight: '600',
   },
 });
 

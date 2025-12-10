@@ -57,8 +57,8 @@ function MenuScreen({ route, navigation }: NativeStackScreenProps<RootStackParam
   const finalPrice = totalPrice * quantity;
 
   const parseData = (resData: GetMenuResponse) => {
-    const userAllergies = Array(22).fill(0);
-    for (let i = 0; i < 22; i++) {
+    const userAllergies = Array(25).fill(0);
+    for (let i = 0; i < 25; i++) {
       if (userCtx?.user?.allergies?.[i]) {
         userAllergies[i] = 1;
       }
@@ -208,7 +208,7 @@ function MenuScreen({ route, navigation }: NativeStackScreenProps<RootStackParam
         }
       };
 
-      if (cartIdx) {
+      if (cartIdx != null) {
         cartCtx?.editAt(cartIdx, newMenu);
       } else {
         cartCtx?.push(storeId, storeName, newMenu);
@@ -303,8 +303,9 @@ function MenuScreen({ route, navigation }: NativeStackScreenProps<RootStackParam
             />
           </View>
         ))}
-        <View style={{ height: 80 }} />
+        <View style={{ height: 96 }} />
       </ScrollView>
+
       <View style={styles.bottomBar}>
         <View style={styles.quantityRow}>
           <Text style={styles.quantityLabel}>수량</Text>
@@ -330,11 +331,17 @@ function MenuScreen({ route, navigation }: NativeStackScreenProps<RootStackParam
           합계 {finalPrice.toLocaleString()}원
         </Text>
       </View>
+
       <View style={styles.addBar}>
-        <Button
-          title='장바구니 담기'
+        <TouchableOpacity
+          style={styles.addButton}
+          activeOpacity={0.9}
           onPress={handleApply}
-        />
+        >
+          <Text style={styles.addButtonText}>
+            {cartIdx != null ? '옵션 변경하기' : '장바구니 담기'}
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -343,7 +350,7 @@ function MenuScreen({ route, navigation }: NativeStackScreenProps<RootStackParam
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#f5f5f7',
   },
   scrollContent: {
     paddingBottom: 16,
@@ -352,30 +359,32 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 16,
     paddingBottom: 12,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#e0e0e0',
   },
   menuName: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#222',
+    color: '#222222',
     marginBottom: 4,
   },
   menuPrice: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#111',
+    color: '#444',
   },
   divider: {
     height: 8,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#f5f5f7',
   },
   groupSpacing: {
     marginTop: 8,
   },
   bottomBar: {
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: '#ddd',
-    backgroundColor: '#fff',
+    borderTopColor: '#e0e0e0',
+    backgroundColor: '#ffffff',
     paddingHorizontal: 16,
     paddingVertical: 8,
   },
@@ -387,36 +396,37 @@ const styles = StyleSheet.create({
   },
   quantityLabel: {
     fontSize: 14,
-    color: '#333',
+    color: '#555',
     fontWeight: '500',
   },
   quantityBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 4,
+    borderRadius: 999,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#e0e0e0',
     paddingHorizontal: 8,
     height: 32,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
   },
   qtyButton: {
-    paddingHorizontal: 8,
+    paddingHorizontal: 10,
     paddingVertical: 4,
   },
   qtyButtonText: {
     fontSize: 18,
-    color: '#333',
+    color: '#222222',
   },
   quantityText: {
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: '600',
     marginHorizontal: 4,
+    color: '#222222',
   },
   totalPriceText: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#111',
+    color: '#ff4b26',
     textAlign: 'right',
   },
   center: {
@@ -424,18 +434,31 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 16,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
   },
   centerText: {
     marginTop: 8,
     fontSize: 14,
-    color: '#555',
+    color: '#666',
   },
   addBar: {
-    padding: 16,
-    borderTopWidth: 1,
-    borderTopColor: '#ddd',
-    backgroundColor: '#fff',
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: '#e0e0e0',
+    backgroundColor: '#ffffff',
+  },
+  addButton: {
+    height: 44,
+    borderRadius: 8,
+    backgroundColor: '#ff4b26',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  addButtonText: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#ffffff',
   },
 });
 

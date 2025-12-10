@@ -9,20 +9,20 @@ function AllergyTags({ allergies, paddingTop }: {
   paddingTop?: number;
 }) {
   return (
-    <View style={[styles.container, { paddingTop: paddingTop ?? 15 }]}>
-      {allergies.map(({ code, level }, index) => <AllergyTag key={index} code={code} level={level} />)}
+    <View style={[styles.container, { paddingTop: paddingTop ?? 10 }]}>
+      {allergies.map(({ code, level }, index) => (
+        <AllergyTag key={index} code={code} level={level} />
+      ))}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    borderBottomWidth: 0,
-    borderColor: '#aaa',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
     flexWrap: 'wrap',
-    gap: 8,
+    alignItems: 'center',
+    gap: 6,
   },
 });
 

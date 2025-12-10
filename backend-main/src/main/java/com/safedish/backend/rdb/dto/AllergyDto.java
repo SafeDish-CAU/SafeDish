@@ -31,7 +31,10 @@ public class AllergyDto {
             "전복",         // 18 ABALONE
             "홍합",         // 19 MUSSEL
             "조개류",       // 20 SHELLFISH
-            "잣"            // 21 PINENUT
+            "잣",            // 21 PINENUT
+            "고열량·저영양",
+            "GMO 식품",
+            "고카페인"
     );
 
     @JsonProperty("code")

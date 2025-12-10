@@ -13,8 +13,12 @@ public class CreateStoreResponseDto {
     @JsonProperty("name")
     private String name;
 
-    public CreateStoreResponseDto(Long id, String name) {
+    @JsonProperty("type")
+    private Long type;
+
+    public CreateStoreResponseDto(Long id, String name, Long type) {
         this.id = id;
         this.name = name;
+        this.type = type;
     }
 }

@@ -20,6 +20,7 @@ import MenuScreen from './screens/MenuScreen';
 import HomeScreen from './screens/HomeScreen';
 import MemoScreen from './screens/MemoScreen';
 import StoreScreen from './screens/StoreScreen';
+import LocationScreen from './screens/LocationScreen';
 
 function App() {
   const navRef = useRef<NavigationContainerRef<RootStackParamList> | null>(null);
@@ -71,7 +72,13 @@ function App() {
         <CartProvider>
           <NavigationContainer ref={navRef} onReady={() => setNavReady(true)}>
             <Stack.Navigator initialRouteName='Home'>
-              <Stack.Screen name='Home' component={HomeScreen} />
+              <Stack.Screen
+                name='Home'
+                component={HomeScreen}
+                options={({ route }) => ({
+                  headerShown: false,
+                })}
+              />
               <Stack.Screen name='Store' component={StoreScreen} />
               <Stack.Screen name='Menu' component={MenuScreen} />
               <Stack.Screen
@@ -86,6 +93,13 @@ function App() {
                 component={CartScreen}
                 options={({ route }) => ({
                   title: '장바구니',
+                })}
+              />
+              <Stack.Screen
+                name='Location'
+                component={LocationScreen}
+                options={({ route }) => ({
+                  title: '주소 설정',
                 })}
               />
               <Stack.Screen name='Test' component={TestScreen} />
