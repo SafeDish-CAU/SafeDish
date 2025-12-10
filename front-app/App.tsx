@@ -6,6 +6,7 @@
  */
 
 import { useRef, useState, useEffect, useCallback } from 'react';
+import { LogBox } from 'react-native';
 import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ShareMenu, { ShareData } from 'react-native-share-menu';
@@ -21,6 +22,11 @@ import HomeScreen from './screens/HomeScreen';
 import MemoScreen from './screens/MemoScreen';
 import StoreScreen from './screens/StoreScreen';
 import LocationScreen from './screens/LocationScreen';
+
+LogBox.ignoreLogs([
+  'new NativeEventEmitter() was called with a non-null argument without the required `addListener` method.',
+  'new NativeEventEmitter() was called with a non-null argument without the required `removeListeners` method.',
+]);
 
 function App() {
   const navRef = useRef<NavigationContainerRef<RootStackParamList> | null>(null);
