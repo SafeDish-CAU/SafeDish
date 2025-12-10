@@ -85,7 +85,7 @@ class Database():
         with self.driver.session() as session:
             session.run(
                 """
-                MATCH (s:Store {storeId: $store_id})
+                MERGE (s:Store {storeId: $store_id})
                 MERGE (m:Menu {menuId: $menu_id})
                 SET m.category = $category,
                     m.allergy  = $allergy
