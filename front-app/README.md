@@ -39,5 +39,8 @@ dependencies {
 }
 ```
 
-# 3. android 에뮬레이터 실행
+# 3. .env 환경변수 설정
+API_BASE=${서버주소}
+
+# 4. android 에뮬레이터 실행
 /front-app 경로에서 ```npm run android``` 명령어 실행
