@@ -36,7 +36,7 @@ function HomeScreen({ route, navigation }: NativeStackScreenProps<RootStackParam
     userCtx?.user?.location?.latitude,
     userCtx?.user?.location?.longitude,
     JSON.stringify(userCtx?.user?.allergies),
-  ])
+  ]);
 
   return (
     <View style={styles.container}>
