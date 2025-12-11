@@ -1,6 +1,6 @@
 import humps from 'humps';
 
-const API_BASE_URL = 'http://115.21.83.127:15557/api';
+const API_BASE_URL = '';
 
 /**
  * 
