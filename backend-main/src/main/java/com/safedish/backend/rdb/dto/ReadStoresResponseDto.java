@@ -19,6 +19,9 @@ public class ReadStoresResponseDto {
         @JsonProperty("name")
         String name;
 
+        @JsonProperty("type")
+        Long type;
+
         @JsonProperty("road_address")
         String roadAddress;
 
@@ -28,9 +31,10 @@ public class ReadStoresResponseDto {
         @JsonProperty("detail_address")
         String detailAddress;
 
-        public Item(Long id, String name, String roadAddress, String postalCode, String detailAddress) {
+        public Item(Long id, String name, Long type, String roadAddress, String postalCode, String detailAddress) {
             this.id = id;
             this.name = name;
+            this.type = type;
             this.roadAddress = roadAddress;
             this.postalCode = postalCode;
             this.detailAddress = detailAddress;

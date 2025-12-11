@@ -5,19 +5,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Setter
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CreateOptionItemRequestDto {
+public class EditOptionGroupRequestDto {
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("price")
-    private Long price;
+    @JsonProperty("min_selected")
+    private Long minSelected;
 
-    @JsonProperty("allergies")
-    private List<Long> allergies = new ArrayList<>();
+    @JsonProperty("max_selected")
+    private Long maxSelected;
 }

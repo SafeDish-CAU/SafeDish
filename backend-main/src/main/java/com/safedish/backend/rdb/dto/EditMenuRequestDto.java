@@ -11,9 +11,12 @@ import java.util.List;
 @Setter
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CreateOptionItemRequestDto {
+public class EditMenuRequestDto {
     @JsonProperty("name")
     private String name;
+
+    @JsonProperty("type")
+    private Long type;
 
     @JsonProperty("price")
     private Long price;

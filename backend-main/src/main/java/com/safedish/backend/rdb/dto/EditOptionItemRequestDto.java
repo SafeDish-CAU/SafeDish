@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CreateOptionItemRequestDto {
+public class EditOptionItemRequestDto {
     @JsonProperty("name")
     private String name;
 

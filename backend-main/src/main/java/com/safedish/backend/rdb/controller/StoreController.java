@@ -72,7 +72,7 @@ public class StoreController {
 
             Owner owner = ownerService.findOwnerById(ownerId);
             for (Store store : owner.getStores()) {
-                resDto.addItem(new ReadStoresResponseDto.Item(store.getId(), store.getName(), store.getRoadAddress(), store.getPostalCode(), store.getDetailAddress()));
+                resDto.addItem(new ReadStoresResponseDto.Item(store.getId(), store.getName(), store.getType(), store.getRoadAddress(), store.getPostalCode(), store.getDetailAddress()));
             }
             return ResponseEntity.ok(resDto);
         } catch (Exception e) {

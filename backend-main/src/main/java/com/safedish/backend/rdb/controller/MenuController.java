@@ -1,8 +1,6 @@
 package com.safedish.backend.rdb.controller;
 
-import com.safedish.backend.rdb.dto.CreateMenuRequestDto;
-import com.safedish.backend.rdb.dto.CreateMenuResponseDto;
-import com.safedish.backend.rdb.dto.ReadMenuResponseDto;
+import com.safedish.backend.rdb.dto.*;
 import com.safedish.backend.rdb.entity.Menu;
 import com.safedish.backend.rdb.service.MenuService;
 import com.safedish.backend.recommend.service.RecommendService;
@@ -46,6 +44,31 @@ public class MenuController {
         try {
             Menu menu = menuService.findByMenuId(menuId);
             ReadMenuResponseDto resDto = new ReadMenuResponseDto(menu);
+            return ResponseEntity.ok(resDto);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PostMapping({"/{menuId}/delete", "/{menuId}/delete/"})
+    public ResponseEntity<?> deleteMenu(@PathVariable(name = "menuId") Long menuId, @RequestHeader("Authorization") String token) {
+        try {
+            menuService.deleteMenu(token, menuId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PostMapping({"/{menuId}/edit", "/{menuId}/edit/"})
+    public ResponseEntity<?> editMenu(@PathVariable(name = "menuId") Long menuId, @RequestHeader("Authorization") String token, @RequestBody EditMenuRequestDto reqDto) {
+        try {
+            long allergyMask = 0L;
+            for (Long allergyId : reqDto.getAllergies()) {
+                allergyMask |= (1L << allergyId);
+            }
+            Menu menu = menuService.editMenu(token, menuId, reqDto.getName(), reqDto.getType(), reqDto.getPrice(), allergyMask);
+            EditMenuResponseDto resDto = new EditMenuResponseDto(menu.getId(), menu.getName(), menu.getType(), menu.getPrice(), menu.getAllergyMask());
             return ResponseEntity.ok(resDto);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

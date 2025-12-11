@@ -42,4 +42,39 @@ public class MenuService {
 
         return menuOpt.get();
     }
+
+    public void deleteMenu(String token, Long menuId) throws Exception {
+        Optional<Menu> menuOpt = menuRepository.findById(menuId);
+        if (menuOpt.isEmpty()) {
+            throw new Exception("해당하는 메뉴가 없습니다.");
+        }
+
+        Menu menu = menuOpt.get();
+        Owner owner = menu.getStore().getOwner();
+        if (!owner.getToken().equals(token)) {
+            throw new Exception("유효하지 않은 토큰입니다.");
+        }
+
+        menuRepository.delete(menu);
+    }
+
+    public Menu editMenu(String token, Long menuId, String name, Long type, Long price, Long allergyMask) throws Exception {
+        Optional<Menu> menuOpt = menuRepository.findById(menuId);
+        if (menuOpt.isEmpty()) {
+            throw new Exception("해당하는 메뉴가 없습니다.");
+        }
+
+        Menu menu = menuOpt.get();
+        Owner owner = menu.getStore().getOwner();
+        if (!owner.getToken().equals(token)) {
+            throw new Exception("유효하지 않은 토큰입니다.");
+        }
+
+        menu.setName(name);
+        menu.setType(type);
+        menu.setPrice(price);
+        menu.setAllergyMask(allergyMask);
+        menuRepository.save(menu);
+        return menu;
+    }
 }

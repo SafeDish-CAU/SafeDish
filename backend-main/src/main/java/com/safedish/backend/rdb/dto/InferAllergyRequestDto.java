@@ -15,7 +15,7 @@ public class InferAllergyRequestDto {
     @JsonProperty("menu_name")
     private String menuName;
 
-    @JsonProperty("optin_group_name")
+    @JsonProperty("option_group_name")
     private String groupName;
 
     @JsonProperty("option_item_name")
