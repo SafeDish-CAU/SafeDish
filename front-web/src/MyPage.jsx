@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Postcode from '@actbase/react-daum-postcode';
+import DaumPostcode from 'react-daum-postcode';
+import { QRCodeCanvas } from 'qrcode.react';
 import './MyPage.css';
 import {
   getStores,
@@ -130,6 +131,8 @@ function MyPage() {
   const [editOptionItemPrice, setEditOptionItemPrice] = useState('');
   const [editOptionItemAllergies, setEditOptionItemAllergies] = useState([]);
   const [editOptionItemLoading, setEditOptionItemLoading] = useState(false);
+  const [bulkMenuLoading, setBulkMenuLoading] = useState(false);
+  const importFileInputRef = useRef(null);
   const resetOptionItemForm = () => {
     setActiveOptionGroupId(null);
     setCreateOptionItemStep(1);
@@ -381,6 +384,172 @@ function MyPage() {
     setIsEditingMenu(false);
     resetOptionItemForm();
     resetOptionEditStates();
+  };
+  const handleClickImportMenus = () => {
+    if (!selectedStoreId) {
+      alert('먼저 가게를 선택해 주세요.');
+      return;
+    }
+    if (bulkMenuLoading) return;
+
+    if (importFileInputRef.current) {
+      importFileInputRef.current.value = '';
+      importFileInputRef.current.click();
+    }
+  };
+  const handleMenusFileSelected = event => {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = async e => {
+      const text = e.target.result;
+      let data;
+
+      try {
+        data = JSON.parse(text);
+      } catch (err) {
+        console.error(err);
+        alert('파일을 읽는 중 오류가 발생했습니다. 올바른 .sddata(JSON) 파일인지 확인해 주세요.');
+        return;
+      }
+
+      if (!Array.isArray(data)) {
+        alert('파일 형식이 올바르지 않습니다. 메뉴 배열(JSON Array) 형식인지 확인해 주세요.');
+        return;
+      }
+
+      const token = getCookie('sd_token');
+      if (!token) {
+        alert('로그인 정보가 없습니다. 다시 로그인해 주세요.');
+        navigate('/signin');
+        return;
+      }
+
+      if (!selectedStoreId) {
+        alert('먼저 가게를 선택해 주세요.');
+        return;
+      }
+
+      setBulkMenuLoading(true);
+
+      try {
+        for (const menu of data) {
+          const name = menu.name;
+          const rawType = typeof menu.type === 'number' ? menu.type : 0;
+          const type =
+            rawType >= 0 && rawType < STORE_TYPE_LABELS.length ? rawType : 0;
+
+          const priceNum = Number(menu.price);
+          if (!name || !priceNum || Number.isNaN(priceNum) || priceNum <= 0) {
+            console.warn('메뉴 정보가 올바르지 않아 건너뜀:', menu);
+            continue;
+          }
+
+          const menuAllergyCodes = Array.isArray(menu.allergies)
+            ? menu.allergies
+              .map(a => Number(a.code))
+              .filter(
+                code =>
+                  Number.isInteger(code) &&
+                  code >= 0 &&
+                  code < ALLERGY_TEXT_LIST.length,
+              )
+            : [];
+
+          const createdMenu = await registerMenu(
+            token,
+            selectedStoreId,
+            name,
+            type,
+            priceNum,
+            menuAllergyCodes,
+          );
+
+          if (!createdMenu || !createdMenu.id) {
+            console.warn('메뉴 등록 실패, 건너뜀:', name);
+            continue;
+          }
+
+          const newMenuId = createdMenu.id;
+
+          if (Array.isArray(menu.options)) {
+            for (const option of menu.options) {
+              const groupName = option.name || '옵션';
+
+              const createdGroup = await registerOptionGroup(
+                token,
+                newMenuId,
+                groupName,
+              );
+
+              if (!createdGroup || !createdGroup.id) {
+                console.warn('옵션 그룹 등록 실패, 건너뜀:', groupName);
+                continue;
+              }
+
+              const groupId = createdGroup.id;
+
+              const minSel =
+                typeof option.minSelected === 'number'
+                  ? option.minSelected
+                  : 0;
+              const maxSel =
+                typeof option.maxSelected === 'number' && option.maxSelected > 0
+                  ? option.maxSelected
+                  : 1;
+
+              try {
+                await editOptionGroup(token, groupId, groupName, minSel, maxSel);
+              } catch (err) {
+                console.warn('옵션 그룹 설정 수정 실패(계속 진행):', err);
+              }
+
+              if (Array.isArray(option.items)) {
+                for (const item of option.items) {
+                  const itemName = item.name || '옵션';
+                  const itemPriceNum = Number(item.price) || 0;
+
+                  const itemAllergyCodes = Array.isArray(item.allergies)
+                    ? item.allergies
+                      .map(a => Number(a.code))
+                      .filter(
+                        code =>
+                          Number.isInteger(code) &&
+                          code >= 0 &&
+                          code < ALLERGY_TEXT_LIST.length,
+                      )
+                    : [];
+
+                  await registerOptionItem(
+                    token,
+                    groupId,
+                    itemName,
+                    itemPriceNum,
+                    itemAllergyCodes,
+                  );
+                }
+              }
+            }
+          }
+        }
+
+        const refreshed = await getStore(selectedStoreId);
+        if (refreshed) {
+          setStoreDetail(refreshed);
+        }
+
+        alert('추가 메뉴 불러오기가 완료되었습니다.');
+      } catch (err) {
+        console.error(err);
+        alert('메뉴를 불러오는 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+      } finally {
+        setBulkMenuLoading(false);
+      }
+    };
+
+    reader.readAsText(file, 'utf-8');
   };
   const handleGuessAllergies = async e => {
     e.preventDefault();
@@ -935,7 +1104,13 @@ function MyPage() {
       : '-';
   return (
     <div className="mypage-root">
-      { }
+      <input
+        type="file"
+        accept=".sddata"
+        ref={importFileInputRef}
+        style={{ display: 'none' }}
+        onChange={handleMenusFileSelected}
+      />
       <header className="mypage-header">
         <div className="mypage-header-left">
           <img
@@ -1211,7 +1386,6 @@ function MyPage() {
                       >
                         <div className="mypage-menu-item-main">
                           <span className="mypage-menu-name">기본 정보</span>
-                          <span className="mypage-menu-tag">읽기 전용</span>
                         </div>
                       </li>
                       {(!storeDetail.menus ||
@@ -1266,7 +1440,20 @@ function MyPage() {
                       >
                         <div className="mypage-menu-item-main">
                           <span className="mypage-menu-item-add-label">
-                            + 추가 메뉴 등록
+                            + 추가 메뉴 등록하기
+                          </span>
+                        </div>
+                      </li>
+                      <li
+                        className={
+                          'mypage-menu-item mypage-menu-item-import' +
+                          (bulkMenuLoading ? ' disabled' : '')
+                        }
+                        onClick={bulkMenuLoading ? undefined : handleClickImportMenus}
+                      >
+                        <div className="mypage-menu-item-main">
+                          <span className="mypage-menu-item-add-label">
+                            {bulkMenuLoading ? '불러오는 중...' : '+ 추가 메뉴 불러오기'}
                           </span>
                         </div>
                       </li>
@@ -1426,6 +1613,19 @@ function MyPage() {
                           등록
                         </button>
                       </form>
+                    </div>
+                    <div className="mypage-qrcode-section">
+                      <h4 className="mypage-menu-detail-title">가게 QR 코드</h4>
+                      <div className="mypage-qrcode-box">
+                        <QRCodeCanvas
+                          value={`https://safedish.com/qrcode?store_id=${selectedStore.id}`}
+                          size={140}
+                          includeMargin
+                        />
+                      </div>
+                      <div className="mypage-qrcode-url">
+                        https://safedish.com/qrcode?store_id={selectedStore.id}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -2388,11 +2588,16 @@ function MyPage() {
             className="mypage-postcode-modal"
             onClick={e => e.stopPropagation()}
           >
-            <Postcode
+            <DaumPostcode
               style={{ width: '100%', height: '100%' }}
               jsOptions={{ animation: true, hideMapBtn: true }}
-              onSelected={handlePostcodeSelected}
-              onError={handlePostcodeError}
+              onComplete={handlePostcodeSelected}
+              onClose={() => setIsPostcodeOpen(false)}
+              animation
+              hideMapBtn
+              errorMessage={
+                <p>주소 서비스를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</p>
+              }
             />
           </div>
         </div>

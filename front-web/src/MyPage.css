@@ -1045,3 +1045,36 @@
 .mypage-option-group-form {
   margin-top: 4px;
 }
+
+.mypage-qrcode-section {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed #e5e7eb;
+  text-align: center;
+}
+
+.mypage-qrcode-box {
+  margin: 8px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.mypage-qrcode-url {
+  font-size: 11px;
+  color: #6b7280;
+  word-break: break-all;
+}
+
+.mypage-menu-item-import {
+  border-style: dashed;
+  background-color: #ffffff;
+}
+
+.mypage-menu-item-import .mypage-menu-item-main {
+  justify-content: center;
+}
+
+.mypage-menu-item-import.disabled {
+  opacity: 0.6;
+  cursor: default;
+}

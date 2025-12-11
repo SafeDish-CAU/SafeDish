@@ -332,16 +332,19 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   legendColorBox: {
-    width: 10,
-    height: 10,
-    borderRadius: 2,
+    width: 12,
+    height: 12,
+    borderRadius: 3,
     marginRight: 4,
+    borderWidth: 1,
   },
   legendColorMain: {
     backgroundColor: '#ff4b26',
+    borderColor: '#e03614',
   },
   legendColorOption: {
-    backgroundColor: '#ffb74d',
+    backgroundColor: '#fff1ea',
+    borderColor: '#ffb38a',
   },
   legendText: {
     fontSize: 11,

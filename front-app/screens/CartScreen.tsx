@@ -72,7 +72,7 @@ function CartScreen({ route, navigation }: NativeStackScreenProps<RootStackParam
           style={styles.emptyButton}
           onPress={() => navigation.navigate('Home')}
         >
-          <Text style={styles.emptyButtonText}>메뉴 보러 가기</Text>
+          <Text style={styles.emptyButtonText}>홈으로 이동하기</Text>
         </TouchableOpacity>
       </View>
     );

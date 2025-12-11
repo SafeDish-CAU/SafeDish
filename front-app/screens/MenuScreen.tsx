@@ -6,6 +6,7 @@ import { useCart } from '../providers/CartProvider';
 import { RootStackParamList } from './Stack';
 import { getMenu, GetMenuResponse } from '../api';
 import OptionCard from '../components/OptionCard';
+import AllergyTags from '../components/AllergyTags';
 
 type AllergyData = {
   code: number;
@@ -288,6 +289,11 @@ function MenuScreen({ route, navigation }: NativeStackScreenProps<RootStackParam
         <View style={styles.menuHeader}>
           <Text style={styles.menuName}>{menu.name}</Text>
           <Text style={styles.menuPrice}>{menu.price.toLocaleString()}원</Text>
+          {menu.allergies.length > 0 && (
+            <View style={styles.allergyRow}>
+              <AllergyTags allergies={menu.allergies} />
+            </View>
+          )}
         </View>
         <View style={styles.divider} />
         {menu.options.map((group, index) => (
@@ -373,6 +379,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: '#444',
+  },
+  allergyRow: {
+    marginTop: 6,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   divider: {
     height: 8,
