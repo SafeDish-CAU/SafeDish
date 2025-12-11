@@ -66,7 +66,7 @@ public class StoreController {
     }
 
     @GetMapping({"", "/"})
-    public ResponseEntity<?> readStores(@RequestParam("owner_id") Long ownerId) {
+    public ResponseEntity<?> readStores(@RequestParam("id") Long ownerId) {
         try {
             ReadStoresResponseDto resDto = new ReadStoresResponseDto();
 
