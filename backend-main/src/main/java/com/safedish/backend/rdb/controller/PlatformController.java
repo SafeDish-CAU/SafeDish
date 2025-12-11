@@ -1,9 +1,6 @@
 package com.safedish.backend.rdb.controller;
 
-import com.safedish.backend.rdb.dto.CreatePlatformRequestDto;
-import com.safedish.backend.rdb.dto.CreatePlatformResponseDto;
-import com.safedish.backend.rdb.dto.ReadPlatformResponseDto;
-import com.safedish.backend.rdb.dto.ReadPlatformsByStoreIdResponseDto;
+import com.safedish.backend.rdb.dto.*;
 import com.safedish.backend.rdb.entity.Baemin;
 import com.safedish.backend.rdb.entity.Coupang;
 import com.safedish.backend.rdb.entity.Store;
@@ -31,9 +28,11 @@ public class PlatformController {
                 if (platformName.equals("baemin")) {
                     Baemin baemin = platformService.createBaemin(token, reqDto.getStoreId(), reqDto.getPlatformSid());
                     platformSid = baemin.getId();
-                } else { // else if (platformName.equals("coupang"))
+                } else if (platformName.equals("coupang")) {
                     Coupang coupang = platformService.createCoupang(token, reqDto.getStoreId(), reqDto.getPlatformSid());
                     platformSid = coupang.getId();
+                } else {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
                 }
                 CreatePlatformResponseDto resDto = new CreatePlatformResponseDto(storeId, platformName, platformSid);
                 return ResponseEntity.ok(resDto);
@@ -68,6 +67,22 @@ public class PlatformController {
             return ResponseEntity.ok(resDto);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PostMapping({"/delete", "/delete/"})
+    public ResponseEntity<?> deletePlatform(@RequestHeader("Authorization") String token, @RequestBody DeletePlatformRequestDto reqDto) {
+        try {
+            if (reqDto.getPfName().equals("baemin")) {
+                platformService.deleteBaemin(token, reqDto.getPfSid());
+            } else if (reqDto.getPfName().equals("coupang")) {
+                platformService.deleteCoupang(token, reqDto.getPfSid());
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 }

@@ -63,6 +63,36 @@ public class PlatformService {
         }
     }
 
+    public void deleteBaemin(String token, Long id) throws Exception {
+        Optional<Baemin> baeminOpt = baeminRepository.findById(id);
+        if (baeminOpt.isEmpty()) {
+            throw new Exception("해당 매장을 찾을 수 없습니다.");
+        }
+
+        Baemin baemin = baeminOpt.get();
+        Owner owner = baemin.getStore().getOwner();
+        if (!owner.getToken().equals(token)) {
+            throw new Exception("유효하지 않은 토큰입니다.");
+        }
+
+        baeminRepository.delete(baemin);
+    }
+
+    public void deleteCoupang(String token, Long id) throws Exception {
+        Optional<Coupang> coupangOpt = coupangRepository.findById(id);
+        if (coupangOpt.isEmpty()) {
+            throw new Exception("해당 매장을 찾을 수 없습니다.");
+        }
+
+        Coupang coupang = coupangOpt.get();
+        Owner owner = coupang.getStore().getOwner();
+        if (!owner.getToken().equals(token)) {
+            throw new Exception("유효하지 않은 토큰입니다.");
+        }
+
+        coupangRepository.delete(coupang);
+    }
+
     public Long findStoreByPlatform(String platformNmae, Long platformSid) {
         if (platformNmae.equals("baemin")) {
             Optional<Baemin> res = baeminRepository.findById(platformSid);
