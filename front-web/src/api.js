@@ -376,12 +376,6 @@ export async function deleteMenu(token, menuId) {
   });
 }
 
-// allergyMask 생성 규칙
-// long allergyMask = 0L;
-// for (Long allergyId : reqDto.getAllergies()) {
-//     allergyMask |= (1L << allergyId);
-// }
-
 /**
  * 
  * @param {string} token 
@@ -424,12 +418,6 @@ export async function editMenu(token, menuId, name, type, price, allergies) {
     return undefined;
   });
 }
-
-// minSelected = 0 인 경우
-// -> '선택' 가능한 옵션으로 최대 maxSelected개 만큼 사용 가능
-
-// minSelected = 1 인 경우
-// -> '필수' 선택 옵션으로 해당 그룹의 아이템 중 1개를 선택해야 한다. 이때 maxSelected는 항상 1이어야 한다.
 
 /**
  * 

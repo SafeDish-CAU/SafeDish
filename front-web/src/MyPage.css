@@ -1,893 +1,888 @@
-/* 공통 레이아웃 */
 .mypage-root {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: #f5f5f7;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui,
-    sans-serif;
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+background-color: #f5f5f7;
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui,
+sans-serif;
 }
-
-/* 헤더 */
 .mypage-header {
-  height: 56px;
-  padding: 0 24px;
-  background-color: #ffffff;
-  color: #111827;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+height: 56px;
+padding: 0 24px;
+background-color: #ffffff;
+color: #111827;
+display: flex;
+align-items: center;
+justify-content: space-between;
+box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+box-sizing: border-box;
 }
-
 .mypage-header-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+display: flex;
+align-items: center;
+gap: 10px;
 }
-
 .mypage-logo-image {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+width: 32px;
+height: 32px;
+border-radius: 8px;
 }
-
 .mypage-logo-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
+display: flex;
+flex-direction: column;
+line-height: 1.1;
 }
-
 .mypage-logo-title {
-  font-size: 17px;
-  font-weight: 700;
-  color: #111827;
+font-size: 17px;
+font-weight: 700;
+color: #111827;
 }
-
 .mypage-logo-sub {
-  font-size: 11px;
-  color: #9ca3af;
+font-size: 11px;
+color: #9ca3af;
 }
-
-/* 레이아웃 */
 .mypage-columns {
-  flex: 1;
-  display: flex;
-  min-height: 0;
+flex: 1;
+display: flex;
+min-height: 0;
 }
-
-/* 공통 컬럼 스타일 */
 .mypage-column {
-  display: flex;
-  flex-direction: column;
-  border-left: 1px solid #e5e7eb;
+display: flex;
+flex-direction: column;
+border-left: 1px solid #e5e7eb;
+box-sizing: border-box;
 }
-
 .mypage-column-header {
-  padding: 10px 14px;
-  border-bottom: 1px solid #e5e7eb;
-  background-color: #f9fafb;
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
+padding: 10px 14px;
+border-bottom: 1px solid #e5e7eb;
+background-color: #f9fafb;
+display: flex;
+align-items: baseline;
+gap: 8px;
 }
-
 .mypage-column-title {
-  margin: 0;
-  font-size: 15px;
-  font-weight: 700;
+margin: 0;
+font-size: 15px;
+font-weight: 700;
 }
-
 .mypage-column-subtitle {
-  font-size: 11px;
-  color: #6b7280;
+font-size: 11px;
+color: #6b7280;
 }
-
 .mypage-column-body {
-  flex: 1;
-  padding: 12px 14px;
-  overflow-y: auto;
-  box-sizing: border-box;
+flex: 1;
+padding: 12px 14px;
+overflow-y: auto;
+box-sizing: border-box;
 }
-
-/* 1. 가게 목록 컬럼 (왼쪽) */
 .mypage-column-stores {
-  width: 260px;
-  background-color: #031a2e;
-  color: #e5e7eb;
-  border-left: none;
+width: 260px;
+background-color: #031a2e;
+color: #e5e7eb;
+border-left: none;
 }
-
 .mypage-column-stores .mypage-column-header {
-  background-color: #031a2e;
-  border-bottom: 1px solid #0f253d;
+background-color: #031a2e;
+border-bottom: 1px solid #0f253d;
 }
-
 .mypage-column-stores .mypage-column-title {
-  color: #ffffff;
+color: #ffffff;
 }
-
 .mypage-column-stores .mypage-column-body {
-  padding-top: 10px;
+padding-top: 10px;
 }
-
-/* 메시지 / 에러 공통 */
 .mypage-message {
-  font-size: 12px;
-  color: #cbd5f5;
-  line-height: 1.5;
+font-size: 12px;
+color: #4b5563;
+line-height: 1.5;
 }
-
+.mypage-column-stores .mypage-message {
+color: #cbd5f5;
+}
 .mypage-message.error {
-  color: #fecaca;
+color: #dc2626;
 }
-
+.mypage-column-stores .mypage-message.error {
+color: #fecaca;
+}
 .mypage-message-link {
-  margin-top: 8px;
-  padding: 4px 8px;
-  border-radius: 999px;
-  border: none;
-  background-color: #ff4b26;
-  color: #ffffff;
-  font-size: 11px;
-  cursor: pointer;
+margin-top: 8px;
+padding: 4px 8px;
+border-radius: 999px;
+border: none;
+background-color: #ff4b26;
+color: #ffffff;
+font-size: 11px;
+cursor: pointer;
 }
-
-/* 가게 리스트 */
 .mypage-store-list {
-  margin-top: 6px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  max-height: calc(100vh - 56px - 80px);
-  overflow-y: auto;
+margin-top: 6px;
+display: flex;
+flex-direction: column;
+gap: 6px;
+max-height: calc(100vh - 56px - 80px);
+overflow-y: auto;
 }
-
 .mypage-store-item {
-  width: 100%;
-  text-align: left;
-  padding: 8px 10px;
-  border-radius: 10px;
-  border: 1px solid transparent;
-  background-color: #071f36;
-  color: #e5e7eb;
-  cursor: pointer;
-  transition: background-color 0.12s ease, border-color 0.12s ease,
-    transform 0.08s ease;
+width: 100%;
+text-align: left;
+padding: 8px 10px;
+border-radius: 10px;
+border: 1px solid transparent;
+background-color: #071f36;
+color: #e5e7eb;
+cursor: pointer;
+transition: background-color 0.12s ease, border-color 0.12s ease,
+transform 0.08s ease;
+box-sizing: border-box;
 }
-
 .mypage-store-item:hover {
-  background-color: #0b2845;
-  transform: translateY(-1px);
+background-color: #0b2845;
+transform: translateY(-1px);
 }
-
 .mypage-store-item.active {
-  border-color: #ff8f4b;
-  background: linear-gradient(135deg, #ff4b26, #ff8f4b);
-  color: #ffffff;
+border-color: #ff8f4b;
+background: linear-gradient(135deg, #ff4b26, #ff8f4b);
+color: #ffffff;
 }
-
 .mypage-store-name {
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 2px;
+font-size: 13px;
+font-weight: 600;
+margin-bottom: 2px;
 }
-
 .mypage-store-address {
-  font-size: 11px;
-  color: #cbd5f5;
+font-size: 11px;
+color: #cbd5f5;
 }
-
-/* 추가 가게 등록 항목 */
 .mypage-store-item-add {
-  margin-top: 6px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  justify-content: center;
-  background-color: transparent;
-  border: 1px dashed #64748b;
-  color: #cbd5f5;
+margin-top: 6px;
+display: flex;
+align-items: center;
+gap: 6px;
+justify-content: center;
+background-color: transparent;
+border: 1px dashed #64748b;
+color: #cbd5f5;
 }
-
 .mypage-store-item-add:hover {
-  background-color: #0b2845;
-  border-color: #ff8f4b;
+background-color: #0b2845;
+border-color: #ff8f4b;
 }
-
 .mypage-store-item-add.active-add {
-  border-color: #ff8f4b;
-  background-color: #0b2845;
+border-color: #ff8f4b;
+background-color: #0b2845;
 }
-
 .mypage-store-add-plus {
-  font-size: 14px;
-  font-weight: 700;
+font-size: 14px;
+font-weight: 700;
 }
-
-/* 2. 가운데 컬럼 (store 모드에서 메뉴/정보 선택만 표시) */
 .mypage-column-menus {
-  width: 320px;
-  background-color: #f5f5f7;
+width: 320px;
+background-color: #f5f5f7;
 }
-
-/* 2. 가게 등록 컬럼 (가운데+오른쪽을 쓰는 느낌) */
 .mypage-column-register-full {
-  flex: 1;
-  background-color: #f5f5f7;
+flex: 1;
+background-color: #f5f5f7;
 }
-
-/* 가게 등록 카드 */
+.mypage-menu-section {
+padding: 12px 10px;
+border-radius: 10px;
+background-color: #ffffff;
+border: 1px solid #e5e7eb;
+}
+.mypage-section-title {
+margin: 0 0 8px 0;
+font-size: 13px;
+font-weight: 700;
+color: #111827;
+}
+.mypage-menu-list {
+list-style: none;
+margin: 6px 0 0 0;
+padding: 0;
+display: flex;
+flex-direction: column;
+gap: 6px;
+}
+.mypage-menu-item {
+padding: 6px 8px;
+border-radius: 8px;
+border: 1px solid transparent;
+background-color: #f9fafb;
+cursor: pointer;
+transition: background-color 0.12s ease, border-color 0.12s ease;
+box-sizing: border-box;
+}
+.mypage-menu-item:hover {
+background-color: #fff7f3;
+border-color: #ffccae;
+}
+.mypage-menu-item.active {
+background-color: #ffefe8;
+border-color: #ff8f4b;
+}
+.mypage-menu-item.disabled {
+cursor: default;
+opacity: 0.7;
+}
+.mypage-menu-item-main {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.mypage-menu-name {
+font-size: 13px;
+font-weight: 600;
+color: #111827;
+}
+.mypage-menu-price {
+font-size: 12px;
+color: #6b7280;
+}
+.mypage-menu-tag {
+font-size: 11px;
+color: #ff4b26;
+font-weight: 600;
+}
+.mypage-menu-item-add {
+border-style: dashed;
+background-color: #ffffff;
+}
+.mypage-menu-item-add .mypage-menu-item-main {
+justify-content: center;
+}
+.mypage-menu-item-add-label {
+font-size: 12px;
+font-weight: 600;
+color: #ff4b26;
+}
 .mypage-register-wrapper {
-  display: flex;
-  justify-content: center;
+display: flex;
+justify-content: center;
 }
-
 .mypage-register-card {
-  width: 100%;
-  max-width: 640px;
-  padding: 16px 18px 14px;
-  background-color: #ffffff;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  box-sizing: border-box;
+width: 100%;
+max-width: 640px;
+padding: 16px 18px 14px;
+background-color: #ffffff;
+border-radius: 12px;
+border: 1px solid #e5e7eb;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+box-sizing: border-box;
 }
-
 .mypage-register-row {
-  margin-bottom: 10px;
+margin-bottom: 10px;
 }
-
 .mypage-register-label {
-  display: flex;
-  flex-direction: column;
-  font-size: 12px;
-  color: #4b5563;
-  gap: 4px;
+display: flex;
+flex-direction: column;
+font-size: 12px;
+color: #4b5563;
+gap: 4px;
 }
-
 .mypage-register-label-text {
-  font-size: 12px;
-  color: #4b5563;
-  font-weight: 600;
-  display: block;
-  margin-bottom: 4px;
+font-size: 12px;
+color: #4b5563;
+font-weight: 600;
+display: block;
+margin-bottom: 4px;
 }
-
 .mypage-register-input {
-  padding: 6px 8px;
-  font-size: 13px;
-  border-radius: 6px;
-  border: 1px solid #d1d5db;
-  background-color: #ffffff;
+padding: 6px 8px;
+font-size: 13px;
+border-radius: 6px;
+border: 1px solid #d1d5db;
+background-color: #ffffff;
+box-sizing: border-box;
 }
-
 .mypage-register-input:focus {
-  outline: none;
-  border-color: #ff4b26;
-  box-shadow: 0 0 0 1px rgba(255, 75, 38, 0.2);
+outline: none;
+border-color: #ff4b26;
+box-shadow: 0 0 0 1px rgba(255, 75, 38, 0.2);
 }
-
-/* textarea 공통 */
 .mypage-textarea {
-  resize: vertical;
-  min-height: 72px;
+resize: vertical;
+min-height: 72px;
 }
-
-/* 한 줄에 여러 필드 */
 .register-row-inline {
-  display: flex;
-  gap: 8px;
-  align-items: flex-end;
+display: flex;
+gap: 8px;
+align-items: flex-end;
 }
-
 .mypage-register-label.half {
-  flex: 0 0 120px;
+flex: 0 0 120px;
 }
-
 .mypage-register-label.flex-1 {
-  flex: 1;
+flex: 1;
 }
-
-/* 카테고리 선택 */
 .mypage-register-type-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
+display: flex;
+flex-wrap: wrap;
+gap: 4px;
 }
-
 .mypage-register-type-chip {
-  padding: 4px 8px;
-  border-radius: 999px;
-  border: 1px solid #d1d5db;
-  background-color: #ffffff;
-  font-size: 11px;
-  cursor: pointer;
+padding: 4px 8px;
+border-radius: 999px;
+border: 1px solid #d1d5db;
+background-color: #ffffff;
+font-size: 11px;
+cursor: pointer;
 }
-
 .mypage-register-type-chip-active {
-  border-color: #ff4b26;
-  background-color: #ffefe8;
-  color: #b91c1c;
+border-color: #ff4b26;
+background-color: #ffefe8;
+color: #b91c1c;
 }
-
-/* 등록 버튼 영역 */
 .mypage-register-actions {
-  margin-top: 6px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
+margin-top: 6px;
+display: flex;
+justify-content: flex-end;
+gap: 8px;
 }
-
 .mypage-register-cancel,
 .mypage-register-submit {
-  padding: 6px 12px;
-  border-radius: 999px;
-  border: none;
-  font-size: 12px;
-  cursor: pointer;
+padding: 6px 12px;
+border-radius: 999px;
+border: none;
+font-size: 12px;
+cursor: pointer;
 }
-
 .mypage-register-cancel {
-  background-color: #e5e7eb;
-  color: #374151;
+background-color: #e5e7eb;
+color: #374151;
 }
-
 .mypage-register-submit {
-  background-color: #ff4b26;
-  color: #ffffff;
-  font-weight: 600;
+background-color: #ff4b26;
+color: #ffffff;
+font-weight: 600;
 }
-
 .mypage-register-submit:hover {
-  background-color: #ff6a47;
+background-color: #ff6a47;
 }
-
-/* 주소 검색 버튼 */
 .mypage-register-search {
-  flex: 0 0 auto;
+flex: 0 0 auto;
 }
-
 .mypage-postcode-button {
-  padding: 7px 12px;
-  border-radius: 999px;
-  border: none;
-  background-color: #ff4b26;
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
+padding: 7px 12px;
+border-radius: 999px;
+border: none;
+background-color: #ff4b26;
+color: #ffffff;
+font-size: 12px;
+font-weight: 600;
+cursor: pointer;
+white-space: nowrap;
 }
-
 .mypage-postcode-button:hover {
-  background-color: #ff6a47;
+background-color: #ff6a47;
 }
-
-/* 가게 등록 도움 문구 */
 .mypage-register-help {
-  margin-top: 8px;
-  font-size: 12px;
-  color: #6b7280;
-  line-height: 1.5;
-  text-align: center;
+margin-top: 8px;
+font-size: 12px;
+color: #6b7280;
+line-height: 1.5;
+text-align: center;
 }
-
-/* 3. 오른쪽 상세 컬럼 (기본정보/메뉴 정보) */
 .mypage-column-detail {
-  flex: 1;
-  background-color: #f3f4f6;
+flex: 1;
+background-color: #f3f4f6;
 }
-
-.mypage-menu-detail-placeholder {
-  font-size: 13px;
-  color: #4b5563;
-}
-
-/* Kakao postcode 모달 */
-.mypage-postcode-backdrop {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.45);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.mypage-postcode-modal {
-  width: 420px;
-  max-width: 90%;
-  height: 430px;
-  background-color: #ffffff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-}
-
-/* 메뉴 / 정보 선택 리스트 섹션 (가운데 컬럼) */
-.mypage-menu-section {
-  padding: 12px 10px;
-  border-radius: 10px;
-  background-color: #ffffff;
-  border: 1px solid #e5e7eb;
-}
-
-.mypage-section-title {
-  margin: 0 0 8px 0;
-  font-size: 13px;
-  font-weight: 700;
-  color: #111827;
-}
-
-.mypage-menu-list {
-  list-style: none;
-  margin: 6px 0 0 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.mypage-menu-item {
-  padding: 6px 8px;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  background-color: #f9fafb;
-  cursor: pointer;
-  transition: background-color 0.12s ease, border-color 0.12s ease;
-}
-
-.mypage-menu-item:hover {
-  background-color: #fff7f3;
-  border-color: #ffccae;
-}
-
-.mypage-menu-item.active {
-  background-color: #ffefe8;
-  border-color: #ff8f4b;
-}
-
-.mypage-menu-item.disabled {
-  cursor: default;
-  opacity: 0.7;
-}
-
-.mypage-menu-item-main {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.mypage-menu-name {
-  font-size: 13px;
-  font-weight: 600;
-  color: #111827;
-}
-
-.mypage-menu-price {
-  font-size: 12px;
-  color: #6b7280;
-}
-
-.mypage-menu-tag {
-  font-size: 11px;
-  color: #ff4b26;
-  font-weight: 600;
-}
-
-/* 추가 메뉴 등록 아이템 */
-.mypage-menu-item-add {
-  border-style: dashed;
-  background-color: #ffffff;
-}
-
-.mypage-menu-item-add .mypage-menu-item-main {
-  justify-content: center;
-}
-
-.mypage-menu-item-add-label {
-  font-size: 12px;
-  font-weight: 600;
-  color: #ff4b26;
-}
-
-/* 오른쪽 기본정보 편집 래퍼 */
-.mypage-basic-edit-wrapper {
-  display: flex;
-  justify-content: center;
-}
-
-/* 오른쪽 기본정보/플랫폼 카드 */
-.mypage-basic-edit-card {
-  max-width: 520px;
-}
-
-/* 기본 정보 표시 */
-.mypage-basic-info-group {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-bottom: 10px;
-}
-
-.mypage-basic-info-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-}
-
-.mypage-basic-info-label {
-  color: #6b7280;
-}
-
-.mypage-basic-info-value {
-  color: #111827;
-  font-weight: 500;
-  margin-left: 12px;
-  text-align: right;
-}
-
-/* 플랫폼 섹션 – 오른쪽 카드 내부에서 사용 */
-.mypage-platform-section {
-  margin-top: 14px;
-  padding-top: 10px;
-  border-top: 1px dashed #e5e7eb;
-}
-
-.mypage-platform-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 4px;
-}
-
-.mypage-platform-title {
-  font-size: 12px;
-  font-weight: 600;
-  color: #111827;
-}
-
-.mypage-platform-status {
-  font-size: 11px;
-  color: #6b7280;
-}
-
-.mypage-platform-status.error {
-  color: #dc2626;
-}
-
-.mypage-platform-list {
-  list-style: none;
-  margin: 4px 0 6px 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.mypage-platform-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 11px;
-  padding: 4px 6px;
-  border-radius: 6px;
-  background-color: #f9fafb;
-}
-
-.mypage-platform-item.empty {
-  justify-content: flex-start;
-  color: #9ca3af;
-}
-
-.mypage-platform-left {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.mypage-platform-label {
-  font-weight: 600;
-  color: #111827;
-}
-
-.mypage-platform-sid {
-  color: #6b7280;
-}
-
-.mypage-platform-delete {
-  border: none;
-  background: transparent;
-  color: #9ca3af;
-  font-size: 11px;
-  cursor: pointer;
-}
-
-.mypage-platform-delete:hover {
-  color: #dc2626;
-}
-
-/* 플랫폼 등록 폼 */
-.mypage-platform-form {
-  margin-top: 6px;
-  display: flex;
-  gap: 4px;
-}
-
-.mypage-platform-select {
-  flex: 0 0 110px;
-  padding: 4px 6px;
-  font-size: 11px;
-  border-radius: 6px;
-  border: 1px solid #d1d5db;
-  background-color: #ffffff;
-}
-
-.mypage-platform-input {
-  flex: 1;
-  padding: 4px 6px;
-  font-size: 11px;
-  border-radius: 6px;
-  border: 1px solid #d1d5db;
-}
-
-.mypage-platform-submit {
-  flex: 0 0 52px;
-  padding: 4px 6px;
-  font-size: 11px;
-  border-radius: 999px;
-  border: none;
-  background-color: #ff4b26;
-  color: #ffffff;
-  cursor: pointer;
-}
-
-.mypage-platform-submit:hover {
-  background-color: #ff6a47;
-}
-
-/* 메뉴 등록 카드 */
-.mypage-menu-create-card {
-  max-width: 520px;
-}
-
-/* 에러 & 힌트 텍스트 */
-.mypage-error-text {
-  margin-top: 4px;
-  font-size: 11px;
-  color: #dc2626;
-}
-
-.mypage-hint-text {
-  font-size: 11px;
-  color: #6b7280;
-  margin-bottom: 6px;
-}
-
-/* 알레르기 선택 */
-.mypage-allergy-section {
-  margin-top: 6px;
-}
-
-.mypage-allergy-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-}
-
-.mypage-allergy-chip {
-  padding: 3px 7px;
-  border-radius: 999px;
-  border: 1px solid #e5e7eb;
-  background-color: #ffffff;
-  font-size: 11px;
-  cursor: pointer;
-}
-
-.mypage-allergy-chip.active {
-  border-color: #ff4b26;
-  background-color: #ffefe8;
-  color: #b91c1c;
-}
-
-/* 메뉴 상세 래퍼 */
+.mypage-basic-edit-wrapper,
 .mypage-menu-detail-wrapper {
-  display: flex;
-  justify-content: center;
+display: flex;
+justify-content: center;
 }
-
-.mypage-menu-detail-card {
-  max-width: 520px;
+.mypage-basic-edit-card,
+.mypage-menu-detail-card,
+.mypage-menu-create-card {
+max-width: 520px;
 }
-
-/* 메뉴 상세 상단 헤더 + 버튼들 */
+.mypage-basic-info-group {
+display: flex;
+flex-direction: column;
+gap: 4px;
+margin-bottom: 10px;
+}
+.mypage-basic-info-row {
+display: flex;
+justify-content: space-between;
+font-size: 12px;
+}
+.mypage-basic-info-label {
+color: #6b7280;
+}
+.mypage-basic-info-value {
+color: #111827;
+font-weight: 500;
+margin-left: 12px;
+text-align: right;
+}
+.mypage-error-text {
+margin-top: 4px;
+font-size: 11px;
+color: #dc2626;
+}
+.mypage-hint-text {
+font-size: 11px;
+color: #6b7280;
+margin-bottom: 6px;
+}
+.mypage-allergy-section {
+margin-top: 6px;
+}
+.mypage-allergy-grid {
+display: flex;
+flex-wrap: wrap;
+gap: 4px;
+}
+.mypage-allergy-chip {
+padding: 3px 7px;
+border-radius: 999px;
+border: 1px solid #e5e7eb;
+background-color: #ffffff;
+font-size: 11px;
+cursor: pointer;
+}
+.mypage-allergy-chip.active {
+border-color: #ff4b26;
+background-color: #ffefe8;
+color: #b91c1c;
+}
 .mypage-menu-detail-header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 8px;
 }
-
 .mypage-menu-detail-actions {
-  display: flex;
-  gap: 6px;
+display: flex;
+gap: 6px;
 }
-
 .mypage-menu-detail-btn {
-  padding: 4px 8px;
-  border-radius: 999px;
-  border: 1px solid #d1d5db;
-  background-color: #ffffff;
-  font-size: 11px;
-  cursor: pointer;
+padding: 4px 8px;
+border-radius: 999px;
+border: 1px solid #d1d5db;
+background-color: #ffffff;
+font-size: 11px;
+cursor: pointer;
 }
-
 .mypage-menu-detail-btn-primary {
-  border-color: #ff4b26;
-  background-color: #ff4b26;
-  color: #ffffff;
-  font-weight: 600;
+border-color: #ff4b26;
+background-color: #ff4b26;
+color: #ffffff;
+font-weight: 600;
 }
-
 .mypage-menu-detail-btn-danger {
-  border-color: #fecaca;
-  background-color: #fef2f2;
-  color: #b91c1c;
+border-color: #fecaca;
+background-color: #fef2f2;
+color: #b91c1c;
 }
-
 .mypage-menu-detail-section {
-  margin-top: 8px;
+margin-top: 8px;
 }
-
 .mypage-menu-detail-group {
-  margin-bottom: 6px;
+margin-bottom: 6px;
 }
-
 .mypage-menu-detail-subsection {
-  margin-top: 6px;
+margin-top: 6px;
 }
-
 .mypage-menu-detail-title {
-  margin: 0 0 6px 0;
-  font-size: 12px;
-  font-weight: 600;
-  color: #111827;
+margin: 0 0 6px 0;
+font-size: 12px;
+font-weight: 600;
+color: #111827;
 }
-
-/* 옵션 리스트 */
+.mypage-platform-section {
+margin-top: 14px;
+padding-top: 10px;
+border-top: 1px dashed #e5e7eb;
+}
+.mypage-platform-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 4px;
+}
+.mypage-platform-title {
+font-size: 12px;
+font-weight: 600;
+color: #111827;
+}
+.mypage-platform-status {
+font-size: 11px;
+color: #6b7280;
+}
+.mypage-platform-status.error {
+color: #dc2626;
+}
+.mypage-platform-list {
+list-style: none;
+margin: 4px 0 6px 0;
+padding: 0;
+display: flex;
+flex-direction: column;
+gap: 3px;
+}
+.mypage-platform-item {
+display: flex;
+justify-content: space-between;
+align-items: center;
+font-size: 11px;
+padding: 4px 6px;
+border-radius: 6px;
+background-color: #f9fafb;
+box-sizing: border-box;
+}
+.mypage-platform-item.empty {
+justify-content: flex-start;
+color: #9ca3af;
+}
+.mypage-platform-left {
+display: flex;
+flex-direction: column;
+gap: 2px;
+}
+.mypage-platform-label {
+font-weight: 600;
+color: #111827;
+}
+.mypage-platform-sid {
+color: #6b7280;
+}
+.mypage-platform-delete {
+border: none;
+background: transparent;
+color: #9ca3af;
+font-size: 11px;
+cursor: pointer;
+}
+.mypage-platform-delete:hover {
+color: #dc2626;
+}
+.mypage-platform-form {
+margin-top: 6px;
+display: flex;
+gap: 4px;
+}
+.mypage-platform-select {
+flex: 0 0 110px;
+padding: 4px 6px;
+font-size: 11px;
+border-radius: 6px;
+border: 1px solid #d1d5db;
+background-color: #ffffff;
+}
+.mypage-platform-input {
+flex: 1;
+padding: 4px 6px;
+font-size: 11px;
+border-radius: 6px;
+border: 1px solid #d1d5db;
+}
+.mypage-platform-submit {
+flex: 0 0 52px;
+padding: 4px 6px;
+font-size: 11px;
+border-radius: 999px;
+border: none;
+background-color: #ff4b26;
+color: #ffffff;
+cursor: pointer;
+}
+.mypage-platform-submit:hover {
+background-color: #ff6a47;
+}
+.mypage-postcode-backdrop {
+position: fixed;
+inset: 0;
+background-color: rgba(0, 0, 0, 0.45);
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 1000;
+}
+.mypage-postcode-modal {
+width: 420px;
+max-width: 90%;
+height: 430px;
+background-color: #ffffff;
+border-radius: 12px;
+overflow: hidden;
+box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+box-sizing: border-box;
+}
 .mypage-option-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 4px;
+display: flex;
+flex-direction: column;
+gap: 8px;
+margin-top: 4px;
 }
-
 .mypage-option-group-card {
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  background-color: #ffffff;
+padding: 10px 10px;
+border-radius: 10px;
+border: 1px solid #e5e7eb;
+background-color: #ffffff;
+box-sizing: border-box;
 }
-
 .mypage-option-group-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 4px;
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+gap: 8px;
+padding-bottom: 6px;
+margin-bottom: 8px;
+border-bottom: 1px solid #e5e7eb;
 }
-
+.mypage-option-group-header-main {
+flex: 1;
+min-width: 0;
+display: flex;
+flex-direction: column;
+gap: 3px;
+}
 .mypage-option-group-name {
-  font-size: 12px;
-  font-weight: 600;
-  color: #111827;
+font-size: 12px;
+font-weight: 600;
+color: #111827;
 }
-
 .mypage-option-group-rule {
-  font-size: 11px;
-  color: #6b7280;
+display: inline-block;
+font-size: 11px;
+color: #6b7280;
 }
-
-.mypage-option-item-list {
-  list-style: none;
-  margin: 4px 0 0 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.mypage-option-group-actions {
+display: grid;
+grid-template-columns: auto auto;
+column-gap: 4px;
+row-gap: 4px;
+justify-content: flex-end;
 }
-
-.mypage-option-item-row {
-  padding: 4px 0;
-  border-bottom: 1px dashed #e5e7eb;
-}
-
-.mypage-option-item-row:last-child {
-  border-bottom: none;
-}
-
-.mypage-option-item-row.empty {
-  border-bottom: none;
-}
-
-.mypage-option-item-main {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.mypage-option-item-name {
-  font-size: 12px;
-  color: #111827;
-}
-
-.mypage-option-item-price {
-  font-size: 11px;
-  color: #6b7280;
-}
-
-.mypage-option-item-allergies {
-  margin-top: 3px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 3px;
-}
-
-.mypage-option-item-allergy-chip {
-  padding: 2px 6px;
-  border-radius: 999px;
-  border: 1px solid #e5e7eb;
-  font-size: 10px;
-  background-color: #f9fafb;
-  color: #374151;
-}
-
-/* 옵션 그룹 헤더 오른쪽 영역 (규칙 + 버튼) */
-.mypage-option-group-right {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
 .mypage-option-add-btn {
-  padding: 3px 8px;
-  border-radius: 999px;
-  border: 1px dashed #d1d5db;
-  background-color: #ffffff;
-  font-size: 11px;
-  cursor: pointer;
-  white-space: nowrap;
+padding: 3px 8px;
+border-radius: 999px;
+border: 1px dashed #d1d5db;
+background-color: #ffffff;
+font-size: 11px;
+cursor: pointer;
+white-space: nowrap;
+grid-column: 2;
+grid-row: 2;
 }
-
 .mypage-option-add-btn:hover:not(:disabled) {
-  border-color: #ff4b26;
-  background-color: #ffefe8;
-  color: #b91c1c;
+border-color: #ff4b26;
+background-color: #ffefe8;
+color: #b91c1c;
 }
-
+.mypage-option-group-btn {
+padding: 3px 7px;
+border-radius: 999px;
+border: 1px solid #d1d5db;
+background-color: #ffffff;
+font-size: 11px;
+cursor: pointer;
+white-space: nowrap;
+}
+.mypage-option-group-btn-primary {
+border-color: #ff4b26;
+background-color: #ff4b26;
+color: #ffffff;
+font-weight: 600;
+}
+.mypage-option-group-btn-danger {
+border-color: #fecaca;
+background-color: #fef2f2;
+color: #b91c1c;
+}
+.mypage-option-group-edit-label {
+font-size: 11px;
+color: #4b5563;
+display: flex;
+flex-direction: column;
+gap: 4px;
+}
+.mypage-option-group-edit-input {
+font-size: 12px;
+}
+.mypage-option-group-edit-mode {
+margin-top: 6px;
+display: flex;
+align-items: center;
+justify-content: flex-start;
+gap: 4px;
+}
+.mypage-option-group-edit-mode-label {
+font-size: 11px;
+color: #4b5563;
+margin-right: 2px;
+}
+.mypage-option-group-mode-toggle {
+display: inline-flex;
+padding: 2px;
+border-radius: 999px;
+background-color: #f3f4f6;
+gap: 2px;
+}
+.mypage-option-group-mode-btn {
+padding: 3px 10px;
+border-radius: 999px;
+border: none;
+background-color: transparent;
+font-size: 11px;
+color: #6b7280;
+cursor: pointer;
+}
+.mypage-option-group-mode-btn.active {
+background-color: #ff4b26;
+color: #ffffff;
+font-weight: 600;
+}
+.mypage-option-group-edit-row {
+margin-top: 6px;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+.mypage-option-group-edit-label-inline {
+font-size: 11px;
+color: #4b5563;
+display: flex;
+flex-direction: column;
+gap: 3px;
+}
+.mypage-option-group-number-input {
+width: 80px;
+padding: 4px 6px;
+border-radius: 6px;
+border: 1px solid #d1d5db;
+font-size: 12px;
+box-sizing: border-box;
+}
+.mypage-option-group-number-input:disabled {
+background-color: #f3f4f6;
+color: #9ca3af;
+}
+.mypage-option-group-edit-caption {
+font-size: 11px;
+color: #6b7280;
+}
+.mypage-option-add-btn {
+padding: 3px 8px;
+border-radius: 999px;
+border: 1px dashed #d1d5db;
+background-color: #ffffff;
+font-size: 11px;
+cursor: pointer;
+white-space: nowrap;
+}
+.mypage-option-add-btn:hover:not(:disabled) {
+border-color: #ff4b26;
+background-color: #ffefe8;
+color: #b91c1c;
+}
 .mypage-option-add-btn:disabled {
-  opacity: 0.5;
-  cursor: default;
+opacity: 0.5;
+cursor: default;
 }
-
-/* 옵션 아이템 생성 영역 */
+.mypage-option-item-list {
+list-style: none;
+margin: 4px 0 0 0;
+padding: 0;
+display: flex;
+flex-direction: column;
+gap: 4px;
+}
+.mypage-option-item-row {
+padding: 4px 0;
+border-bottom: 1px dashed #e5e7eb;
+}
+.mypage-option-item-row:last-child {
+border-bottom: none;
+}
+.mypage-option-item-row.empty {
+border-bottom: none;
+}
+.mypage-option-item-main {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.mypage-option-item-name {
+font-size: 12px;
+color: #111827;
+}
+.mypage-option-item-price {
+font-size: 11px;
+color: #6b7280;
+}
+.mypage-option-item-allergies {
+margin-top: 3px;
+display: flex;
+flex-wrap: wrap;
+gap: 4px;
+}
+.mypage-option-item-allergy-chip {
+padding: 3px 8px;
+border-radius: 999px;
+border: 1px solid #ffcfb3;
+font-size: 11px;
+background-color: #ffefe8;
+color: #b91c1c;
+}
+.mypage-option-item-actions {
+margin-top: 4px;
+display: flex;
+gap: 4px;
+align-items: center;
+justify-content: flex-end;
+width: 100%;
+}
+.mypage-option-item-btn {
+padding: 3px 7px;
+border-radius: 999px;
+border: 1px solid #d1d5db;
+background-color: #ffffff;
+font-size: 11px;
+cursor: pointer;
+white-space: nowrap;
+}
+.mypage-option-item-btn-primary {
+border-color: #ff4b26;
+background-color: #ff4b26;
+color: #ffffff;
+font-weight: 600;
+}
+.mypage-option-item-btn-danger {
+border-color: #fecaca;
+background-color: #fef2f2;
+color: #b91c1c;
+}
+.mypage-option-item-edit-block {
+margin-top: 6px;
+padding: 6px 8px;
+border-radius: 8px;
+background-color: #ffffff;
+border: 1px solid #e5e7eb;
+box-sizing: border-box;
+}
+.mypage-option-item-edit-actions {
+margin-top: 6px;
+display: flex;
+justify-content: flex-end;
+gap: 6px;
+}
 .mypage-option-item-create {
-  margin-top: 6px;
-  padding-top: 8px;
-  border-top: 1px dashed #e5e7eb;
+margin-top: 6px;
+padding-top: 8px;
+border-top: 1px dashed #e5e7eb;
 }
-
 .mypage-option-item-create .mypage-register-row {
-  margin-bottom: 8px;
+margin-bottom: 8px;
 }
-
-/* 옵션 그룹 생성 섹션 */
 .mypage-option-create-group {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px dashed #e5e7eb;
+margin-top: 10px;
+padding-top: 10px;
+border-top: 1px dashed #e5e7eb;
 }
-
 .mypage-option-group-form {
-  margin-top: 4px;
+margin-top: 4px;
 }
