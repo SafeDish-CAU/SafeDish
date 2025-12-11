@@ -22,6 +22,10 @@ public class OwnerService {
             Owner owner = new Owner(email, encodedPassword);
             ownerRepository.save(owner);
 
+            String token = tokenGenerator.generateToken(owner.getId(), owner.getEmail());
+            owner.setToken(token);
+            ownerRepository.save(owner);
+
             return owner;
         }  catch (Exception e) {
             throw new Exception("이미 사용 중인 이메일입니다.");
@@ -55,5 +59,14 @@ public class OwnerService {
         if (ownerOpt.isEmpty()) {
             throw new Exception("유효하지 않은 토큰입니다.");
         }
+    }
+
+    public Owner findOwnerById(Long id) throws Exception {
+        Optional<Owner> ownerOpt = ownerRepository.findById(id);
+        if (ownerOpt.isEmpty()) {
+            throw new Exception("해당하는 유저가 없습니다.");
+        }
+
+        return ownerOpt.get();
     }
 }

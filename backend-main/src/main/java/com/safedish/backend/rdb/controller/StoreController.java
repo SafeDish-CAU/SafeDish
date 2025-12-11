@@ -5,7 +5,10 @@ import com.safedish.backend.kakao.service.KakaoService;
 import com.safedish.backend.rdb.dto.CreateStoreRequestDto;
 import com.safedish.backend.rdb.dto.CreateStoreResponseDto;
 import com.safedish.backend.rdb.dto.ReadStoreResponseDto;
+import com.safedish.backend.rdb.dto.ReadStoresResponseDto;
+import com.safedish.backend.rdb.entity.Owner;
 import com.safedish.backend.rdb.entity.Store;
+import com.safedish.backend.rdb.service.OwnerService;
 import com.safedish.backend.rdb.service.StoreService;
 import com.safedish.backend.recommend.service.RecommendService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/store")
 public class StoreController {
+    private final OwnerService ownerService;
     private final StoreService storeService;
     private final KakaoService kakaoService;
     private final RecommendService recommendService;
@@ -55,6 +59,21 @@ public class StoreController {
         try {
             Store store = storeService.findStoreById(storeId);
             ReadStoreResponseDto resDto = new ReadStoreResponseDto(store);
+            return ResponseEntity.ok(resDto);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @GetMapping({"", "/"})
+    public ResponseEntity<?> readStores(@RequestParam("owner_id") Long ownerId) {
+        try {
+            ReadStoresResponseDto resDto = new ReadStoresResponseDto();
+
+            Owner owner = ownerService.findOwnerById(ownerId);
+            for (Store store : owner.getStores()) {
+                resDto.addItem(new ReadStoresResponseDto.Item(store.getId(), store.getName(), store.getRoadAddress(), store.getPostalCode(), store.getDetailAddress()));
+            }
             return ResponseEntity.ok(resDto);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
