@@ -37,31 +37,31 @@ const STORE_TYPE_LABELS = [
   '카페디저트',
 ];
 const ALLERGY_TEXT_LIST = [
-  '알류(가금류)', 
-  '우유', 
-  '메밀', 
-  '땅콩', 
-  '대두', 
-  '밀', 
-  '고등어', 
-  '게', 
-  '새우', 
-  '돼지고기', 
-  '복숭아', 
-  '토마토', 
-  '아황산류', 
-  '호두', 
-  '닭고기', 
-  '쇠고기', 
-  '오징어', 
-  '굴', 
-  '전복', 
-  '홍합', 
-  '조개류', 
-  '잣', 
-  '고열량·저영양', 
-  'GMO 식품', 
-  '고카페인', 
+  '알류(가금류)',
+  '우유',
+  '메밀',
+  '땅콩',
+  '대두',
+  '밀',
+  '고등어',
+  '게',
+  '새우',
+  '돼지고기',
+  '복숭아',
+  '토마토',
+  '아황산류',
+  '호두',
+  '닭고기',
+  '쇠고기',
+  '오징어',
+  '굴',
+  '전복',
+  '홍합',
+  '조개류',
+  '잣',
+  '고열량·저영양',
+  'GMO 식품',
+  '고카페인',
 ];
 function MyPage() {
   const navigate = useNavigate();
@@ -91,7 +91,7 @@ function MyPage() {
   const [createMenuType, setCreateMenuType] = useState(0);
   const [createMenuDescription, setCreateMenuDescription] = useState('');
   const [createMenuPrice, setCreateMenuPrice] = useState('');
-  const [createMenuAllergies, setCreateMenuAllergies] = useState([]); 
+  const [createMenuAllergies, setCreateMenuAllergies] = useState([]);
   const [guessLoading, setGuessLoading] = useState(false);
   const [guessError, setGuessError] = useState('');
   const [registerMenuLoading, setRegisterMenuLoading] = useState(false);
@@ -99,7 +99,7 @@ function MyPage() {
   const [editMenuName, setEditMenuName] = useState('');
   const [editMenuType, setEditMenuType] = useState(0);
   const [editMenuPrice, setEditMenuPrice] = useState('');
-  const [editMenuAllergies, setEditMenuAllergies] = useState([]); 
+  const [editMenuAllergies, setEditMenuAllergies] = useState([]);
   const [editMenuLoading, setEditMenuLoading] = useState(false);
   const [newOptionGroupName, setNewOptionGroupName] = useState('');
   const [optionGroupLoading, setOptionGroupLoading] = useState(false);
@@ -110,15 +110,15 @@ function MyPage() {
   const [editOptionMaxSelected, setEditOptionMaxSelected] = useState(0);
   const [editOptionGroupLoading, setEditOptionGroupLoading] = useState(false);
   const [editOptionIsRequired, setEditOptionIsRequired] = useState(false);
-  const [activeOptionGroupId, setActiveOptionGroupId] = useState(null); 
-  const [createOptionItemStep, setCreateOptionItemStep] = useState(1); 
+  const [activeOptionGroupId, setActiveOptionGroupId] = useState(null);
+  const [createOptionItemStep, setCreateOptionItemStep] = useState(1);
   const [createOptionItemName, setCreateOptionItemName] = useState('');
   const [createOptionItemDescription, setCreateOptionItemDescription] =
     useState('');
   const [createOptionItemPrice, setCreateOptionItemPrice] = useState('');
   const [createOptionItemAllergies, setCreateOptionItemAllergies] = useState(
     [],
-  ); 
+  );
   const [optionGuessLoading, setOptionGuessLoading] = useState(false);
   const [optionGuessError, setOptionGuessError] = useState('');
   const [registerOptionItemLoading, setRegisterOptionItemLoading] =
@@ -355,6 +355,10 @@ function MyPage() {
     setNewPostalCode(data.zonecode || '');
     setIsPostcodeOpen(false);
   };
+  const handlePostcodeError = error => {
+    alert('주소 검색 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+    setIsPostcodeOpen(false);
+  };
   const handleSelectCreateMenu = () => {
     const store = stores.find(s => s.id === selectedStoreId);
     const baseType =
@@ -362,12 +366,12 @@ function MyPage() {
         ? storeDetail.type
         : store && typeof store.type === 'number'
           ? store.type
-          : 0; 
+          : 0;
     setDetailMode('createMenu');
     setSelectedMenuId(null);
     setCreateMenuStep(1);
     setCreateMenuName('');
-    setCreateMenuType(baseType); 
+    setCreateMenuType(baseType);
     setCreateMenuDescription('');
     setCreateMenuPrice('');
     setCreateMenuAllergies([]);
@@ -729,8 +733,8 @@ function MyPage() {
     setOptionGuessError('');
     const selectedMenuObj =
       storeDetail &&
-      storeDetail.menus &&
-      selectedMenuId != null
+        storeDetail.menus &&
+        selectedMenuId != null
         ? storeDetail.menus.find(m => m.id === selectedMenuId)
         : null;
     const menuName = selectedMenuObj ? selectedMenuObj.name : '';
@@ -909,14 +913,14 @@ function MyPage() {
     stores.find(s => s.id === selectedStoreId) || null;
   const selectedMenu =
     storeDetail &&
-    storeDetail.menus &&
-    selectedMenuId != null
+      storeDetail.menus &&
+      selectedMenuId != null
       ? storeDetail.menus.find(m => m.id === selectedMenuId)
       : null;
   const selectedMenuTypeLabel =
     selectedMenu &&
-    typeof selectedMenu.type === 'number' &&
-    STORE_TYPE_LABELS[selectedMenu.type]
+      typeof selectedMenu.type === 'number' &&
+      STORE_TYPE_LABELS[selectedMenu.type]
       ? STORE_TYPE_LABELS[selectedMenu.type]
       : '-';
   const storeTypeIndex =
@@ -931,7 +935,7 @@ function MyPage() {
       : '-';
   return (
     <div className="mypage-root">
-      {}
+      { }
       <header className="mypage-header">
         <div className="mypage-header-left">
           <img
@@ -946,9 +950,9 @@ function MyPage() {
         </div>
         <div className="mypage-header-right" />
       </header>
-      {}
+      { }
       <div className="mypage-columns">
-        {}
+        { }
         <section className="mypage-column mypage-column-stores">
           <div className="mypage-column-header">
             <h2 className="mypage-column-title">가게 목록</h2>
@@ -971,7 +975,7 @@ function MyPage() {
                 </button>
               </div>
             )}
-            {}
+            { }
             {!loading && !error && stores.length === 0 && (
               <>
                 <div className="mypage-message">
@@ -994,7 +998,7 @@ function MyPage() {
                 </div>
               </>
             )}
-            {}
+            { }
             {!loading && !error && stores.length > 0 && (
               <div className="mypage-store-list">
                 {stores.map(store => (
@@ -1030,7 +1034,7 @@ function MyPage() {
             )}
           </div>
         </section>
-        {}
+        { }
         <section
           className={
             'mypage-column ' +
@@ -1050,7 +1054,7 @@ function MyPage() {
             )}
           </div>
           <div className="mypage-column-body">
-            {}
+            { }
             {viewMode === 'createStore' && (
               <>
                 <div className="mypage-register-wrapper">
@@ -1168,14 +1172,14 @@ function MyPage() {
                 </p>
               </>
             )}
-            {}
+            { }
             {viewMode === 'store' && !selectedStore && (
               <div className="mypage-message">
                 왼쪽에서 가게를 선택하면 가게 정보와 메뉴 리스트가 여기에
                 표시됩니다.
               </div>
             )}
-            {}
+            { }
             {viewMode === 'store' && selectedStore && (
               <>
                 {storeDetailLoading && (
@@ -1252,7 +1256,7 @@ function MyPage() {
                             </div>
                           </li>
                         ))}
-                      {}
+                      { }
                       <li
                         className={
                           'mypage-menu-item mypage-menu-item-add' +
@@ -1273,7 +1277,7 @@ function MyPage() {
             )}
           </div>
         </section>
-        {}
+        { }
         {viewMode === 'store' && (
           <section className="mypage-column mypage-column-detail">
             <div className="mypage-column-header">
@@ -1292,7 +1296,7 @@ function MyPage() {
                   먼저 왼쪽에서 가게를 선택해 주세요.
                 </div>
               )}
-              {}
+              { }
               {selectedStore && detailMode === 'basic' && (
                 <div className="mypage-basic-edit-wrapper">
                   <div className="mypage-register-card mypage-basic-edit-card">
@@ -1336,7 +1340,7 @@ function MyPage() {
                         </span>
                       </div>
                     </div>
-                    {}
+                    { }
                     <div className="mypage-platform-section">
                       <div className="mypage-platform-header">
                         <span className="mypage-platform-title">
@@ -1426,7 +1430,7 @@ function MyPage() {
                   </div>
                 </div>
               )}
-              {}
+              { }
               {selectedStore && detailMode === 'createMenu' && (
                 <div className="mypage-basic-edit-wrapper">
                   <div className="mypage-register-card mypage-menu-create-card">
@@ -1482,7 +1486,7 @@ function MyPage() {
                         <h3 className="mypage-section-title">
                           알레르기 · 카테고리 · 가격 설정
                         </h3>
-                        {}
+                        { }
                         <div className="mypage-register-row">
                           <span className="mypage-register-label-text">
                             메뉴 카테고리
@@ -1566,7 +1570,7 @@ function MyPage() {
                   </div>
                 </div>
               )}
-              {}
+              { }
               {selectedStore && detailMode === 'menu' && !selectedMenuId && (
                 <div className="mypage-message">
                   가운데에서 메뉴를 선택하면 이 영역에 상세 정보가 표시됩니다.
@@ -1580,7 +1584,7 @@ function MyPage() {
                 ) : (
                   <div className="mypage-menu-detail-wrapper">
                     <div className="mypage-register-card mypage-menu-detail-card">
-                      {}
+                      { }
                       <div className="mypage-menu-detail-header-row">
                         <h3 className="mypage-section-title">
                           메뉴 정보
@@ -1622,7 +1626,7 @@ function MyPage() {
                           </div>
                         )}
                       </div>
-                      {}
+                      { }
                       {!isEditingMenu ? (
                         <>
                           <div className="mypage-menu-detail-section">
@@ -1759,7 +1763,7 @@ function MyPage() {
                           </div>
                         </>
                       )}
-                      {}
+                      { }
                       <div className="mypage-menu-detail-section">
                         <h4 className="mypage-menu-detail-title">
                           옵션 정보
@@ -1779,7 +1783,7 @@ function MyPage() {
                                   option.minSelected >= 1;
                                 const maxCount =
                                   typeof option.maxSelected === 'number' &&
-                                  option.maxSelected > 0
+                                    option.maxSelected > 0
                                     ? option.maxSelected
                                     : 1;
                                 return (
@@ -1788,11 +1792,11 @@ function MyPage() {
                                     className="mypage-option-group-card"
                                   >
                                     <div className="mypage-option-group-header">
-                                      {}
+                                      { }
                                       {editingOptionGroupId === option.id ? (
                                         <>
                                           <div className="mypage-option-group-header-main">
-                                            {}
+                                            { }
                                             <label className="mypage-option-group-edit-label">
                                               그룹명
                                               <input
@@ -1806,7 +1810,7 @@ function MyPage() {
                                                 }
                                               />
                                             </label>
-                                            {}
+                                            { }
                                             <div className="mypage-option-group-edit-mode">
                                               <span className="mypage-option-group-edit-mode-label">
                                                 선택 방식
@@ -1857,7 +1861,7 @@ function MyPage() {
                                                 </button>
                                               </div>
                                             </div>
-                                            {}
+                                            { }
                                             <div className="mypage-option-group-edit-row">
                                               <label className="mypage-option-group-edit-label-inline">
                                                 <span>최대 선택 개수</span>
@@ -1890,7 +1894,7 @@ function MyPage() {
                                               )}
                                             </div>
                                           </div>
-                                          {}
+                                          { }
                                           <div className="mypage-option-group-actions">
                                             <button
                                               type="button"
@@ -1978,7 +1982,7 @@ function MyPage() {
                                         </>
                                       )}
                                     </div>
-                                    {}
+                                    { }
                                     <ul className="mypage-option-item-list">
                                       {option.items && option.items.length > 0 ? (
                                         option.items.map(item => (
@@ -2018,7 +2022,7 @@ function MyPage() {
                                                   )}
                                                 </div>
                                               )}
-                                            {}
+                                            { }
                                             <div className="mypage-option-item-actions">
                                               <button
                                                 type="button"
@@ -2047,7 +2051,7 @@ function MyPage() {
                                                 삭제
                                               </button>
                                             </div>
-                                            {}
+                                            { }
                                             {editingOptionItemGroupId ===
                                               option.id &&
                                               editingOptionItemId ===
@@ -2160,7 +2164,7 @@ function MyPage() {
                                         </li>
                                       )}
                                     </ul>
-                                    {}
+                                    { }
                                     {activeOptionGroupId === option.id &&
                                       !isEditingMenu && (
                                         <div className="mypage-option-item-create">
@@ -2319,7 +2323,7 @@ function MyPage() {
                               })}
                             </div>
                           )}
-                        {}
+                        { }
                         <div className="mypage-option-create-group">
                           <h4 className="mypage-menu-detail-title">
                             옵션 그룹 추가
@@ -2374,7 +2378,7 @@ function MyPage() {
           </section>
         )}
       </div>
-      {}
+      { }
       {isPostcodeOpen && (
         <div
           className="mypage-postcode-backdrop"
@@ -2388,6 +2392,7 @@ function MyPage() {
               style={{ width: '100%', height: '100%' }}
               jsOptions={{ animation: true, hideMapBtn: true }}
               onSelected={handlePostcodeSelected}
+              onError={handlePostcodeError}
             />
           </div>
         </div>
