@@ -6,7 +6,7 @@
  */
 
 import { useRef, useState, useEffect, useCallback } from 'react';
-import { LogBox } from 'react-native';
+import { LogBox, Alert, BackHandler } from 'react-native';
 import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ShareMenu, { ShareData } from 'react-native-share-menu';
@@ -47,13 +47,29 @@ function App() {
     const { data } = item;
     if (typeof data !== 'string') return;
 
+    let storeId = undefined;
     const store = await parseStoreFromDeepLink(data);
-    if (!store) return;
+    if (store) {
+      storeId = await getStoreIdByPlatform(store.platform, store.storeId);
+    }
 
-    const storeId = await getStoreIdByPlatform(store.platform, store.storeId);
-    if (!storeId) return;
-
-    navigateToStore(storeId);
+    if (storeId) {
+      navigateToStore(storeId);
+    } else {
+      Alert.alert(
+        '알림',
+        '등록되지 않은 매장입니다',
+        [
+          {
+            text: '확인',
+            onPress: () => {
+              BackHandler.exitApp();
+            },
+          },
+        ],
+        { cancelable: false },
+      );
+    }
   }, []);
 
   useEffect(() => {
