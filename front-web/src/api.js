@@ -221,7 +221,7 @@ export async function registerPlatform(token, storeId, pfName, pfSid) {
  * @param {number} storeId 
  * @returns {{
  *   items: Array<{
- *     pfName: 'baemin' | 'coupnag';
+ *     pfName: 'baemin' | 'coupang';
  *     pfSid: number;
  *   }>;
  * } | undefined}

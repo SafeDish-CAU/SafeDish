@@ -1563,7 +1563,7 @@ function MyPage() {
                                 <span className="mypage-platform-label">
                                   {pf.pfName === 'baemin'
                                     ? '배달의민족'
-                                    : pf.pfName === 'coupnag'
+                                    : pf.pfName === 'coupang'
                                       ? '쿠팡이츠'
                                       : pf.pfName}
                                 </span>
