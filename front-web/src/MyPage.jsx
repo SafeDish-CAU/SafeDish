@@ -1595,7 +1595,7 @@ function MyPage() {
                           }
                         >
                           <option value="baemin">배달의민족</option>
-                          <option value="coupnag">쿠팡이츠</option>
+                          <option value="coupang">쿠팡이츠</option>
                         </select>
                         <input
                           className="mypage-platform-input"
